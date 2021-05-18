@@ -86,32 +86,38 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
   <tr>
     <td align="center">
       <a href="#">
-        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Iuri Silva no GitHub"/><br>
+        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Joao Pedro no GitHub"/><br>
         <sub>
           <b>Joao Pedro</b>
         </sub>
       </a>
     </td>
-     <tr>
     <td align="center">
       <a href="#">
-        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Iuri Silva no GitHub"/><br>
+        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Diego"/><br>
         <sub>
-          <b>Joao Pedro</b>
+          <b>Diego</b>
         </sub>
       </a>
     </td>
-      <tr>
     <td align="center">
       <a href="#">
-        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Iuri Silva no GitHub"/><br>
+        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Marcos Alan"/><br>
         <sub>
-          <b>Joao Pedro</b>
+          <b>Marcos Alan</b>
         </sub>
       </a>
     </td>
+       <td align="center">
+      <a href="#">
+        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Steve Jobs"/><br>
+        <sub>
+          <b>Steve Jobs</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
 </table>
-
 
 <br>
 
