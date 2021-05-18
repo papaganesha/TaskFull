@@ -9,7 +9,6 @@ var app = express()
 
 router.get('/', tarefasController.listar);
 router.get('/:id', tarefasController.listar_porID);
-router.get('/:"nome"', tarefasController.listar_porNome);
 router.post('/add', tarefasController.adicionar_tarefa);
 router.put('/alterar/:id', tarefasController.alterar_tarefa);
 router.delete('/deletar/:id', tarefasController.deletar_tarefa);
