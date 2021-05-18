@@ -63,8 +63,8 @@ exports.adicionar_lista = (req, res) => {
   let error = app.error;
   console.log(req.body)
   if (!error) {
-    var sql = `INSERT INTO LISTA_TAREFAS(NOME_LISTA, CATEGORIA) values(?, ?);`
-    dbConn.query(sql, [req.body.nome, req.body.categoria], function (err, rows) {
+    var sql = `INSERT INTO LISTA_TAREFAS(COD_USUARIO, NOME_LISTA, CATEGORIA) values(?, ?, ?);`
+    dbConn.query(sql, [req.body.cod_usuario, req.body.nome, req.body.categoria], function (err, rows) {
       if (err) {
         res.status(500).json({erro : "Database Error"})
         console.log('database error',err);
@@ -86,7 +86,7 @@ exports.alterar_lista = (req, res) => {
     console.log('ROTA DE PUT LISTAS REQUISITADA')
   let error = app.error;
   if (!error) {
-    var sql = `UPDATE LISTA SET NOME = ?, CATEGORIA = ? WHERE cod_lista = ?;`
+    var sql = `UPDATE LISTA_TAREFAS SET NOME_LISTA = ?, CATEGORIA = ? WHERE cod_lista = ?;`
     dbConn.query(sql, [req.body.nome, req.body.categoria, req.params.id], function (err, rows) {
       if (err) {
         console.log('error', err);
@@ -108,7 +108,7 @@ exports.deletar_lista = (req, res) => {
   console.log('ROTA DE DELETE LISTAS REQUISITADA')
   let error = app.error;
   if (!error) {
-    var sql = `DELETE FROM tarefa WHERE where cod_tarefa = ?;`
+    var sql = `DELETE FROM LISTA_TAREFAS WHERE COD_LISTA = ?;`
     dbConn.query(sql, [req.params.id], function (err, rows) {
       if (err) {
         console.log('error', err);

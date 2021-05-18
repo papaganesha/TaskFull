@@ -62,8 +62,8 @@ exports.adicionar_tarefa = (req, res) => {
   let error = app.error;
   console.log(req.body)
   if (!error) {
-    var sql = `INSERT INTO tarefa(NOME_TAREFA, DESCRICAO) values(?, ?);`
-    dbConn.query(sql, [req.body.nome, req.body.descricao], function (err, rows) {
+    var sql = `INSERT INTO tarefa(COD_LISTA, NOME_TAREFA, DESCRICAO) values(?, ?, ?);`
+    dbConn.query(sql, [req.body.cod_lista, req.body.nome, req.body.descricao], function (err, rows) {
       if (err) {
         res.status(500).json({erro : "Database Error"})
         console.log('database error',err);

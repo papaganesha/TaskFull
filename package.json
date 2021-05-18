@@ -5,13 +5,22 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "nodemon app"
+    "start": "nodemon app"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.7"
-  }
+    "nodemon": "^2.0.7",
+    "requirements": "^1.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/papaganesha/TaskFull.git"
+  },
+  "bugs": {
+    "url": "https://github.com/papaganesha/TaskFull/issues"
+  },
+  "homepage": "https://github.com/papaganesha/TaskFull#readme"
 }
