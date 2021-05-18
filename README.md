@@ -30,8 +30,8 @@
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
 
-- [ ] Criaçao do banco de dados
-- [ ] Criacao da api Node.js
+- [x] Criaçao do banco de dados
+- [x] Criacao da API com Node.js
 - [ ] Criacao das funcionalidades(web services)
 
 
