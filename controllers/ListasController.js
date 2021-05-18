@@ -86,7 +86,7 @@ exports.alterar_lista = (req, res) => {
     console.log('ROTA DE PUT LISTAS REQUISITADA')
   let error = app.error;
   if (!error) {
-    var sql = `UPDATE LISTA_TAREFAS SET NOME_LISTA = ?, CATEGORIA = ? WHERE cod_lista = ?;`
+    var sql = `UPDATE LISTA_TAREFAS SET NOME_LISTA = ?, CATEGORIA = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_lista = ?;`
     dbConn.query(sql, [req.body.nome, req.body.categoria, req.params.id], function (err, rows) {
       if (err) {
         console.log('error', err);
