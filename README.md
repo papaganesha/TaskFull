@@ -1,3 +1,5 @@
+<br>
+
 # TaskFull
 
 <!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
@@ -18,10 +20,11 @@
 </pre>
 
 --->
-
 <img src="banner_readme.PNG" alt="exemplo imagem">
 
 > O objetivo deste trabalho é criar um sistema Web que proporcione ao usuario a habilidade de organizar e controlar suas Listas de Tarefas (compostas por Tarefas) .
+
+<br>
 
 ### Ajustes e melhorias
 
@@ -32,6 +35,8 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [ ] Criacao das funcionalidades(web services)
 
 
+<br>
+
 ## 💻 Pré-requisitos
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
@@ -40,15 +45,18 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Você tem uma máquina Windows
 * Você leu `<guia / link / documentação_relacionada_ao_projeto>`.
 
+<br>
+
 ## 🚀 Instalando TaskFull
 
 Para instalar o TaskFull, siga estas etapas:
-
 
 Windows:
 ```
 <comando_de_instalação>
 ```
+
+<br>
 
 ## ☕ Usando <nome_do_projeto>
 
@@ -59,6 +67,9 @@ Para usar <nome_do_projeto>, siga estas etapas:
 ```
 
 Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Fornece uma referência de opções para pontos de bônus!
+
+
+<br>
 
 ## 📫 Contribuindo para TaskFull
 <!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
@@ -71,6 +82,9 @@ Para contribuir com <nome_do_projeto>, siga estas etapas:
 5. Crie a solicitação de pull.
 
 Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
+
+<br>
 
 ## 🤝 Colaboradores
 
@@ -106,9 +120,14 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
 </table>
 
 
+<br>
+
 ## 😄 Seja um dos contribuidores<br>
 
 Quer fazer parte desse projeto? Clique [AQUI](CONTRIBUTING.md) e leia como contribuir.
+
+
+<br>
 
 ## 📝 Licença
 
