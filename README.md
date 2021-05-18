@@ -8,9 +8,6 @@
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/iuricode/README-template?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/iuricode/README-template?style=for-the-badge)
 
-<img src="exemplo-image.png" alt="exemplo imagem">
---->
-
 <pre>
 ████████╗ █████╗ ███████╗██╗  ██╗███████╗██╗   ██╗██╗     ██╗     
 ╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝██╔════╝██║   ██║██║     ██║     
@@ -19,6 +16,10 @@
    ██║   ██║  ██║███████║██║  ██╗██║     ╚██████╔╝███████╗███████╗
    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚══════╝╚══════╝
 </pre>
+
+--->
+
+<img src="banner_readme.PNG" alt="exemplo imagem">
 
 > O objetivo deste trabalho é criar um sistema Web que proporcione ao usuario a habilidade de organizar e controlar suas Listas de Tarefas (compostas por Tarefas) .
 
