@@ -1,26 +1,18 @@
-<br>
-
 # TaskFull
 
-<!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
-<!---![GitHub repo size](https://img.shields.io/github/repo-size/iuricode/README-template?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/iuricode/README-template?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/iuricode/README-template?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/iuricode/README-template?style=for-the-badge)
-![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/iuricode/README-template?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/papaganesha/TaskFull?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/papaganesha/TaskFull?style=for-the-badge)
+![image](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![image](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![image](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![image](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
 
-<pre>
-████████╗ █████╗ ███████╗██╗  ██╗███████╗██╗   ██╗██╗     ██╗     
-╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝██╔════╝██║   ██║██║     ██║     
-   ██║   ███████║███████╗█████╔╝ █████╗  ██║   ██║██║     ██║     
-   ██║   ██╔══██║╚════██║██╔═██╗ ██╔══╝  ██║   ██║██║     ██║     
-   ██║   ██║  ██║███████║██║  ██╗██║     ╚██████╔╝███████╗███████╗
-   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚══════╝╚══════╝
-</pre>
 
---->
-<img src="banner_readme.PNG" alt="exemplo imagem">
+
+
+
+<img src="banner_readme.PNG" alt="Banner Taskfull">
 
 > O objetivo deste trabalho é criar um sistema Web que proporcione ao usuario a habilidade de organizar e controlar suas Listas de Tarefas (compostas por Tarefas) .
 
