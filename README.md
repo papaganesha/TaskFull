@@ -14,17 +14,27 @@
 
 <img src="banner_readme.PNG" alt="Banner Taskfull">
 
-> O objetivo deste trabalho é criar um sistema Web que proporcione ao usuario a habilidade de organizar e controlar suas Listas de Tarefas (compostas por Tarefas) .
+> O objetivo deste trabalho é criar um sistema Web que proporcione ao usuario a habilidade de organizar e controlar suas Tarefas do dia a dia.
 
 <br>
 
-### Ajustes e melhorias
+## 💻 Funcionalidades da aplicação.
 
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
+<br>
 
-- [x] Criaçao do banco de dados
-- [x] Criacao da API com Node.js
-- [ ] Criacao das funcionalidades(web services)
+Funcionalidades relacionadas a Listas de Tarefas:
+- [x] Listar, adicionar, alterar e excluir Lista de Tarefas
+- [x] Consultar Listas por nome ou código.
+- [x] Alterar Lista por código.
+- [x] Excluir Lista por código. 
+
+<br>
+
+Funcionalidades relacionadas a Tarefas:
+- [x] Listar, adicionar, alterar e excluir Tarefas.
+- [x] Consultar Tarefas por nome ou código.
+- [x] Alterar Tarefa por código.
+- [x] Excluir Tarefa por código. 
 
 
 <br>
