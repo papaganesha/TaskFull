@@ -86,7 +86,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
   <tr>
     <td align="center">
       <a href="#">
-        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Joao Pedro no GitHub"/><br>
+        <img src="https://avatars.githubusercontent.com/u/32704567?v=4" width="100px;" alt="Foto do Joao Pedro no GitHub"/><br>
         <sub>
           <b>Joao Pedro</b>
         </sub>
@@ -94,7 +94,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Diego"/><br>
+        <img src="https://avatars.githubusercontent.com/u/23509904?v=4" width="100px;" alt="Foto do Diego"/><br>
         <sub>
           <b>Diego</b>
         </sub>
@@ -119,16 +119,11 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
   </tr>
 </table>
 
-<br>
-
-## 😄 Seja um dos contribuidores<br>
-
-Quer fazer parte desse projeto? Clique [AQUI](CONTRIBUTING.md) e leia como contribuir.
 
 
 <br>
 
-## 📝 Licença
+## 📝 Documentações
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
 
