@@ -1,17 +1,10 @@
-var express = require('express');
-var dbConn = require('../database/config');
-var app = express();
+import connection from '../database/config.js';
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-
-
-
-exports.listar = (req, res) => {
+export function index(req, res) {
   console.log('ROTA DE GET TAREFAS REQUISITADA')
   let error = app.error;
   if (!error) {
-    dbConn.query('SELECT * FROM tarefa', function (err, rows) {
+    connection('SELECT * FROM tarefa', function (err, rows) {
       if (err) {
           res.status(500).json({erro : "Database Error"})
         console.log('database error',err);
@@ -29,12 +22,12 @@ exports.listar = (req, res) => {
 }
 
 
-exports.listar_porID = (req, res) => {
+export function item(req, res) {
     console.log('ROTA DE GET TAREFA POR ID REQUISITADA')
 
     let error = app.error;
     if (!error) {
-      dbConn.query(`SELECT * FROM tarefa where cod_tarefa = ${req.params.id}`, function (err, rows) {
+      connection(`SELECT * FROM tarefa where cod_tarefa = ${req.params.id}`, function (err, rows) {
         if (err) {
             res.status(500).json({erro : "Database Error"})
             console.log('database error',err);
@@ -57,13 +50,13 @@ exports.listar_porID = (req, res) => {
 
 
 
-exports.adicionar_tarefa = (req, res) => {
+export function create(req, res) {
     console.log('ROTA DE POST TAREFAS REQUISITADA')
   let error = app.error;
   console.log(req.body)
   if (!error) {
     var sql = `INSERT INTO tarefa(COD_LISTA, NOME_TAREFA, DESCRICAO) values(?, ?, ?);`
-    dbConn.query(sql, [req.body.cod_lista, req.body.nome, req.body.descricao], function (err, rows) {
+    connection(sql, [req.body.cod_lista, req.body.nome, req.body.descricao], function (err, rows) {
       if (err) {
         res.status(500).json({erro : "Database Error"})
         console.log('database error',err);
@@ -81,12 +74,12 @@ exports.adicionar_tarefa = (req, res) => {
 }
 
 
-exports.alterar_tarefa = (req, res) => {
+export function update(req, res) {
     console.log('ROTA DE PUT TAREFAS REQUISITADA')
   let error = app.error;
   if (!error) {
     var sql = `INSERT INTO tarefa(NOME_TAREFA, DESCRICAO) values(?, ?);`
-    dbConn.query(sql, [req.body.nome, req.body.descricao], function (err, rows) {
+    connection(sql, [req.body.nome, req.body.descricao], function (err, rows) {
       if (err) {
         console.log('error', err);
         res.status(500).json({msg: `Tarefa de ID ${req.params.id} nao existe`});
@@ -103,12 +96,12 @@ exports.alterar_tarefa = (req, res) => {
 }
 
 
-exports.deletar_tarefa = (req, res) => {
+export function del(req, res) {
   console.log('ROTA DE DELETE TAREFAS REQUISITADA')
   let error = app.error;
   if (!error) {
     var sql = `DELETE FROM tarefa WHERE cod_tarefa = ?;`
-    dbConn.query(sql, [req.params.id], function (err, rows) {
+    connection(sql, [req.params.id], function (err, rows) {
       if (err) {
         console.log('error', err);
         res.status(404).send({msg: `Tarefa de ID ${req.params.id} nao existe`});

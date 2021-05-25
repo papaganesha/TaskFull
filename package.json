@@ -2,17 +2,17 @@
   "name": "taskfull_1",
   "version": "1.0.0",
   "description": "RestFull Project ProgNet2",
+  "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app"
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.7",
     "requirements": "^1.4.1"
   },
   "repository": {
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/papaganesha/TaskFull/issues"
   },
-  "homepage": "https://github.com/papaganesha/TaskFull#readme"
+  "homepage": "https://github.com/papaganesha/TaskFull#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
