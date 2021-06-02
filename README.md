@@ -51,7 +51,6 @@ Funcionalidades relacionadas a Tarefas:
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Você instalou a versão mais recente de `<Node.js / pacotes : express, mysql, jwt e bcrypt são requeridos>`
-* Você leu `<guia / link / documentação_relacionada_ao_projeto>`.
 
 <br>
 
