@@ -55,21 +55,20 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 <br>
 
-## ☕ Usando <nome_do_projeto>
+## ☕ Usando o TaskFull
 
-Para usar o TaskFull, siga estas etapas:
+Para usar o TaskFull, siga estas rotas:
 
 ```
-<exemplo_de_uso>
+
 ```
 
-Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Fornece uma referência de opções para pontos de bônus!
 
 
 <br>
 
-## 📫 Contribuindo para TaskFull
-<!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado
+<!---## 📫 Contribuindo para TaskFull
+Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado
 Para contribuir com <nome_do_projeto>, siga estas etapas:
 
 1. Bifurque este repositório.
@@ -110,14 +109,6 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
         <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Marcos Alan"/><br>
         <sub>
           <b>Marcos Alan</b>
-        </sub>
-      </a>
-    </td>
-       <td align="center">
-      <a href="#">
-        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Steve Jobs"/><br>
-        <sub>
-          <b>Steve Jobs</b>
         </sub>
       </a>
     </td>
