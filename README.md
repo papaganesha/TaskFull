@@ -55,30 +55,10 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 <br>
 
-## ☕ Usando <nome_do_projeto>
+## ☕ Rotas do TaskFull
 
-Para usar o TaskFull, siga estas etapas:
-
-```
-<exemplo_de_uso>
-```
-
-Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Fornece uma referência de opções para pontos de bônus!
-
-
-<br>
-
-## 📫 Contribuindo para TaskFull
-<!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado
-Para contribuir com <nome_do_projeto>, siga estas etapas:
-
-1. Bifurque este repositório.
-2. Crie um branch: `git checkout -b <nome_branch>`.
-3. Faça suas alterações e confirme-as: `git commit -m '<mensagem_commit>'`
-4. Envie para o branch original: `git push origin <nome_do_projeto> / <local>`
-5. Crie a solicitação de pull.
-
-Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).--->
+Para entender as Rotas do TaskFull, acesse o site do Postman:
+https://app.getpostman.com/join-team?invite_code=0aae0d6367dd59519973c747bf9370c1&ws=64be7939-2bf9-48af-8717-aaaeb70c7e5f
 
 
 <br>
@@ -130,6 +110,6 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
 
 ## 📝 Documentações
 
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
+https://app.getpostman.com/join-team?invite_code=0aae0d6367dd59519973c747bf9370c1&ws=64be7939-2bf9-48af-8717-aaaeb70c7e5f
 
-[⬆ Voltar ao topo](#nome-do-projeto)<br>
+[⬆ Voltar ao topo](#TaskFull)<br>
