@@ -204,7 +204,7 @@ import {
   
           }
   
-          else {
+          else if(categoriaLista) {
                   execute("UPDATE LISTA_TAREFAS SET CATEGORIA = ? WHERE COD_LISTA = ?;", [categoriaLista.toUpperCase(), id]).then((result) => {
                   if(result.affectedRows > 0){    
                       const response = {
@@ -228,6 +228,7 @@ import {
                           return res.status(500).send(response)
                           next()
                       }
+             
               }).catch((error) => {
                   const response = {
                       msg : error, 
@@ -240,6 +241,16 @@ import {
                   next()
               })
           }
+          else{
+            const response = {
+                msg: `É necessario informar os campos de alteração`,
+                request: {
+                    tipo: 'PUT',
+                    descricao: 'Erro durante operação de PUT'
+                }   
+            }
+            return res.status(500).send(response)
+        }
   
       }
   
@@ -259,15 +270,28 @@ import {
       var id = +req.params.id
       if(id && id != NaN && req){
               execute("DELETE FROM LISTA_TAREFAS WHERE COD_LISTA = ?;", [id]).then((result) => {
-              const response = {
-                  msg: `Lista de ${id} deletada com sucesso`,
-                  request: {
-                      tipo: 'POST',
-                      descricao: 'Delete de Listas'
-                  }
-              }
-              return res.status(201).send(response)
-              next()
+                if(result.affectedRows > 0){
+                    const response = {
+                        msg: `Lista de id:(${id}) deletada com sucesso`,
+                        request: {
+                            tipo: 'DELETE',
+                            descricao: 'Delete de Listas'
+                        }
+                    }
+                    return res.status(201).send(response)
+                next()
+                }
+                else{
+                    const response = {
+                        msg: `Lista de id:(${id}) não existe`,
+                        request: {
+                            tipo: 'DELETE',
+                            descricao: 'Erro durante operação de DELETE'
+                        }
+                    }
+                    return res.status(500).send(response)
+                    next()
+                }
           }).catch((error) => {
               const response = {
                   msg : error, 

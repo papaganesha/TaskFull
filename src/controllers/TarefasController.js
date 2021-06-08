@@ -30,7 +30,7 @@ export function index(req, res, next) {
             }
         }).catch((error) => {
             const response = {
-                msg: error,
+                msg: error.sqlMessage,
                 request: {
                     tipo: 'GET',
                     descricao: 'Erro durante operação de GET'
@@ -159,7 +159,7 @@ export function update(req, res, next) {
     var descTarefa = req.body.descricao
     if (id && id != NaN && req) {
         if (nomeTarefa && descTarefa) {
-            execute("UPDATE TAREFAS SET NOME_TAREFA = ?,  DESCRICAO =  ? WHERE COD_TAREFA = ?;", [nomeTarefa.toUpperCase(), descTarefa.toUpperCase(), id]).then((result) => {
+            execute("UPDATE TAREFA SET NOME_TAREFA = ?,  DESCRICAO =  ? WHERE COD_TAREFA = ?;", [nomeTarefa.toUpperCase(), descTarefa.toUpperCase(), id]).then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
                         msg: `Nome e categoria da Tarefa de ID(${id}) editados com sucesso`,
@@ -196,7 +196,7 @@ export function update(req, res, next) {
         }
 
         else if (nomeTarefa) {
-            execute("UPDATE TAREFA SET NOME_TAREFA = ? WHERE COD_LISTA = ?;", [nomeTarefa.toUpperCase(), id]).then((result) => {
+            execute("UPDATE TAREFA SET NOME_TAREFA = ? WHERE COD_TAREFA = ?;", [nomeTarefa.toUpperCase(), id]).then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
                         msg: `Nome da Tarefa de ID(${id}) editado com sucesso`,
@@ -220,8 +220,8 @@ export function update(req, res, next) {
 
         }
 
-        else {
-            execute("UPDATE LISTA_TAREFAS SET DESCRICAO = ? WHERE COD_TAREFA = ?;", [descTarefa.toUpperCase(), id]).then((result) => {
+        else if(descTarefa){
+            execute("UPDATE TAREFA SET DESCRICAO = ? WHERE COD_TAREFA = ?;", [descTarefa.toUpperCase(), id]).then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
                         msg: `Descricao da Lista de ID(${id}) editada com sucesso`,
@@ -256,6 +256,16 @@ export function update(req, res, next) {
                 next()
             })
         }
+        else{
+            const response = {
+                msg: `É necessario informar os campos de alteração`,
+                request: {
+                    tipo: 'PUT',
+                    descricao: 'Erro durante operação de PUT'
+                }
+            }
+            return res.status(500).send(response)
+        }
 
     }
 
@@ -275,15 +285,29 @@ export function del(req, res, next) {
     var id = +req.params.id
     if (id && id != NaN && req) {
         execute("DELETE FROM TAREFA WHERE COD_TAREFA = ?;", [id]).then((result) => {
-            const response = {
-                msg: `Tarefa de ${id} deletada com sucesso`,
-                request: {
-                    tipo: 'POST',
-                    descricao: 'Delete de Tarefas'
+            if(result.affectedRows > 0){
+                const response = {
+                    msg: `Tarefa de id:(${id}) deletada com sucesso`,
+                    request: {
+                        tipo: 'DELETE',
+                        descricao: 'Delete de Tarefas'
+                    }
                 }
-            }
-            return res.status(201).send(response)
+                return res.status(201).send(response)
             next()
+            }
+            else{
+                const response = {
+                    msg: `Tarefa de id:(${id}) não existe`,
+                    request: {
+                        tipo: 'DELETE',
+                        descricao: 'Erro durante operação de DELETE'
+                    }
+                }
+                return res.status(500).send(response)
+                next()
+            }
+            
         }).catch((error) => {
             const response = {
                 msg: error,

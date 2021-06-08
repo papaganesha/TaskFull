@@ -40,10 +40,10 @@ CREATE TABLE `lista_tarefas` (
 -- Extraindo dados da tabela `lista_tarefas`
 --
 
-INSERT INTO `lista_tarefas` (`cod_usuario`, `cod_lista`, `nome_lista`, `categoria`, `data_entrada`, `data_ultima_alteracao`) VALUES
-(91, 1, 'lista_1', 'faculdade', '2021-05-05 01:13:05', NULL),
-(91, 2, 'lista_teste3', 'teste_post', '2021-05-05 01:25:56', NULL),
-(91, 3, 'lista recem alterada', 'recemalterada2', '2021-05-18 03:03:01', '2021-05-18 15:20:15');
+--INSERT INTO `lista_tarefas` (`cod_usuario`, `cod_lista`, `nome_lista`, `categoria`, `data_entrada`, `data_ultima_alteracao`) VALUES
+--(91, 1, 'lista_1', 'faculdade', '2021-05-05 01:13:05', NULL),
+--(91, 2, 'lista_teste3', 'teste_post', '2021-05-05 01:25:56', NULL),
+--(91, 3, 'lista recem alterada', 'recemalterada2', '2021-05-18 03:03:01', '2021-05-18 15:20:15');
 
 -- --------------------------------------------------------
 
@@ -54,9 +54,9 @@ INSERT INTO `lista_tarefas` (`cod_usuario`, `cod_lista`, `nome_lista`, `categori
 CREATE TABLE `tarefa` (
   `cod_lista` int(11) NOT NULL,
   `cod_tarefa` int(11) NOT NULL,
-  `nome_tarefa` varchar(30) NOT NULL,
+  `nome_tarefa` varchar(30) NOT NULL unique,
   `descricao` varchar(100) NOT NULL,
-  `data_entrada` timestamp NOT NULL DEFAULT current_timestamp(),
+  `data_entrada` timestamp NOT NULL DEFAULT current_timestamp() ,
   `statusTarefa` tinyint(1) DEFAULT 0,
   `data_termino` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -78,8 +78,9 @@ INSERT INTO `tarefa` (`cod_lista`, `cod_tarefa`, `nome_tarefa`, `descricao`, `da
 
 CREATE TABLE `usuarios` (
   `cod_usuario` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(80) NOT NULL,
+  `username` varchar(50) NOT NULL unique,
+  `nome` varchar(50) NOT NULL unique,
+  `email` varchar(80) NOT NULL unique,
   `password` varchar(50) NOT NULL,
   `data_entrada` timestamp NOT NULL DEFAULT current_timestamp(),
   `data_ultima_alteracao` timestamp NULL DEFAULT NULL
@@ -89,8 +90,8 @@ CREATE TABLE `usuarios` (
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`cod_usuario`, `username`, `email`, `password`, `data_entrada`, `data_ultima_alteracao`) VALUES
-(91, 'jorge', 'jorge@gmail.com', '12345', '2021-05-18 15:21:35', NULL);
+INSERT INTO `usuarios` (`cod_usuario`, `username`, `nome`, `email`, `password`, `data_entrada`, `data_ultima_alteracao`) VALUES
+(91, 'jorge','jorge', 'jorge@gmail.com', '12345', '2021-05-18 15:21:35', NULL);
 
 --
 -- Índices para tabelas despejadas

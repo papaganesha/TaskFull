@@ -11,9 +11,9 @@ import {
       var username = req.body.username
       var password = req.body.password
       if (username && password) {
-          const salt = bcrypt.genSaltSync(10)
-          var password_hashed = bcrypt.compareSync(password, salt)
-              execute("SELECT * FROM USUARIOS WHERE USERNAME = ? AND PASSWORD = ?;", [username, password_hashed]).then((result) => {
+          //const salt = bcrypt.genSaltSync(10)
+          //var password_hashed = bcrypt.compareSync(password, salt)
+              execute("SELECT * FROM USUARIOS WHERE USERNAME = ? AND PASSWORD = ?;", [username, password]).then((result) => {
               if(result.length > 0){
                   /*export let token = jwt.sign({
                       cod_usuario : result[0].cod_usuario
@@ -73,9 +73,9 @@ import {
       var nome = req.body.nome
       var email = req.body.email
       if (username && nome && email && password) {
-          const salt = bcrypt.genSaltSync(10)
-          var password_hashed = bcrypt.hashSync(password, salt)
-          execute("INSERT INTO USUARIOS(USERNAME, NOME, EMAIL, PASSWORD) VALUES(?, ?, ?, ?);", [username.toUpperCase(), nome.toUpperCase(), email.toUpperCase(), password_hashed]).then((result) => {
+          //const salt = bcrypt.genSaltSync(10)
+          //var password_hashed = bcrypt.hashSync(password, salt)
+          execute("INSERT INTO USUARIOS(USERNAME, NOME, EMAIL, PASSWORD) VALUES(?, ?, ?, ?);", [username.toUpperCase(), nome.toUpperCase(), email.toUpperCase(), password]).then((result) => {
               if(result.affectedRows > 0){
                   const response = {
                               msg : `${username} cadastrado com sucesso`, 
