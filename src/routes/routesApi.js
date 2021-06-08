@@ -1,5 +1,7 @@
 import { Router } from "express";
-// import timeLog from '../shared/middleware/timelogMiddleware'
+//import timeLog from '../shared/middleware/timelogMiddleware'
+
+
 
 import {
   index as indexList,
@@ -23,13 +25,17 @@ import {
 } from "../controllers/AuthController.js";
 
 var router = Router();
+
 // router.use(timeLog())
+
+
 //LIST ROUTES
 router.get("/v1/api/index/list", indexList);
 router.get("/v1/api/item/list/:id", itemList);
 router.post("/v1/api/create/list", createList);
 router.put("/v1/api/update/list/:id", updateList);
 router.delete("/v1/api/delete/list/:id", deleteList);
+
 //TASK ROUTES
 router.get("/v1/api/index/task", indexTask);
 router.get("/v1/api/item/task/:id", itemTask);

@@ -51,23 +51,25 @@ Funcionalidades relacionadas a Tarefas:
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Você instalou a versão mais recente de `<Node.js / pacotes : express, mysql, jwt e bcrypt são requeridos>`
+* Você leu `<guia / link / documentação_relacionada_ao_projeto>`.
 
 <br>
 
-## ☕ Usando o TaskFull
+## ☕ Usando <nome_do_projeto>
 
-Para usar o TaskFull, siga estas rotas:
-
-```
+Para usar o TaskFull, siga estas etapas:
 
 ```
+<exemplo_de_uso>
+```
 
+Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Fornece uma referência de opções para pontos de bônus!
 
 
 <br>
 
-<!---## 📫 Contribuindo para TaskFull
-Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado
+## 📫 Contribuindo para TaskFull
+<!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado
 Para contribuir com <nome_do_projeto>, siga estas etapas:
 
 1. Bifurque este repositório.
@@ -108,6 +110,14 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
         <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Marcos Alan"/><br>
         <sub>
           <b>Marcos Alan</b>
+        </sub>
+      </a>
+    </td>
+       <td align="center">
+      <a href="#">
+        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Steve Jobs"/><br>
+        <sub>
+          <b>Steve Jobs</b>
         </sub>
       </a>
     </td>
