@@ -1,6 +1,14 @@
-import { Router } from "express";
+import express from "express"
+import { Router } from "express"
+import path from "path"
 
+
+var app = express();
 var router = Router();
+
+
+app.set('views', path.join('./', 'public'))
+app.set('view engine', 'ejs')
 
 
 
