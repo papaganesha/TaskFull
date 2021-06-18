@@ -1,7 +1,7 @@
 <html lang="br">
   <head>
     <meta charset="UTF-8" />
-    <title>Manter Tarefas - TaskFull</title>
+    <title>Editar Tarefa - TaskFull</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
@@ -11,13 +11,13 @@
   
 
     <link
-      href="estilos/geral.css"
+      href="../estilos/geral.css"
       rel="stylesheet"
       type="text/css"
       media="all"
     />
     <link
-      href="estilos/dashboard.css"
+      href="../estilos/dashboard.css"
       rel="stylesheet"
       type="text/css"
       media="all"
@@ -47,22 +47,23 @@
       <main>
 
        
-        <span id="cod_lista" hidden></span>
+        <span id="cod_tarefa" hidden></span>
         <span id="span_msg" hidden></span>
         <form class="add_lista_form" action="" method="post">
        
             <strong><p>Nome</p></strong>
             <input
               type="text"
-              id="nomeLista"
+              id="nomeTarefa"
               required
-              placeholder="Digite o nome da Lista"
+              placeholder="Digite o nome da Tarefa"
             />
             <br />
-            <strong><p>Categoria</p></strong>
-            <input id="categoria" name="categoria" required placeholder="Digite a categoria da Lista"></textarea>
+            <strong><p>Descricao</p></strong>
+            <textarea id="descricao" name="descricao" required placeholder="Digite a descricao da Tarefa"></textarea>
             <br /><br />
-        </form>
+           
+        </form>   
         <button class="btn btn-primary" id="btn-editar">Editar</button>
 
 
@@ -77,6 +78,6 @@
       </footer>
     </div>
 
-    <script type="text/javascript" src="editarLista.js"></script>
+    <script type="text/javascript" src="editarTarefa.js"></script>
   </body>
 </html>

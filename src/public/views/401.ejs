@@ -1,67 +1,56 @@
 <html lang="br">
   <head>
     <meta charset="UTF-8" />
-    <title>Excluir Lista - TaskFull</title>
+    <title>Usuario não autenticado - 401</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   
 
     <link
-      href="estilos/geral.css"
+      href="../estilos/geral.css"
       rel="stylesheet"
       type="text/css"
       media="all"
     />
     <link
-      href="estilos/dashboard.css"
+      href="../estilos/dashboard.css"
       rel="stylesheet"
       type="text/css"
       media="all"
     />
   </head>
 
-  <body id="produtos" onLoad="index_listas()">
+
+  <body id="produtos">
     <div id="tudo">
       <header>
         <strong><h1>TaskFull</h1></strong>
- 
+     
         <nav>
-            <a href="listas.html" id="in">Listas</a>
-            <a href="tarefas.html" id="qs">Tarefas</a>
+          <a href="cadastro" id="in">Cadastro</a>
+          <a href="/" id="qs">login</a>
+
         </nav>
-        <form method="GET" action="#" id="busca">
-          <label>
-            Buscar
-            <input type="text" name="busca" />
-          </label>
-          <input type="submit" value="OK" id="submit" />
-        </form>
+ 
       </header>
       <main>
 
-      
-
-
-    
-
-      <!--- CARREGANDO LISTAS AQUI --->  
-        <section id="root"></section>
-      <!--- CARREGANDO LISTAS AQUI --->  
-
+   
+      <section id="root"></section>
 
 
       </main>
-     
+    
 
       <footer id="rodape">
         <p>Baseado no <a href="#">BMMotores do Maujor.</a></p>
       </footer>
     </div>
 
-    <script type="text/javascript" src="adicionarLista.js"></script>
+    <script type="text/javascript" src="./views/401.js"></script>
   </body>
 </html>

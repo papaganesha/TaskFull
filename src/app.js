@@ -15,8 +15,14 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
-app.use(express.static(path.join(path.dirname("src") + './public')))
-app.set('views', path.join("./" , 'public'))
+
+app.use(express.static(path.join("./src/public")));
+
+//app.use(express.static(path.join("./src/public") + '/views'))
+//app.set('views', __dirname + '/views');
+app.set('views', path.join("./src/public/views"))
+
+
 app.set('view engine', 'ejs')
 
 

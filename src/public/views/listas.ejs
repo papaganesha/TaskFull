@@ -1,7 +1,7 @@
 <html lang="br">
   <head>
     <meta charset="UTF-8" />
-    <title>Editar Perfil - TaskFull</title>
+    <title>Manter Listas - TaskFull</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
@@ -11,13 +11,13 @@
   
 
     <link
-      href="estilos/geral.css"
+      href="../estilos/geral.css"
       rel="stylesheet"
       type="text/css"
       media="all"
     />
     <link
-      href="estilos/dashboard.css"
+      href="../estilos/dashboard.css"
       rel="stylesheet"
       type="text/css"
       media="all"
@@ -29,7 +29,7 @@
     <div id="tudo">
       <header>
         <strong><h1>TaskFull</h1></strong>
-     
+ 
         <nav>
           <a href="listas" id="in">Listas</a>
           <a href="perfil" id="qs">Perfil</a>
@@ -46,46 +46,33 @@
       </header>
       <main>
 
-       
-        <span id="cod_lista" hidden></span>
+      
         <span id="span_msg" hidden></span>
-        <form class="add_lista_form" action="" method="post">
-       
-            <strong><p>Nome</p></strong>
-            <input
-              type="text"
-              id="nomeUsuario"
-              required
-              placeholder="Digite seu nome"
-            />
-            <br />
-            <strong><p>Email</p></strong>
-            <input type="email" id="emailUsuario" name="categoria" required placeholder="Digite a categoria da Lista"></input>
-            <br />
-
-            <strong><p>Senha</p></strong>
-            <input
-              type="text"
-              id="passwordUsuario"
-              required
-              placeholder="Digite seu novo password"
-            />
-            <br />
-        </form>
-        <button class="btn btn-primary" id="btn-editar">Editar</button>
 
 
-      <!--- CARREGANDO EDITOR AQUI --->  
-      <section id="root"></section>
-      <!--- CARREGANDO EDITOR AQUI --->  
-</main>
-    
+
+        <form action="adicionarLista" method="get">
+          <button class="btn btn-primary" id="btn-adicionarLista">Adicionar Lista</button>
+          </form>
+
+
+
+
+
+      <!--- CARREGANDO LISTAS AQUI --->  
+        <section id="root"></section>
+      <!--- CARREGANDO LISTAS AQUI --->  
+
+
+
+      </main>
+     
 
       <footer id="rodape">
         <p>Baseado no <a href="#">BMMotores do Maujor.</a></p>
       </footer>
     </div>
 
-    <script type="text/javascript" src="editarPerfil.js"></script>
+    <script type="text/javascript" src="./views/handler_listas.js"></script>
   </body>
 </html>
