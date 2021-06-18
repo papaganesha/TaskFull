@@ -5,30 +5,31 @@ import {
 //import { token } from "/AuthController.js"
 
 export function index(req, res, next) {
-     //if (token) {
-        execute("SELECT * FROM TAREFA").then((result) => {
-            if (result.length > 0) {
-                const response = {
-                    quantidade: result.length,
-                    tarefas: result.map((task => {
-                        return {
+    //if (token) {
+    execute("SELECT * FROM TAREFA").then((result) => {
+        if (result.length > 0) {
+            const response = {
+                    tarefa : result.map((task => {
+                    return {
                             cod_lista: task.cod_lista,
                             cod_tarefa: task.cod_tarefa,
-                            nome: task.nome_tarefa,
+                            nome_tarefa: task.nome_tarefa,
                             descricao: task.descricao,
-                            request: {
-                                tipo: 'GET',
-                                descricao: 'Retorna as Tarefas cadastradas'
-                            }
+                            data_entrada: task.data_entrada,
+                            data_ultima_alteracao: task.data_ultima_alteracao,
+                            statusTarefa: task.statusTarefa,
+                            data_termino: task.data_termino
                         }
-                    }))
-                }
-                return res.status(200).send(response)
-                next()
-            } else {
-                return res.status(500).send({ msg: 'Tabela de Tarefas vazia' })
+                }))
             }
-        }).catch((error) => {
+            return res.status(200).send(response)
+            next()
+        }
+        else {
+            return res.status(500).send({ msg: 'Tabela de Tarefas vazia' })
+        }
+    })
+        .catch((error) => {
             const response = {
                 msg: error.sqlMessage,
                 request: {
@@ -53,31 +54,72 @@ export function index(req, res, next) {
 }
 
 
+
+
+export function index_codLista(req, res, next) {
+    var cod_lista = req.params.id 
+    execute("SELECT * FROM TAREFA WHERE cod_lista = ?;",[cod_lista]).then((result) => {
+        if (result.length > 0) {
+            const response = {
+                tarefa: result.map((task => {
+                    return {
+                        cod_lista: task.cod_lista,
+                        cod_tarefa: task.cod_tarefa,
+                        nome_tarefa: task.nome_tarefa,
+                        descricao: task.descricao,
+                        data_entrada: task.data_entrada,
+                        statusTarefa: task.statusTarefa,
+                        data_ultima_alteracao: task.data_ultima_alteracao
+                    }
+                }))
+                
+            }
+            return res.status(200).send(response)
+            next()
+        }
+        else {
+            return res.status(500).send({ msg: 'Lista sem tarefas' })
+        }
+    }).catch((error) => {
+        const response = {
+            msg: error.sqlMessage,
+            request: {
+                tipo: 'GET',
+                descricao: 'Erro durante operação de GET'
+            }
+        }
+        return res.status(500).send(response)
+        next()
+    })
+}
+
+
+
+
+
 export function item(req, res, next) {
     var id = +req.params.id
     if (id && id != NaN && req) {
         execute("SELECT * FROM TAREFA WHERE COD_TAREFA = ?;", [id]).then((result) => {
             if (result.length > 0) {
                 const response = {
-                    tarefa: result.map((task => {
-                        return {
-                            cod_lista: task.cod_lista,
-                            cod_tarefa: task.cod_tarefa,
-                            nome: task.nome_tarefa,
-                            descricao: task.descricao,
-                            request: {
-                                tipo: 'GET',
-                                descricao: 'Retorna a Tarefa de ID requerido'
-                            }
-                        }
-                    }))
-                }
-                return res.status(201).send(response)
-                next()
+                                    cod_lista: result[0].cod_lista,
+                                    cod_tarefa: result[0].cod_tarefa,
+                                    nome_tarefa: result[0].nome_tarefa,
+                                    descricao: result[0].descricao,
+                                    data_entrada: result[0].data_entrada,
+                                    data_ultima_alteracao: result[0].data_ultima_alteracao,
+                                    statusTarefa: result[0].statusTarefa,
+                                    data_termino: result[0].data_termino
+                                }
+                    
+            
+            return res.status(201).send(response)
+            next()
             }
             else {
                 const response = {
-                    msg: `Tarefa de ID(${id}) não existe`,
+                    msg: `Tarefa não existe`,
                     request: {
                         tipo: 'GET',
                         descricao: 'Erro durante operação de GET'
@@ -159,10 +201,10 @@ export function update(req, res, next) {
     var descTarefa = req.body.descricao
     if (id && id != NaN && req) {
         if (nomeTarefa && descTarefa) {
-            execute("UPDATE TAREFA SET NOME_TAREFA = ?,  DESCRICAO =  ? WHERE COD_TAREFA = ?;", [nomeTarefa.toUpperCase(), descTarefa.toUpperCase(), id]).then((result) => {
+            execute("UPDATE TAREFA SET NOME_TAREFA = ?,  DESCRICAO =  ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE COD_TAREFA = ?;", [nomeTarefa.toUpperCase(), descTarefa.toUpperCase(), id]).then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
-                        msg: `Nome e categoria da Tarefa de ID(${id}) editados com sucesso`,
+                        msg: `Nome e categoria da Tarefa editados com sucesso`,
                         request: {
                             tipo: 'PUT',
                             descricao: 'Edição de Tarefas'
@@ -173,10 +215,10 @@ export function update(req, res, next) {
                 }
                 else {
                     const response = {
-                        msg: `Tarefa de ID(${id}) não existe`,
+                        msg: `Tarefa não existe`,
                         request: {
-                            tipo: 'POST',
-                            descricao: 'Erro durante operação de POST'
+                            tipo: 'PUT',
+                            descricao: 'Erro durante operação de PUT'
                         }
                     }
                     return res.status(500).send(response)
@@ -187,7 +229,7 @@ export function update(req, res, next) {
                     msg: error,
                     request: {
                         tipo: 'POST',
-                        descricao: 'Erro durante operação de POST'
+                        descricao: 'Erro durante operação de PUT'
                     }
                 }
                 return res.status(500).send(response)
@@ -199,7 +241,7 @@ export function update(req, res, next) {
             execute("UPDATE TAREFA SET NOME_TAREFA = ? WHERE COD_TAREFA = ?;", [nomeTarefa.toUpperCase(), id]).then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
-                        msg: `Nome da Tarefa de ID(${id}) editado com sucesso`,
+                        msg: `Nome da Tarefa editado com sucesso`,
                         request: {
                             tipo: 'PUT',
                             descricao: 'Edição de Tarefas'
@@ -220,11 +262,11 @@ export function update(req, res, next) {
 
         }
 
-        else if(descTarefa){
-            execute("UPDATE TAREFA SET DESCRICAO = ? WHERE COD_TAREFA = ?;", [descTarefa.toUpperCase(), id]).then((result) => {
+        else if (descTarefa) {
+            execute("UPDATE TAREFA SET DESCRICAO = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE COD_TAREFA = ?;", [descTarefa.toUpperCase(), id]).then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
-                        msg: `Descricao da Lista de ID(${id}) editada com sucesso`,
+                        msg: `Descricao da Lista editada com sucesso`,
                         request: {
                             tipo: 'PUT',
                             descricao: 'Edição de Tarefas'
@@ -235,7 +277,7 @@ export function update(req, res, next) {
                 }
                 else {
                     const response = {
-                        msg: `Tarefa de ID(${id}) não existe`,
+                        msg: `Tarefa não existe`,
                         request: {
                             tipo: 'PUT',
                             descricao: 'Erro durante operação de PUT'
@@ -256,7 +298,7 @@ export function update(req, res, next) {
                 next()
             })
         }
-        else{
+        else {
             const response = {
                 msg: `É necessario informar os campos de alteração`,
                 request: {
@@ -285,20 +327,20 @@ export function del(req, res, next) {
     var id = +req.params.id
     if (id && id != NaN && req) {
         execute("DELETE FROM TAREFA WHERE COD_TAREFA = ?;", [id]).then((result) => {
-            if(result.affectedRows > 0){
+            if (result.affectedRows > 0) {
                 const response = {
-                    msg: `Tarefa de id:(${id}) deletada com sucesso`,
+                    msg: `Tarefa deletada com sucesso`,
                     request: {
                         tipo: 'DELETE',
                         descricao: 'Delete de Tarefas'
                     }
                 }
                 return res.status(201).send(response)
-            next()
+                next()
             }
-            else{
+            else {
                 const response = {
-                    msg: `Tarefa de id:(${id}) não existe`,
+                    msg: `Tarefa não existe`,
                     request: {
                         tipo: 'DELETE',
                         descricao: 'Erro durante operação de DELETE'
@@ -307,7 +349,7 @@ export function del(req, res, next) {
                 return res.status(500).send(response)
                 next()
             }
-            
+
         }).catch((error) => {
             const response = {
                 msg: error,

@@ -1,0 +1,116 @@
+
+body {
+	background:#ccc;
+	color:#333;
+	margin: 0; 
+	padding: 0;
+	font: 12px/1.4 Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	}
+#tudo {
+	width: 980px;
+	margin: 0 auto;
+	text-align:left;
+	background:#fff;
+	}
+header {
+	position:relative;
+	width:980px;
+	height:100px;
+	background:#f60 url('../img/bg-topo.jpg') no-repeat;
+	}
+header h1  { 
+	position:absolute; 
+	left:50px; 
+	top:15px; 
+	font-size: 28px;
+	margin:0;
+	}
+header h1 strong {
+	color:#fff;
+	}
+nav {
+	position:absolute; 
+	left:50px; 
+	top:75px;
+	margin:0; 
+	padding:0;
+	} 
+nav a { 
+	float:left;
+	color: #fff;
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: none;
+	text-transform: uppercase;
+	padding: 3px 15px 7px 15px;
+	margin-right:25px;
+	}
+nav a:hover {  
+	background:#f63 url('../img/bg-over.jpg') repeat-x 0 0;
+	}
+#busca { 
+	position:absolute; 
+	right:20px; 
+	top:75px;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	font-size: 11px;
+	font-weight: bold;
+	}
+#busca label input {
+	background: #fcc;
+	border: none;
+	}
+#busca input#submit {
+	background: #c30;
+	border: 2px outset #f66;
+	color:#fff;
+	font-size:10px;
+	}
+footer {
+	height:20px;
+	clear:both;
+	background:#fc6;
+	}
+footer p {
+	margin-left: 50px;
+	font-size:11px;
+	line-height:2;
+	}
+footer p span {
+	color:#f60;
+	font-weight:bold;
+	}
+h2 {
+	font-size:26px;
+	color:#0056a6;
+	margin:30px 0 10px 0;
+	}
+main p {
+	margin-top:10px;;
+	}
+main a, main a:visited {
+	color: #f63;
+	}
+main a:hover {
+	color: #f90;
+	text-decoration: none;
+	}
+p.pular {margin:0;}
+p.pular a {
+	display:block;
+	text-align:right;
+	padding-right:10px;
+	color:#fff;
+	}
+p.pular a:hover {
+	background:#fff;
+	color:#333;
+	}
+body#index nav a#in, body#quemsomos nav a#qs, 
+body#produtos nav a#pr, body#contato nav a#co,
+body#sucesso nav a#co {  
+	background:#f63 url('../imagens/bg-over.jpg') repeat-x 0 0;
+	}

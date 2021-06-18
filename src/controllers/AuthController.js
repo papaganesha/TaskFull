@@ -23,6 +23,7 @@ import {
                  
                   const response = {
                       msg : `${username} logado com sucesso`,
+                      cod_usuario : result[0].cod_usuario,
                               request: {
                                   tipo: 'POST',
                                   descricao: 'Login de Usuarios'
@@ -66,7 +67,7 @@ import {
       }
   }
   
-  
+
   export function register(req, res, next){
       var username = req.body.username
       var password = req.body.password
