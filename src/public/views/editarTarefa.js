@@ -1,6 +1,12 @@
 
 window.addEventListener("load", ()=>{
   document.getElementById("btn-editar").addEventListener("click", ()=>{
+
+    document.getElementById("deslogar").addEventListener("click", () => {
+      sessionStorage.clear();
+      location.assign("/");
+    })
+
       btnEditar();
 })
 })
@@ -23,7 +29,7 @@ function btnEditar(){
     
       }
       else{
-        span_msg.innerHTML =  "Não pode submeter sem pelo menos um campo de alteração"
+        span_msg.innerHTML =  dismissable_warning_Msg("Não pode submeter sem pelo menos um campo de alteração");
       }
       $.ajax({
         url : `http://localhost:3000/v1/api/update/task/${cod_tarefa}`, // Url of backend (can be python, php, etc..)
@@ -31,11 +37,11 @@ function btnEditar(){
         data : formData, // data in json format
           async : true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
         success: function(response) {
-            span_msg.innerHTML =  response.msg;
+            span_msg.innerHTML =  dismissable_sucess_Msg(response.msg);
             span_msg.hidden = false;
         },
         error: function (response) {
-            span_msg.innerHTML =  response.responseJSON.msg;
+            span_msg.innerHTML =  
             span_msg.hidden = false;
     
         }

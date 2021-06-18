@@ -2,11 +2,15 @@ import {
     execute
 } from "../database/config.js";
 
+import jwt from 'jsonwebtoken';
+
 
 export function item(req, res, next) {
-    var cod_usuario = +req.params.id
+    var cod_usuario = req.body.cod_usuario   
+    var decoded = jwt.verify(cod_usuario, 'RUTHLESS');
+    var cod_usuario_decoded = decoded.cod_usuario;
     if (cod_usuario && cod_usuario != NaN && req) {
-        execute("SELECT * FROM USUARIOS WHERE COD_USUARIO = ?;", [cod_usuario])
+        execute("SELECT * FROM USUARIOS WHERE COD_USUARIO = ?;", [cod_usuario_decoded])
         .then((result) => {
             if (result.length > 0) {
                 const response = {
@@ -58,13 +62,15 @@ export function item(req, res, next) {
 }
 
 export function update(req, res, next) {
-    var cod_usuario = +req.body.cod_usuario
+    var cod_usuario = req.body.cod_usuario   
+    var decoded = jwt.verify(cod_usuario, 'RUTHLESS');
+    var cod_usuario_decoded = decoded.cod_usuario;
     var nome = req.body.nome
     var email = req.body.email
     var password = req.body.password
-    if (cod_usuario && cod_usuario != NaN && req) {
+    if (cod_usuario_decoded && cod_usuario_decoded != NaN && req) {
         if (nome && email && password) {
-            execute("UPDATE USUARIOS SET nome = ?,  email =  ?,  password = ?,  DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), email.toUpperCase(), password, cod_usuario])
+            execute("UPDATE USUARIOS SET nome = ?,  email =  ?,  password = ?,  DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), email.toUpperCase(), password, cod_usuario_decoded])
             .then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
@@ -102,7 +108,7 @@ export function update(req, res, next) {
         }
 
         else if (nome) {
-            execute("UPDATE USUARIOS SET nome = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), cod_usuario])
+            execute("UPDATE USUARIOS SET nome = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), cod_usuario_decoded])
             .then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
@@ -136,7 +142,7 @@ export function update(req, res, next) {
         }
 
         else if (email) {
-            execute("UPDATE USUARIOS SET email = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [email.toUpperCase(), cod_usuario])
+            execute("UPDATE USUARIOS SET email = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [email.toUpperCase(), cod_usuario_decoded])
             .then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
@@ -175,7 +181,7 @@ export function update(req, res, next) {
         }
 
         else if (password) {
-            execute("UPDATE USUARIOS SET password = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [password, cod_usuario])
+            execute("UPDATE USUARIOS SET password = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [password, cod_usuario_decoded])
             .then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
@@ -214,7 +220,7 @@ export function update(req, res, next) {
         }
 
         else if (nome && email) {
-            execute("UPDATE USUARIOS SET nome = ?, email =?,  DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), email.toUpperCase(), cod_usuario])
+            execute("UPDATE USUARIOS SET nome = ?, email =?,  DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), email.toUpperCase(), cod_usuario_decoded])
             .then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
@@ -253,7 +259,7 @@ export function update(req, res, next) {
         }
 
         else if (nome && senha) {
-            execute("UPDATE USUARIOS SET nome = ?, senha =?,  DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), senha, cod_usuario])
+            execute("UPDATE USUARIOS SET nome = ?, password =?,  DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), senha, cod_usuario_decoded])
             .then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {
@@ -292,7 +298,7 @@ export function update(req, res, next) {
         }
 
         else if (email && senha) {
-            execute("UPDATE USUARIOS SET nome = ?, email =?,  DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [nome.toUpperCase(), email.toUpperCase(), cod_usuario])
+            execute("UPDATE USUARIOS SET email = ?, senha =?,  DATA_ULTIMA_ALTERACAO = NOW() WHERE cod_usuario = ?;", [email.toUpperCase(), senha, cod_usuario_decoded])
             .then((result) => {
                 if (result.affectedRows > 0) {
                     const response = {

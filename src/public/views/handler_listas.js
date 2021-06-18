@@ -1,16 +1,14 @@
 window.onload = index_listas();
 window.addEventListener("load", () => {
+    
+    timeInterval_global(index_listas, 30000);
     sessionStorage.cod_lista = 0;
+
+
     document.getElementById("deslogar").addEventListener("click", () => {
         sessionStorage.clear();
         window.location.assign("/");
     })
-
-    timeInterval_20secs(index_listas);
-    mostrarTarefas();
-    botoesAdicionarTarefa();
-    botoesEditar();
-    botoesExcluir();
 
 })
 
@@ -35,7 +33,18 @@ var timeOut_global = (nomeFuncao, ms) => {
     }, ms);
 }
 
-function mostrarTarefas(){
+var timeInterval_global = (nomeFuncao, ms) => {
+    window.setTimeout(nomeFuncao, ms);
+    window.setTimeout(() => {
+      console.log(`REFRESH ${ms}ms`);
+    }, ms);
+  }
+
+
+
+
+
+  function mostrarTarefasxxx(){
         let elementsArray = document.querySelectorAll("#mostrarTarefas");
         elementsArray.forEach(function (elem) {
             elem.addEventListener("click", () => {
@@ -74,16 +83,39 @@ function botoesAdicionarTarefa() {
 }
 
 
+function mostrarTarefas(obj){
+    var codLista = obj.value;
+    sessionStorage.cod_lista = codLista;
+    window.location.assign("tarefas");
+} 
+
+function adicionarTarefa(obj){
+    var codLista = obj.value;
+    sessionStorage.cod_lista = codLista;
+    window.location.assign("adicionarTarefa");
+} 
+
+
+function editarLista(obj){
+    var codLista = obj.value;
+    sessionStorage.cod_lista = codLista;
+    window.location.assign("editarLista");
+}     
+
+
+function deletarLista(obj){
+    var codLista = obj.value;
+    excluirLista(codLista);
+    timeOut_global(index_listas, 500);
+}
+
 function botoesExcluir() {
     let elementsArray = document.querySelectorAll("#btnExcluirLista");
     elementsArray.forEach(function (elem) {
         elem.addEventListener("click", () => {
-            var codLista = elem.value;
-            excluirLista(codLista);
-            timeOut_global(index_listas, 500);
+            
         })
     })
-
 }
 
 function excluirLista(codLista) {
@@ -146,10 +178,11 @@ function index_listas() {
                                  Criada em: ${data.lista[i].data_entrada}
                             </dd>
                             <br>
-                            <button value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnEditarLista">Editar</button>
-                            <button value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnExcluirLista">Excluir</button>
-                            <button value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnAdicionarTarefa">Adicionar Tarefa</button>
-                            <button value="${data.lista[i].cod_lista}" class="btn btn-primary" id="mostrarTarefas">Ver Tarefas</button>
+                            
+                            <button onclick="editarLista(this)" value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnEditarLista">Editar</button>
+                            <button onclick="deletarLista(this)" value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnExcluirLista">Excluir</button>
+                            <button onclick="adicionarTarefa(this)" value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnAdicionarTarefa">Adicionar Tarefa</button>
+                            <button onclick="mostrarTarefas(this)" value="${data.lista[i].cod_lista}" class="btn btn-primary" id="mostrarTarefas">Ver Tarefas</button>
 
                 
 

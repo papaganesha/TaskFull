@@ -56,7 +56,7 @@ router.delete("/v1/api/delete/task/:id", deleteTask);
 
 
 //PERFIL ROUTES
-router.get("/v1/api/index/perfil/:id", indexPerfil);
+router.post("/v1/api/index/perfil/", indexPerfil);
 router.put("/v1/api/index/perfil", updatePerfil);
 
 

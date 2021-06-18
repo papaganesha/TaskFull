@@ -6,7 +6,7 @@ window.addEventListener("load", () => {
     var password = document.getElementById("password").value;
     var spanMsg = document.getElementById("span_msg");
     if (username && password) {
-      logar(username, password);
+      logar(username, password);  
     }
     else{
       span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
@@ -24,8 +24,8 @@ function logar(username, password) {
     data: formData, // data in json format
     async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
     success: function (response) {
+      sessionStorage.cod_usuario = response.jwt;
       window.location.assign("listas");
-      sessionStorage.cod_usuario = response.cod_usuario;
     },
     error: function (response) {
       span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);

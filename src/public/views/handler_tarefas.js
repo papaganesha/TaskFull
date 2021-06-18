@@ -1,8 +1,7 @@
 window.onload =  index_tarefas();
 window.addEventListener("load", () => {
-
   sessionStorage.cod_tarefa = 0;
-
+  index_tarefas();
   timeInterval_20secs(index_tarefas);
 
 
@@ -12,9 +11,8 @@ window.addEventListener("load", () => {
   })
   
   redirectAdicionarTarefa();
-  botoes_editaTarefas();
-  botoesExcluir()
-  //switchStatus();
+
+
 })
 
 var timeInterval_20secs = (nomeFuncao) => {
@@ -38,7 +36,12 @@ var timeOut_global = (nomeFuncao, ms) => {
   }, ms);
 }
 
-
+var timeInterval_global = (nomeFuncao, ms) => {
+  window.setTimeout(nomeFuncao, ms);
+  window.setTimeout(() => {
+    console.log(`REFRESH ${ms}ms`);
+  }, ms);
+}
 
 function redirectAdicionarTarefa(){
         document.getElementById("btnAdicionarTarefa").addEventListener("click", ()=>{
@@ -47,22 +50,33 @@ function redirectAdicionarTarefa(){
 }
 
 
-function botoes_editaTarefas() {
-  let elementsArray = document.querySelectorAll("#btnEditarTarefa");
-  elementsArray.forEach(function (elem) {
-      elem.addEventListener("click", () => {
-          var codTarefa = elem.value;
-          console.log(codTarefa);
-          //sessionStorage.setItem('cod_tarefa', codTarefa);
-          sessionStorage.cod_tarefa = codTarefa;
 
-          window.location.assign("editarTarefa");
-      })
-  })
+function editarTarefa(obj){
+    var codTarefa = obj.value;
+    sessionStorage.cod_tarefa = codTarefa;
+    window.location.assign("editarTarefa");
 }
 
 
 
+function deletarTarefa(obj){
+  var codTarefa = obj.value;
+  sessionStorage.cod_tarefa = codTarefa;
+  excluirTarefa(codTarefa);
+  timeOut_global(index_tarefas, 500);
+}
+
+
+function botoes_editaTarefas(){
+  let elementsArray = document.querySelectorAll("#btnEditarTarefa");
+  elementsArray.forEach(function (elem) {
+      elem.addEventListener("click", () => {
+          var codTarefa = elem.value;
+          sessionStorage.cod_tarefa = codTarefa;
+          window.location.assign("editarTarefa");
+      })
+  })
+}
 
 function botoesExcluir() {
   let elementsArray = document.querySelectorAll("#btnExcluirTarefa");
@@ -140,11 +154,9 @@ function index_tarefas() {
                                        Criada em: ${data.tarefa[i].data_entrada}
                                   </dd>
                                   <br>
-                  
-                                      <input type="hidden" name="cod_tarefa" value="${data.tarefa[i].cod_tarefa}" />
-                                      <button value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary" id="btnEditarTarefa">Editar</button>
-                                      <button value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary" id="btnExcluirTarefa">Excluir</button>
-                                     
+                                    <button onclick="editarTarefa(this)" value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary" id="btnEditarTarefa">Editar</button>
+                                    <button onclick="deletarTarefa(this)" value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary" id="btnExcluirTarefa">Excluir</button>
+
   
                               </dl>
                               

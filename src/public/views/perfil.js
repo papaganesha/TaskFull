@@ -37,8 +37,9 @@ function index_perfil() {
     if (sessionStorage.cod_usuario) {
       var cod_usuario = sessionStorage.cod_usuario;
       $.ajax({
-        url: `http://localhost:3000/v1/api/index/perfil/${cod_usuario}`, // Url of backend (can be python, php, etc..)
-        type: "GET", // data type (can be get, post, put, delete)
+        url: `http://localhost:3000/v1/api/index/perfil`, // Url of backend (can be python, php, etc..)
+        type: "post",
+        data: {cod_usuario : cod_usuario}, // data type (can be get, post, put, delete)
         async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
         success: function (response) {
           var data = response;
@@ -65,4 +66,26 @@ function index_perfil() {
     else {
       window.location.assign("401");
     }
+  }
+
+
+
+
+  
+  function dismissable_sucess_Msg(msg) {
+    return `
+  <div class="alert alert-success  alert-dismissible fade show" role="alert">
+  <strong>Tudo Certo!</strong>${" "}${msg}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+  `
+  }
+
+  function dismissable_warning_Msg(msg) {
+    return `
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<strong>Erro!</strong>${" "}${msg}
+<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+`
   }

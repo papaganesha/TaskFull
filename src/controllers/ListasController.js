@@ -1,3 +1,6 @@
+import jwt from 'jsonwebtoken';
+
+
 import {
     execute
 } from "../database/config.js";
@@ -42,7 +45,9 @@ export function index(req, res, next) {
 
 export function index_codUsuario(req, res, next) {
     var cod_usuario = req.body.cod_usuario   
-    execute("SELECT * FROM LISTA_TAREFAS where cod_usuario = ?;",[cod_usuario]).then((result) => {
+    var decoded = jwt.verify(cod_usuario, 'RUTHLESS');
+    var cod_usuario_decoded = decoded.cod_usuario;
+    execute("SELECT * FROM LISTA_TAREFAS where cod_usuario = ?;",[cod_usuario_decoded]).then((result) => {
         if (result.length > 0) {
             const response = {
                 lista: result.map((list => {
@@ -65,7 +70,7 @@ export function index_codUsuario(req, res, next) {
         }
     }).catch((error) => {
         const response = {
-            msg: error.sqlMessage,
+            msg: error,
             request: {
                 tipo: 'GET',
                 descricao: 'Erro durante operação de GET'
@@ -135,10 +140,12 @@ export function item(req, res, next) {
 
 export function create(req, res, next) {
     var cod_usuario = req.body.cod_usuario
+    var decoded = jwt.verify(cod_usuario, 'RUTHLESS');
+    var cod_usuario_decoded = decoded.cod_usuario;
     var nomeLista = req.body.nome
     var categoriaLista = req.body.categoria
-    if (req && nomeLista && categoriaLista) {
-        execute("INSERT INTO LISTA_TAREFAS(COD_USUARIO, NOME_LISTA, CATEGORIA) VALUES(?, ?, ?);", [cod_usuario, nomeLista.toUpperCase(), categoriaLista.toUpperCase()])
+    if (cod_usuario_decoded && nomeLista && categoriaLista && req) {
+        execute("INSERT INTO LISTA_TAREFAS(COD_USUARIO, NOME_LISTA, CATEGORIA) VALUES(?, ?, ?);", [cod_usuario_decoded, nomeLista.toUpperCase(), categoriaLista.toUpperCase()])
         .then((result) => {
             const response = {
                 msg: `${nomeLista} cadastrada com sucesso`,

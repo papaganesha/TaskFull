@@ -13,17 +13,20 @@ import {
       if (username && password) {
           //const salt = bcrypt.genSaltSync(10)
           //var password_hashed = bcrypt.compareSync(password, salt)
-              execute("SELECT * FROM USUARIOS WHERE USERNAME = ? AND PASSWORD = ?;", [username, password]).then((result) => {
+              execute("SELECT * FROM USUARIOS WHERE USERNAME = ? AND PASSWORD = ?;", [username, password])
+              .then((result) => {
               if(result.length > 0){
-                  /*export let token = jwt.sign({
-                      cod_usuario : result[0].cod_usuario
+                   let token = jwt.sign({
+                      cod_usuario : result[0].cod_usuario,
+                      nome_usuario : result[0].nome
                     }, 'RUTHLESS', { expiresIn: '1h' })
-                    var decoded = jwt.verify(token, 'RUTHLESS');
-                    console.log(decoded.cod_usuario) */
+                    
+                    //var decoded = jwt.verify(token, 'RUTHLESS');
+                    //console.log(decoded.cod_usuario)
                  
                   const response = {
                       msg : `${username} logado com sucesso`,
-                      cod_usuario : result[0].cod_usuario,
+                      jwt : token,
                               request: {
                                   tipo: 'POST',
                                   descricao: 'Login de Usuarios'
@@ -45,7 +48,7 @@ import {
               }
           }).catch((error) => {
               const response = {
-                  msg : error, 
+                  msg : error.sqlMessage, 
                   request: {
                       tipo: 'POST',
                       descricao: 'Erro durante operação de POST'

@@ -1,5 +1,11 @@
 window.addEventListener("load", () => {
 
+  document.getElementById("deslogar").addEventListener("click", () => {
+    sessionStorage.clear();
+    window.location.assign("/");
+  })
+
+
   document.getElementById("adicionarBTN").addEventListener("click", () => {
      botaoAdicionarLista();
   })
