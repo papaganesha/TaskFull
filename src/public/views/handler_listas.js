@@ -1,16 +1,21 @@
-window.onload = index_listas();
-window.addEventListener("load", () => {
-    
-    timeInterval_global(index_listas, 30000);
-    sessionStorage.cod_lista = 0;
-
-
-    document.getElementById("deslogar").addEventListener("click", () => {
-        sessionStorage.clear();
-        window.location.assign("/");
+window.onload = function(){
+if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
+    document.getElementById("busca").innerHTML = sessionStorage.nome;
+    index_listas();
+    window.addEventListener("load", () => {
+        timeInterval_global(index_listas, 30000);
+        sessionStorage.cod_lista = 0;
     })
+}
+else{
+    window.location.assign("401")
+}
+}
 
-})
+function deslogar(){
+    sessionStorage.clear();
+    window.location.assign("/");
+  }
 
 var timeInterval_20secs = (nomeFuncao) => {
     window.setInterval(nomeFuncao, 20000);
@@ -34,8 +39,8 @@ var timeOut_global = (nomeFuncao, ms) => {
 }
 
 var timeInterval_global = (nomeFuncao, ms) => {
-    window.setTimeout(nomeFuncao, ms);
-    window.setTimeout(() => {
+    window.setInterval(nomeFuncao, ms);
+    window.setInterval(() => {
       console.log(`REFRESH ${ms}ms`);
     }, ms);
   }
@@ -44,43 +49,7 @@ var timeInterval_global = (nomeFuncao, ms) => {
 
 
 
-  function mostrarTarefasxxx(){
-        let elementsArray = document.querySelectorAll("#mostrarTarefas");
-        elementsArray.forEach(function (elem) {
-            elem.addEventListener("click", () => {
-                var codLista = elem.value;
-                sessionStorage.cod_lista = elem.value;
-                location.assign("tarefas");
-            })
-        })
-    }
-
-
-
-function botoesEditar() {
-    let elementsArray = document.querySelectorAll("#btnEditarLista");
-    elementsArray.forEach(function (elem) {
-        elem.addEventListener("click", () => {
-            var codLista = elem.value;
-            console.log(codLista);
-            sessionStorage.cod_lista = codLista;
-            window.location.assign("editarLista");
-        })
-    })
-}
-
-
-function botoesAdicionarTarefa() {
-    let elementsArray = document.querySelectorAll("#btnAdicionarTarefa");
-    elementsArray.forEach(function (elem) {
-        elem.addEventListener("click", () => {
-            var codLista = elem.value;
-            console.log(codLista);
-            sessionStorage.cod_lista = codLista;
-            window.location.assign("adicionarTarefa");
-        })
-    })
-}
+ 
 
 
 function mostrarTarefas(obj){
@@ -106,7 +75,7 @@ function editarLista(obj){
 function deletarLista(obj){
     var codLista = obj.value;
     excluirLista(codLista);
-    timeOut_global(index_listas, 500);
+    timeOut_global(index_listas, 1000);
 }
 
 function botoesExcluir() {
@@ -194,7 +163,7 @@ function index_listas() {
                 }
             },
             error: function (response) {
-                span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
+                span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);
                 span_msg.hidden = false;
             }
         })
@@ -207,18 +176,63 @@ function index_listas() {
 
 function dismissable_sucess_Msg(msg) {
     return `
-    <div class="alert alert-success  alert-dismissible fade show" role="alert">
-    <strong>Tudo Certo!</strong>${" "}${msg}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+     <div class="alert alert-success  alert-dismissible fade show" role="alert">
+        <strong>Tudo Certo!</strong>${" "}${msg}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+     </div>
     `
 }
 
 function dismissable_warning_Msg(msg) {
     return `
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Erro!</strong>${" "}${msg}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Erro!</strong>${" "}${msg}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
   `
+}
+
+
+
+
+
+
+
+
+function mostrarTarefasxxx(){
+    let elementsArray = document.querySelectorAll("#mostrarTarefas");
+    elementsArray.forEach(function (elem) {
+        elem.addEventListener("click", () => {
+            var codLista = elem.value;
+            sessionStorage.cod_lista = elem.value;
+            location.assign("tarefas");
+        })
+    })
+}
+
+
+
+function botoesEditar() {
+let elementsArray = document.querySelectorAll("#btnEditarLista");
+elementsArray.forEach(function (elem) {
+    elem.addEventListener("click", () => {
+        var codLista = elem.value;
+        console.log(codLista);
+        sessionStorage.cod_lista = codLista;
+        window.location.assign("editarLista");
+    })
+})
+}
+
+
+function botoesAdicionarTarefa() {
+let elementsArray = document.querySelectorAll("#btnAdicionarTarefa");
+elementsArray.forEach(function (elem) {
+    elem.addEventListener("click", () => {
+        var codLista = elem.value;
+        console.log(codLista);
+        sessionStorage.cod_lista = codLista;
+        window.location.assign("adicionarTarefa");
+    })
+})
 }

@@ -1,33 +1,71 @@
-window.addEventListener("load", () => {
-  document.getElementById("deslogar").addEventListener("click", () => {
-    sessionStorage.clear();
-    window.location.assign("index");
-  })
-  document.getElementById("btn-editar").addEventListener("click", () => {
-    editarLista();
-  })
-})
+window.onload = function() {
+  if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
+    document.getElementById("busca").innerHTML += sessionStorage.nome;   
+   window.addEventListener("load", () => {
+    })
+}
+  else{
+  window.location.assign("401");
+  }
+}
+
+
+function deslogar(){
+  sessionStorage.clear();
+  window.location.assign("/");
+}
+
+
+var timeInterval_20secs = (nomeFuncao) => {
+  window.setInterval(nomeFuncao, 20000);
+  window.setInterval(() => {
+      console.log("20secs, REFRESH");
+  }, 20000);
+}
+
+var timeInterval_3secs = (nomeFuncao) => {
+  window.setInterval(nomeFuncao, 3000);
+  window.setInterval(() => {
+      console.log("3secs, REFRESH");
+  }, 3000);
+}
+
+var timeOut_global = (nomeFuncao, ms) => {
+  window.setTimeout(nomeFuncao, ms);
+  window.setTimeout(() => {
+      console.log("REFRESH");
+  }, ms);
+}
+
+var timeInterval_global = (nomeFuncao, ms) => {
+  window.setInterval(nomeFuncao, ms);
+  window.setInterval(() => {
+    console.log(`REFRESH ${ms}ms`);
+  }, ms);
+}
 
 
 function editarLista() {
-  if (sessionStorage.cod_usuario) {
     var cod_lista = sessionStorage.cod_lista;
-    var nomeLista = document.getElementById("nomeLista").value;
-    var categoria = document.getElementById("categoria").value;
+    var nomeLista = document.getElementById("nomeLista");
+    var categoria = document.getElementById("categoria");
     var spanMsg = document.getElementById("span_msg");
     var formData;
-    console.log(cod_lista + " --- " + nomeLista + " --- " + categoria);
     if (nomeLista && categoria) {
+      nomeLista = nomeLista.value;
+      categoria = categoria.value;
       formData = {nome: nomeLista, categoria: categoria };
     }
     else if (nomeLista) {
+      nomeLista = nomeLista.value;
       formData = { nome: nomeLista };
     }
     else if (categoria) {
+      categoria = categoria.value;
       formData = { categoria: categoria };
     }
     else {
-      span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
+      span_msg.innerHTML += dismissable_warning_Msg("Insira os dados corretamente");
     }
 
     $.ajax({
@@ -36,21 +74,17 @@ function editarLista() {
       data: formData, // data in json format
       async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
       success: function (response) {
-        span_msg.innerHTML = dismissable_sucess_Msg(response.msg);
+        span_msg.innerHTML += dismissable_sucess_Msg(response.msg);
         span_msg.hidden = false;
+       
 
       },
       error: function (response) {
-        span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
+        span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);
         span_msg.hidden = false;
       }
     })
   }
-
-  else {
-    window.location.assign("401");
-  }
-}
 
 
 

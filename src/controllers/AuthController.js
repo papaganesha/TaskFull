@@ -2,6 +2,8 @@ import {
     execute
   } from "../database/config.js";
   
+  import mailNewUser from '../services/mailer.js'
+
   
   import bcrypt from 'bcryptjs'
   import jwt from 'jsonwebtoken';
@@ -16,26 +18,27 @@ import {
               execute("SELECT * FROM USUARIOS WHERE USERNAME = ? AND PASSWORD = ?;", [username, password])
               .then((result) => {
               if(result.length > 0){
+                  var cod_usuario = result[0].cod_usuario
+                  var nome = result[0].NOME
+
                    let token = jwt.sign({
-                      cod_usuario : result[0].cod_usuario,
-                      nome_usuario : result[0].nome
+                      cod_usuario : cod_usuario,
+                      nome_usuario : nome
                     }, 'RUTHLESS', { expiresIn: '1h' })
                     
                     //var decoded = jwt.verify(token, 'RUTHLESS');
                     //console.log(decoded.cod_usuario)
-                 
+                    
                   const response = {
                       msg : `${username} logado com sucesso`,
-                      jwt : token,
-                              request: {
-                                  tipo: 'POST',
-                                  descricao: 'Login de Usuarios'
-                              }
-                          }
+                      nome : nome,
+                      jwt : token
+                    }
   
                   return res.status(201).send(response)
                   next()
               }else{
+            
                   const response = {
                       msg : 'Erro na autentição, verifique seus dados', 
                       request: {
@@ -89,6 +92,7 @@ import {
                               }
                   }
                   return res.status(201).send(response)
+                  //mailNewUser(nome, email)
                   next()
               }else{
                   const response = {

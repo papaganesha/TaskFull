@@ -1,12 +1,23 @@
-window.addEventListener("load", () => {
-  document.getElementById("deslogar").addEventListener("click", () => {
-    sessionStorage.clear();
-    window.location.assign("/");
-  })
-  document.getElementById("btn-editar").addEventListener("click", () => {
-    editarPerfil();
-  })
-})
+window.onload = function () {
+  if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
+    document.getElementById("busca").innerHTML += sessionStorage.nome;   
+    window.addEventListener("load", () => {
+        document.getElementById("btn-editar").addEventListener("click", () => {
+            editarPerfil();
+        })
+    })
+  
+  }
+  else {
+    window.location.assign("401");
+
+  }
+}
+
+function deslogar() {
+  sessionStorage.clear();
+  window.location.assign("/");
+}
 
 
 function editarPerfil() {
@@ -22,41 +33,41 @@ function editarPerfil() {
       emailUsuario = emailUsuario.value;
       passwordUsuario = passwordUsuario.value;
 
-      formData = {cod_usuario: cod_usuario, nome: nomeUsuario, email: emailUsuario, password: passwordUsuario};
+      formData = { cod_usuario: cod_usuario, nome: nomeUsuario, email: emailUsuario, password: passwordUsuario };
     }
 
-    else if (nomeUsuario && emailUsuario ) {
+    else if (nomeUsuario && emailUsuario) {
       nomeUsuario = nomeUsuario.value;
       emailUsuario = emailUsuario.value;
-      formData = {cod_usuario: cod_usuario, nome: nomeUsuario, email: emailUsuario};
+      formData = { cod_usuario: cod_usuario, nome: nomeUsuario, email: emailUsuario };
     }
 
-    else if (nomeUsuario && passwordUsuario ) {
+    else if (nomeUsuario && passwordUsuario) {
       nomeUsuario = nomeUsuario.value;
       passwordUsuario = passwordUsuario.value;
-      formData = {cod_usuario: cod_usuario, nome: nomeUsuario, password: passwordUsuario};
+      formData = { cod_usuario: cod_usuario, nome: nomeUsuario, password: passwordUsuario };
     }
 
-    else if (emailUsuario && passwordUsuario ) {
+    else if (emailUsuario && passwordUsuario) {
       emailUsuario = emailUsuario.value;
       passwordUsuario = passwordUsuario.value;
-      formData = {cod_usuario: cod_usuario,  email: emailUsuario,  password: passwordUsuario};
+      formData = { cod_usuario: cod_usuario, email: emailUsuario, password: passwordUsuario };
     }
 
 
     else if (nomeUsuario) {
       nomeUsuario = nomeUsuario.value;
-      formData = {cod_usuario: cod_usuario, nome: nomeUsuario};
+      formData = { cod_usuario: cod_usuario, nome: nomeUsuario };
     }
 
     else if (emailUsuario) {
       emailUsuario = emailUsuario.value;
-      formData = {cod_usuario: cod_usuario, email: emailUsuario};
+      formData = { cod_usuario: cod_usuario, email: emailUsuario };
     }
 
     else if (passwordUsuario) {
       passwordUsuario = passwordUsuario.value;
-      formData = {cod_usuario: cod_usuario,  password: passwordUsuario};
+      formData = { cod_usuario: cod_usuario, password: passwordUsuario };
     }
 
     else {

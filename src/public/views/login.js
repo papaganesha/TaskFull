@@ -1,6 +1,7 @@
 
 
 window.addEventListener("load", () => {
+  sessionStorage.clear();
   document.getElementById("loginBTN").addEventListener("click", () => {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
@@ -16,6 +17,12 @@ window.addEventListener("load", () => {
 })
 
 
+
+
+
+
+
+
 function logar(username, password) {
   var formData = { username: username, password: password }; //Array 
   $.ajax({
@@ -25,6 +32,7 @@ function logar(username, password) {
     async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
     success: function (response) {
       sessionStorage.cod_usuario = response.jwt;
+      sessionStorage.nome = response.nome;
       window.location.assign("listas");
     },
     error: function (response) {

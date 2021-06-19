@@ -32,36 +32,36 @@ import {
   auth as userLogin,
 } from "../controllers/AuthController.js";
 
-var router = Router();
+var routerApi = Router();
 
 // router.use(timeLog())
 
 
 //LIST ROUTES
-router.get("/v1/api/index/list", indexList);
-router.post("/v1/api/index/listperUser", indexList_perUser);
-router.get("/v1/api/item/list/:id", itemList);
-router.post("/v1/api/create/list", createList);
-router.put("/v1/api/update/list/:id", updateList);
-router.delete("/v1/api/delete/list/:id", deleteList);
+routerApi.get("/v1/api/index/list", indexList);
+routerApi.post("/v1/api/index/listperUser", indexList_perUser);
+routerApi.get("/v1/api/item/list/:id", itemList);
+routerApi.post("/v1/api/create/list", createList);
+routerApi.put("/v1/api/update/list/:id", updateList);
+routerApi.delete("/v1/api/delete/list/:id", deleteList);
 
 //TASK ROUTES
-router.get("/v1/api/index/task", indexTask);
-router.get("/v1/api/item/task/:id", itemTask);
-router.get("/v1/api/list/tasks/:id", indexTarefasUserX);
+routerApi.get("/v1/api/index/task", indexTask);
+routerApi.get("/v1/api/item/task/:id", itemTask);
+routerApi.get("/v1/api/list/tasks/:id", indexTarefasUserX);
 
-router.post("/v1/api/create/task", createTask);
-router.put("/v1/api/update/task/:id", updateTask);
-router.delete("/v1/api/delete/task/:id", deleteTask);
+routerApi.post("/v1/api/create/task", createTask);
+routerApi.put("/v1/api/update/task/:id", updateTask);
+routerApi.delete("/v1/api/delete/task/:id", deleteTask);
 
 
 //PERFIL ROUTES
-router.post("/v1/api/index/perfil/", indexPerfil);
-router.put("/v1/api/index/perfil", updatePerfil);
+routerApi.post("/v1/api/index/perfil/", indexPerfil);
+routerApi.put("/v1/api/index/perfil", updatePerfil);
 
 
 //AUTH ROUTES
-router.post("/v1/api/auth/register", registerUser);
-router.post("/v1/api/auth/login", userLogin);
+routerApi.post("/v1/api/auth/register", registerUser);
+routerApi.post("/v1/api/auth/login", userLogin);
 
-export default router;
+export default routerApi;

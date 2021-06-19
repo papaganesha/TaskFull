@@ -34,15 +34,9 @@
         <nav>
             <a href="listas" id="in">Listas</a>
             <a href="perfil" id="qs">Perfil</a>
-            <button id="deslogar">Deslogar</button>
-        </nav>
-        <form method="GET" action="#" id="busca">
-          <label>
-            Buscar
-            <input type="text" name="busca" />
-          </label>
-          <input type="submit" value="OK" id="submit" />
-        </form>
+            <button onclick="deslogar()" id="deslogar">Deslogar</button>
+          </nav>
+        <p id="busca"></p>
       </header>
       <main>
 
@@ -67,7 +61,7 @@
                    <br /><br />
                   
                </form>
-               <button id="adicionarBTN" type="button" class="btn btn-primary">Adicionar</button>
+               <button id="adicionarBTN" type="button" class="btn btn-primary" onclick="adicionarLista()">Adicionar</button>
                <br>
         <p><a href="listas">Voltar</a></p>
 

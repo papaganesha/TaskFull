@@ -1,18 +1,23 @@
-window.addEventListener("load", () => {
-
-  document.getElementById("deslogar").addEventListener("click", () => {
-    sessionStorage.clear();
-    window.location.assign("/");
-  })
-
-
-  document.getElementById("adicionarBTN").addEventListener("click", () => {
-     botaoAdicionarLista();
-  })
-})
+window.onload = function() {
+  if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
+    document.getElementById("busca").innerHTML += sessionStorage.nome;
+    window.addEventListener("load",() =>{
+    })
+  }
+  else{
+      window.location.assign("401")
+  }
+}
 
 
-  function botaoAdicionarLista() {
+function deslogar(){
+  sessionStorage.clear();
+  window.location.assign("/");
+}
+
+
+
+  function adicionarLista() {
     if (sessionStorage.cod_usuario) {
     var nomeLista = document.getElementById("nomeLista");
     var categoria = document.getElementById("categoria");
@@ -34,10 +39,10 @@ window.addEventListener("load", () => {
         },
         error: function (response) {
           if (response.responseJSON.msg.errno === 1062) {
-            span_msg.innerHTML = dismissable_warning_Msg("Lista já existente");
+            span_msg.innerHTML += dismissable_warning_Msg("Lista já existente");
             span_msg.hidden = false;
           } else {
-            span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
+            span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);
             span_msg.hidden = false;
           }
         }

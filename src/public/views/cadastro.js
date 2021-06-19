@@ -1,20 +1,23 @@
 window.addEventListener("load",()=>{
+  
   document.getElementById("cadastroBTN").addEventListener("click",()=>{
-    var username = document.getElementById("username").value;
-    var nome = document.getElementById("nome").value;
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    if(username && nome && email && password){
-        cadastrar(username, nome, email, password);
-    }
-    else{
-      span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
-      span_msg.hidden = false;
-    }
+    formCadastro();
   })
 })
 
-
+function formCadastro(){
+  var username = document.getElementById("username").value;
+  var nome = document.getElementById("nome").value;
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  if(username && nome && email && password){
+      cadastrar(username, nome, email, password);
+  }
+  else{
+    span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
+    span_msg.hidden = false;
+  }
+}
 
 function cadastrar(username, nome, email, password) {
     var formData = {username: username, nome: nome, email : email, password: password}; //Array
