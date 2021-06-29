@@ -1,0 +1,156 @@
+.nav-link {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+.btn.btn-outline-success.mt-2.mt-md-0.ml-lg-3 {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 30px;
+}
+
+.navbar-brand {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 5px;
+	margin-left: 30px;
+}
+
+.signup {
+	background-color: black;
+	color: white;
+	min-height: 100vh;
+}
+
+.image {
+	min-height: 100vh;
+	width: 656px;
+	height: 388px;
+	background-color: rgb(214, 96, 96);
+}
+
+.bg-image {
+	background-image: url("https://res.cloudinary.com/db8nknhbk/image/upload/v1563102621/desk-home-office-indoors-1036808_szp42j.jpg");
+	background-size: cover;
+	background-position-x: 50%;
+	background-position-y: 50%;
+}
+
+.signup-heading {
+	font-weight: 300;
+}
+
+.btn.btn-lg.btn-block.btn-primary.mb-3 {
+	color: rgb(40, 167, 69);
+	font-weight: 400;
+	font-size: medium;
+	display: inline-block;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: rgb(40, 167, 69);
+	border-right-color: rgb(40, 167, 69);
+	border-bottom-color: rgb(40, 167, 69);
+	border-left-color: rgb(40, 167, 69);
+	border-image-source: initial;
+	border-image-slice: initial;
+	border-image-width: initial;
+	border-image-outset: initial;
+	border-image-repeat: initial;
+	background-color: #606060;
+	color: #FFF;
+	margin-top: 15px;
+	margin-right: 0px;
+	margin-bottom: 16px;
+	margin-left: 0px;
+}
+
+.form-control {
+	background-color: #000;
+	color: #FFF;
+	margin-top: 5px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+.signup-heading.mb-4 {
+	margin-top: 30px;
+	margin-right: 0px;
+	margin-bottom: 30px;
+	margin-left: 0px;
+}
+
+.row {
+	background-color: #000;
+	color: #FFF;
+	text-align: left;
+}
+
+.signup.d-flex.align-items-center.py-5 {
+	text-align: center;
+	margin-top: 0px;
+	margin-right: 24px;
+	margin-bottom: 0px;
+	margin-left: 24px;
+}
+
+.col-md-8.col-lg-6 {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 100px;
+}
+
+.image {
+	min-height: 100vh;
+	width: 656px;
+	height: 388px;
+}
+
+.display-1 {
+	font-size: 45px;
+	margin-top: 30%;
+	margin-right: 30px;
+	margin-bottom: 8px;
+	margin-left: 30px;
+	text-align: justify;
+}
+
+.display-4 {
+	font-size: 45px;
+	text-align: justify;
+	margin-top: 2035%;
+	margin-right: 0px;
+	margin-bottom: 8px;
+	margin-left: 0px;
+}
+
+#iw9ut {
+	font-weight: 300;
+	font-size: 25px;
+	text-align: center;
+	margin-top: 10%;
+	margin-right: 30px;
+	margin-bottom: 8px;
+	margin-left: 30px;
+	margin: 10% 0 8px 165px;
+}
+
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+	box-shadow: black 0px 0px 5px 3px;
+  height : 75px;
+}
+
+.display-1.text-center {
+	text-align: center;
+	margin: 40% 0 8px 175px;
+}

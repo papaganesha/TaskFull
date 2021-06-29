@@ -1,10 +1,14 @@
+import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+
+
+
 window.onload = function(){
-if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
-    document.getElementById("busca").innerHTML = sessionStorage.nome;
+if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
+    document.getElementById("busca").innerHTML = localStorage.nome;
     index_listas();
     window.addEventListener("load", () => {
         timeInterval_global(index_listas, 30000);
-        sessionStorage.cod_lista = 0;
+        localStorage.cod_lista = 0;
     })
 }
 else{
@@ -12,62 +16,24 @@ else{
 }
 }
 
-function deslogar(){
-    sessionStorage.clear();
-    window.location.assign("/");
-  }
-
-var timeInterval_20secs = (nomeFuncao) => {
-    window.setInterval(nomeFuncao, 20000);
-    window.setInterval(() => {
-        console.log("20secs, REFRESH");
-    }, 20000);
-}
-
-var timeInterval_3secs = (nomeFuncao) => {
-    window.setInterval(nomeFuncao, 3000);
-    window.setInterval(() => {
-        console.log("3secs, REFRESH");
-    }, 3000);
-}
-
-var timeOut_global = (nomeFuncao, ms) => {
-    window.setTimeout(nomeFuncao, ms);
-    window.setTimeout(() => {
-        console.log("REFRESH");
-    }, ms);
-}
-
-var timeInterval_global = (nomeFuncao, ms) => {
-    window.setInterval(nomeFuncao, ms);
-    window.setInterval(() => {
-      console.log(`REFRESH ${ms}ms`);
-    }, ms);
-  }
-
-
-
-
-
- 
 
 
 function mostrarTarefas(obj){
     var codLista = obj.value;
-    sessionStorage.cod_lista = codLista;
+    localStorage.cod_lista = codLista;
     window.location.assign("tarefas");
 } 
 
 function adicionarTarefa(obj){
     var codLista = obj.value;
-    sessionStorage.cod_lista = codLista;
+    localStorage.cod_lista = codLista;
     window.location.assign("adicionarTarefa");
 } 
 
 
 function editarLista(obj){
     var codLista = obj.value;
-    sessionStorage.cod_lista = codLista;
+    localStorage.cod_lista = codLista;
     window.location.assign("editarLista");
 }     
 
@@ -118,11 +84,11 @@ function excluirLista(codLista) {
 
 
 function index_listas() {
-    if (sessionStorage.cod_usuario) {
-        var cod_usuario = sessionStorage.cod_usuario;
+    if (localStorage.cod_usuario) {
+        var cod_usuario = localStorage.cod_usuario;
         $.ajax({
             url: "http://localhost:3000/v1/api/index/listperUser", // Url of backend (can be python, php, etc..)
-            type: "POST", // data type (can be get, post, put, delete)
+            type: "GET", // data type (can be get, post, put, delete)
             data: { cod_usuario: cod_usuario }, // data in json format
             async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
             success: function (response) {
@@ -163,7 +129,7 @@ function index_listas() {
                 }
             },
             error: function (response) {
-                span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);
+                span_msg.innerHTML += dismissable_warning_Msg(response);
                 span_msg.hidden = false;
             }
         })
@@ -172,30 +138,6 @@ function index_listas() {
         window.location.assign("401");
     }
 }
-
-
-function dismissable_sucess_Msg(msg) {
-    return `
-     <div class="alert alert-success  alert-dismissible fade show" role="alert">
-        <strong>Tudo Certo!</strong>${" "}${msg}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-     </div>
-    `
-}
-
-function dismissable_warning_Msg(msg) {
-    return `
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Erro!</strong>${" "}${msg}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  `
-}
-
-
-
-
-
 
 
 

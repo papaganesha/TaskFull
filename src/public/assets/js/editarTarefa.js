@@ -1,3 +1,6 @@
+import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+
+
 window.onload = function () {
   if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
     document.getElementById("busca").innerHTML = sessionStorage.nome;   
@@ -13,10 +16,6 @@ window.onload = function () {
   }
 }
 
-function deslogar() {
-  sessionStorage.clear();
-  window.location.assign("/");
-}
 
 function confirmaEditar() {
     var nomeTarefa = document.getElementById("nomeTarefa").value;
@@ -56,23 +55,3 @@ function confirmaEditar() {
 
 
 
-
-
-function dismissable_sucess_Msg(msg) {
-  return `
-    <div class="alert alert-success  alert-dismissible fade show" role="alert">
-    <strong>Tudo Certo!</strong>${" "}${msg}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
-  </div>
-    `
-}
-
-
-function dismissable_warning_Msg(msg) {
-  return `
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Erro!</strong>${" "}${msg}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
-</div>
-  `
-}

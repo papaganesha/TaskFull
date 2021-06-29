@@ -1,0 +1,28 @@
+
+
+//GET http://localhost:3000/v1/api/list/tasks/60 HTTP/1.1
+
+
+// http://localhost:3000/v1/api/index/list HTTP/1.1
+
+
+
+GET http://localhost:3000/v1/api/list?nome_lista=LISTA HTTP/1.1
+
+content-type: application/json
+{
+    "cod_usuario": 91
+}
+
+
+<!--POST http://localhost:3000/v1/api/list/busca?nome_lista=LISTA+NOVA HTTP/1.1
+content-type: application/json
+
+{
+    "cod_usuario": "91"
+}
+-->
+
+
+
+

@@ -6,6 +6,7 @@ import { Router } from "express";
 import {
   index as indexList,
   index_codUsuario as indexList_perUser,
+  busca_nomeLista as busca_listaPorNome,
   item as itemList,
   create as createList,
   update as updateList,
@@ -14,7 +15,7 @@ import {
 
 import {
   index as indexTask,
-  index_codLista as indexTarefasUserX,
+  index_codLista as indexTarefasListaX,
   item as itemTask,
   create as createTask,
   update as updateTask,
@@ -34,12 +35,12 @@ import {
 
 var routerApi = Router();
 
-// router.use(timeLog())
 
 
 //LIST ROUTES
 routerApi.get("/v1/api/index/list", indexList);
-routerApi.post("/v1/api/index/listperUser", indexList_perUser);
+routerApi.post("/v1/api/list", busca_listaPorNome);
+routerApi.get("/v1/api/index/listperUser", indexList_perUser);
 routerApi.get("/v1/api/item/list/:id", itemList);
 routerApi.post("/v1/api/create/list", createList);
 routerApi.put("/v1/api/update/list/:id", updateList);
@@ -48,7 +49,7 @@ routerApi.delete("/v1/api/delete/list/:id", deleteList);
 //TASK ROUTES
 routerApi.get("/v1/api/index/task", indexTask);
 routerApi.get("/v1/api/item/task/:id", itemTask);
-routerApi.get("/v1/api/list/tasks/:id", indexTarefasUserX);
+routerApi.get("/v1/api/list/tasks/:id", indexTarefasListaX);
 
 routerApi.post("/v1/api/create/task", createTask);
 routerApi.put("/v1/api/update/task/:id", updateTask);

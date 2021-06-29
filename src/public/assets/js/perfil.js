@@ -1,3 +1,6 @@
+import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+
+
 window.onload = function () {
   if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
     index_perfil();
@@ -14,40 +17,6 @@ window.onload = function () {
 }
 
 
-function deslogar() {
-  sessionStorage.clear();
-  window.location.assign("/");
-}
-
-
-var timeInterval_20secs = (nomeFuncao) => {
-  window.setInterval(nomeFuncao, 20000);
-  window.setInterval(() => {
-    console.log("20secs, REFRESH");
-  }, 20000);
-}
-
-var timeInterval_3secs = (nomeFuncao) => {
-  window.setInterval(nomeFuncao, 3000);
-  window.setInterval(() => {
-    console.log("3secs, REFRESH");
-  }, 3000);
-}
-
-var timeOut_global = (nomeFuncao, ms) => {
-  window.setTimeout(nomeFuncao, ms);
-  window.setTimeout(() => {
-    console.log("REFRESH");
-  }, ms);
-}
-
-
-var timeInterval_global = (nomeFuncao, ms) => {
-  window.setInterval(nomeFuncao, ms);
-  window.setInterval(() => {
-    console.log(`REFRESH ${ms}ms`);
-  }, ms);
-}
 
 
 function index_perfil() {
@@ -88,21 +57,3 @@ function index_perfil() {
 
 
 
-
-function dismissable_sucess_Msg(msg) {
-  return `
-  <div class="alert alert-success  alert-dismissible fade show" role="alert">
-  <strong>Tudo Certo!</strong>${" "}${msg}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-  `
-}
-
-function dismissable_warning_Msg(msg) {
-  return `
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-<strong>Erro!</strong>${" "}${msg}
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-`
-}

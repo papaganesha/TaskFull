@@ -6,8 +6,9 @@ import {
 } from "../database/config.js";
 
 
+
+
 export function index(req, res, next) {
-    //var cod_usuario = req.body.cod_usuario   
     execute("SELECT * FROM LISTA_TAREFAS;").then((result) => {
         if (result.length > 0) {
             const response = {
@@ -30,23 +31,16 @@ export function index(req, res, next) {
             return res.status(500).send({ msg: 'Tabela de listas vazia' })
         }
     }).catch((error) => {
-        const response = {
-            msg: error.sqlMessage,
-            request: {
-                tipo: 'GET',
-                descricao: 'Erro durante operação de GET'
-            }
-        }
-        return res.status(500).send(response)
+        return res.status(500).send({msg : error})
         next()
     })
 }
 
 
 export function index_codUsuario(req, res, next) {
-    var cod_usuario = req.body.cod_usuario   
-    var decoded = jwt.verify(cod_usuario, 'RUTHLESS');
-    var cod_usuario_decoded = decoded.cod_usuario;
+    var cod_usuario = req.query.cod_usuario  
+    var decoded = jwt.verify(cod_usuario, 'RUTHLESS')
+    var cod_usuario_decoded = decoded.cod_usuario
     execute("SELECT * FROM LISTA_TAREFAS where cod_usuario = ?;",[cod_usuario_decoded]).then((result) => {
         if (result.length > 0) {
             const response = {
@@ -66,22 +60,53 @@ export function index_codUsuario(req, res, next) {
             next()
         }
         else {
-            return res.status(500).send({ msg: 'Tabela de listas vazia' })
+            const response = {
+                msg: 'Tabela de listas vazia'
+               
+            }
+            return res.status(500).send(response)
         }
     }).catch((error) => {
         const response = {
-            msg: error,
-            request: {
-                tipo: 'GET',
-                descricao: 'Erro durante operação de GET'
-            }
+            msg: error
+           
         }
-        return res.status(500).send(response)
+        return res.status(500).send({msg : error})
         next()
     })
 }
 
-
+export function busca_nomeLista(req, res, next){
+    var cod_usuario = req.body.cod_usuario   
+    var decoded = jwt.verify(cod_usuario, 'RUTHLESS')
+    var cod_usuario_decoded =  decoded.cod_usuario
+    const query =`SELECT * FROM LISTA_TAREFAS WHERE NOME_LISTA LIKE '%lista%' AND COD_USUARIO = ?;`
+    execute(query ,[cod_usuario_decoded]).then((result) => {
+        if (result.length > 0) {
+            const response = {
+                lista: result.map((list => {
+                    return {
+                        cod_usuario: list.cod_usuario,
+                        cod_lista: list.cod_lista,
+                        nome_lista: list.nome_lista,
+                        categoria: list.categoria,
+                        data_entrada: list.data_entrada,
+                        data_ultima_alteracao: list.data_ultima_alteracao
+                    }
+                }))
+                
+            }
+            return res.status(200).send(response)
+            next()
+        }
+        else {
+            return res.status(500).send({ msg: `Nenhuma Lista para pesquisa: ${nomeLista}` })
+        }
+    }).catch((error) => {
+        return res.status(500).send({msg : error})
+        next()
+    })
+}
 
 export function item(req, res, next) {
     var id = +req.params.id

@@ -1,11 +1,18 @@
+import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+
+
 window.addEventListener("load",()=>{
   
-  document.getElementById("cadastroBTN").addEventListener("click",()=>{
-    formCadastro();
+  localStorage.clear();
+  $('form').on("submit", (event) => {
+  formCadastro(event);
+    })
   })
-})
 
-function formCadastro(){
+  
+
+function formCadastro(event){
+    event.preventDefault();
   var username = document.getElementById("username").value;
   var nome = document.getElementById("nome").value;
   var email = document.getElementById("email").value;
@@ -21,7 +28,7 @@ function formCadastro(){
 
 function cadastrar(username, nome, email, password) {
     var formData = {username: username, nome: nome, email : email, password: password}; //Array
-    var spanMsg = document.getElementById("span_msg");
+    var span_msg = document.getElementById("span_msg");
  
     $.ajax({
       url : "http://localhost:3000/v1/api/auth/register", // Url of backend (can be python, php, etc..)
@@ -33,9 +40,18 @@ function cadastrar(username, nome, email, password) {
         span_msg.hidden = false;
       },
       error: function (response) {
+        if(response.responseJSON.msg.errno === 1062){
           console.log(response.responseJSON.msg);
-          span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
+          span_msg.innerHTML += dismissable_warning_Msg("Usuario já existente");
           span_msg.hidden = false;
+          console.log("12");
+      
+        }else{
+          span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);
+          span_msg.hidden = false;
+        
+        }
+         
         
       }
   });
@@ -49,24 +65,3 @@ function cadastrar(username, nome, email, password) {
 
 
 
-
-  
-
-function dismissable_sucess_Msg(msg){
-    return `
-    <div class="alert alert-success  alert-dismissible fade show" role="alert">
-    <strong>Tudo Certo!</strong>${" "}${msg}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-    `
-}
-
-
-function dismissable_warning_Msg(msg){
-  return `
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Erro!</strong>${" "}${msg}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-  `
-}

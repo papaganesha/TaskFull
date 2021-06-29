@@ -10,6 +10,10 @@ routerFront.get('/', function(req, res, next) { //LOGIN
     res.render('index');
 });
 
+routerFront.get('/login', function(req, res, next) { //LOGIN
+    res.render('login');
+});
+
 routerFront.get('/cadastro', function(req, res, next) {
     res.render('cadastro');
 });
