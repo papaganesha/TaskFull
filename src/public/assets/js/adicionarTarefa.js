@@ -2,10 +2,19 @@ import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_gl
 
 
 window.onload = function() {
-  if (sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
-    document.getElementById("busca").innerHTML += sessionStorage.nome;   
-    window.addEventListener("load",() =>{
-    
+  if (localStorage.cod_usuario && localStorage.cod_usuario != null) {
+    $('form').on("submit", (event) => {
+      event.preventDefault();
+      var nomeTarefa = document.getElementById("nomeTarefa");
+      var descricao = document.getElementById("descricao");
+      var span_msg = document.getElementById("span_msg");
+    if(nomeTarefa && descricao){
+      adicionarTarefa(nomeTarefa.value, descricao.value);
+    }
+    else{
+      span_msg.innerHTML += dismissable_warning_Msg("Insira os dados corretamente");
+      span_msg.hidden = false;
+  }
     })
   }
   else {
@@ -15,14 +24,8 @@ window.onload = function() {
 
   
 
-function adicionarTarefa(){
-    var nomeTarefa = document.getElementById("nomeTarefa");
-    var descricao = document.getElementById("descricao");
-    var span_msg = document.getElementById("span_msg");
-    var cod_lista = sessionStorage.cod_lista;
-  if(nomeTarefa && descricao){
-       nomeTarefa = nomeTarefa.value;
-       descricao = descricao.value;
+function adicionarTarefa(nomeTarefa, descricao){
+       var cod_lista = localStorage.cod_lista;
        var formData = {cod_lista : cod_lista, nome: nomeTarefa, descricao: descricao };
        $.ajax({
            url: "http://localhost:3000/v1/api/create/task",   // Url of backend (can be python, php, etc..)
@@ -30,7 +33,7 @@ function adicionarTarefa(){
            data: formData, // data in json format
            async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
            success: function (response) {
-                span_msg.innerHTML += customAlert_sucess(response.msg, 3000);
+                span_msg.innerHTML += dismissable_sucess_Msg(response.msg);
                 span_msg.hidden = false;
                
            },
@@ -46,31 +49,12 @@ function adicionarTarefa(){
                }
            }
        })
-  }else{
-       span_msg.innerHTML += dismissable_warning_Msg("Preencha todos os campos");
-       span_msg.hidden = false;
-   
   }
-}
 
 
 
 
 
-function customAlert_sucess(msg,duration)
-{
-  var styler = document.createElement("div");
-  styler.setAttribute("style","border: solid 5px Red;width:auto;height:auto;top:50%;left:40%;background-color:#444;color:Silver");
- styler.innerHTML = "<h1>"+msg+"</h1>";
- setTimeout(function()
- {
-   styler.parentNode.removeChild(styler);
- },duration);
- document.body.appendChild(styler);
-}
-  function caller()
-  {
-    customAlert("This custom alert box will be closed in 2 seconds","2000");
-  }
+
 
 

@@ -27,6 +27,10 @@ routerFront.get('/401', function(req, res, next) {
 
 
 //ROTAS DE LISTAS
+routerFront.get('/dashboard', function(req, res, next) {
+    res.render('dashboard');
+});
+
 routerFront.get('/listas', function(req, res, next) {
     res.render('listas');
 });

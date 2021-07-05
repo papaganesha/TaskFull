@@ -1,56 +1,59 @@
-import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+import { timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg } from './common.js';
 
 
-window.onload = function(){
-if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
-    document.getElementById("busca").innerHTML = localStorage.nome;
-    index_listas();
-    window.addEventListener("load", () => {
+window.onload = function () {
+    if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
+        index_listas();
+      
+        setInterval(function () {
+            document.querySelectorAll('.btnslistas').forEach(item => {
+                item.addEventListener('click', e => {
+                 
+                    if (e.target !== e.currentTarget) {
+                        if(e.target.id == "showTarefas"){
+                            var codLista = e.target.value;
+                            localStorage.cod_lista = codLista;
+                            location.assign('tarefas');
+                        }
+                        else if(e.target.id == "addTarefa"){
+                            var codLista = e.target.value;
+                            localStorage.cod_lista = codLista;
+                            location.assign('adicionarTarefa');
+                        }
+                        else if(e.target.id == "editarLista"){
+                            var codLista = e.target.value;
+                            localStorage.cod_lista = codLista;
+                            location.assign('editarLista');
+                        }
+                        else if(e.target.id == "DeletarLista"){
+                            var codLista = e.target.value;
+                            excluirLista(codLista);
+                            //timeOut_global(location.reload(), 1000);
+                        }
+
+                    }
+                    e.stopPropagation();
+                })
+              })
+        },2000);
+        $('form').on("submit", (event) => {
+            event.preventDefault();
+            var valor = event.target.value;
+            buscarListas(valor);
+          })
+            
+        
         timeInterval_global(index_listas, 30000);
         localStorage.cod_lista = 0;
-    })
-}
-else{
-    window.location.assign("401")
-}
-}
 
-
-
-function mostrarTarefas(obj){
-    var codLista = obj.value;
-    localStorage.cod_lista = codLista;
-    window.location.assign("tarefas");
-} 
-
-function adicionarTarefa(obj){
-    var codLista = obj.value;
-    localStorage.cod_lista = codLista;
-    window.location.assign("adicionarTarefa");
-} 
-
-
-function editarLista(obj){
-    var codLista = obj.value;
-    localStorage.cod_lista = codLista;
-    window.location.assign("editarLista");
-}     
-
-
-function deletarLista(obj){
-    var codLista = obj.value;
-    excluirLista(codLista);
-    timeOut_global(index_listas, 1000);
+       
+    }
+    else {
+        window.location.assign("401")
+    }
 }
 
-function botoesExcluir() {
-    let elementsArray = document.querySelectorAll("#btnExcluirLista");
-    elementsArray.forEach(function (elem) {
-        elem.addEventListener("click", () => {
-            
-        })
-    })
-}
+
 
 function excluirLista(codLista) {
     $.ajax({
@@ -60,20 +63,16 @@ function excluirLista(codLista) {
         success: function (response) {
             span_msg.innerHTML = dismissable_sucess_Msg(response.msg);
             span_msg.hidden = false;
-
         },
         error: function (response) {
-            console.log(typeof (response.responseJSON.msg));
-            var data = response.responseJSON.msg;
-            if (data === 1451) {
+            if (response.msg === 1451) {
                 span_msg.innerHTML = dismissable_warning_Msg("Lista possui tarefas filhas");
                 span_msg.hidden = false;
             }
             else {
-                span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
+                span_msg.innerHTML = dismissable_warning_Msg(response.msg);
                 span_msg.hidden = false;
             }
-            return response;
 
         }
     })
@@ -95,40 +94,36 @@ function index_listas() {
                 var section = document.querySelector("#root");
                 section.innerHTML = "";
                 for (let i = 0; i < data.lista.length; i++) {
-                    let template = `
-                        <dl class = "box" id = "box">
-                        
-                        <br> 
-                            <dt>
-                       
-                                <a  href="#"> ${data.lista[i].nome_lista} </a>
+                    $('table').find('tbody')
+                        .append(
+                            `<tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">${data.lista[i].nome_lista}</h6>
+                                        </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">${data.lista[i].categoria}</p>
+                                    
+                                    </td>
+                                    <td class="align-middle">
+                                    <div class="btnslistas">
+                                    <button id="showTarefas" value="${data.lista[i].cod_lista}" class="btn btn-primary">Tarefas</button>
+                                    <button id="addTarefa" value="${data.lista[i].cod_lista}" class="btn btn-primary">Adicionar Tarefa</button>
+                                    <button id="EditarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Editar</button>
+                                    <button id="DeletarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Excluir</button>
+                                    </div>
+                                    </td>
+                                </tr>
+                             `);
 
-                                </dt>
-                            <br>
-                            <dd>
-                                 Categoria: ${data.lista[i].categoria}
-                            </dd>
-                            <dd>
-                                 Criada em: ${data.lista[i].data_entrada}
-                            </dd>
-                            <br>
-                            
-                            <button onclick="editarLista(this)" value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnEditarLista">Editar</button>
-                            <button onclick="deletarLista(this)" value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnExcluirLista">Excluir</button>
-                            <button onclick="adicionarTarefa(this)" value="${data.lista[i].cod_lista}" class="btn btn-primary" id="btnAdicionarTarefa">Adicionar Tarefa</button>
-                            <button onclick="mostrarTarefas(this)" value="${data.lista[i].cod_lista}" class="btn btn-primary" id="mostrarTarefas">Ver Tarefas</button>
-
-                
-
-                            <br>
-                        </dl>
-                        
-                        `;
-                    section.innerHTML += template;
                 }
             },
             error: function (response) {
-                span_msg.innerHTML += dismissable_warning_Msg(response);
+                span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);
                 span_msg.hidden = false;
             }
         })
@@ -140,40 +135,54 @@ function index_listas() {
 
 
 
-function mostrarTarefasxxx(){
-    let elementsArray = document.querySelectorAll("#mostrarTarefas");
-    elementsArray.forEach(function (elem) {
-        elem.addEventListener("click", () => {
-            var codLista = elem.value;
-            sessionStorage.cod_lista = elem.value;
-            location.assign("tarefas");
-        })
+function buscarListas(valor) {
+    var cod_usuario = localStorage.cod_usuario;
+    var formData = { cod_usuario: cod_usuario };
+    $.ajax({
+      url: `http://localhost:3000/v1/api/list/${valor}`, // Url of backend (can be python, php, etc..)
+      type: "POST", // data type (can be get, post, put, delete)
+      data : formData,
+      async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+      success: function (response) {
+        var data = response;
+        var section = document.querySelector("#root");
+        var span_msg = document.getElementById("span_msg");
+        for (let i = 0; i < data.tarefa.length; i++) {
+          $('table').find('tbody')
+                .append(
+                `<tr>
+                    <td>
+                        <div class="d-flex px-2 py-1">
+                    
+                          <div class="d-flex flex-column justify-content-center">
+                             <h6 class="mb-0 text-sm">${data.lista[i].nome_lista}</h6>
+                          </div>
+                         </div>
+                         </td>
+                        <td>
+                            <p class="text-xs font-weight-bold mb-0">${data.lista[i].categoria}</p>
+                        </td>
+                        <td class="align-middle">
+                        <div class="btnslistas">
+                            <button id="showTarefas" value="${data.lista[i].cod_lista}" class="btn btn-primary">Tarefas</button>
+                            <button id="addTarefa" value="${data.lista[i].cod_lista}" class="btn btn-primary">Adicionar Tarefa</button>
+                            <button id="EditarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Editar</button>
+                            <button id="DeletarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Excluir</button>
+                        </div>
+                        </td>
+                        </tr>
+                        `);
+        }
+      },
+      error: function (response) {
+          console.log(response);
+        span_msg.innerHTML = dismissable_warning_Msg(response.msg);
+        span_msg.hidden = false;
+      }
     })
-}
+  
+  
+  }
 
 
 
-function botoesEditar() {
-let elementsArray = document.querySelectorAll("#btnEditarLista");
-elementsArray.forEach(function (elem) {
-    elem.addEventListener("click", () => {
-        var codLista = elem.value;
-        console.log(codLista);
-        sessionStorage.cod_lista = codLista;
-        window.location.assign("editarLista");
-    })
-})
-}
-
-
-function botoesAdicionarTarefa() {
-let elementsArray = document.querySelectorAll("#btnAdicionarTarefa");
-elementsArray.forEach(function (elem) {
-    elem.addEventListener("click", () => {
-        var codLista = elem.value;
-        console.log(codLista);
-        sessionStorage.cod_lista = codLista;
-        window.location.assign("adicionarTarefa");
-    })
-})
-}

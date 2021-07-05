@@ -5,16 +5,15 @@ import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_gl
 window.addEventListener("load", () => {
   localStorage.clear();
   
-  $('form').on("submit", (event) => {
+  $('.form-login').on("submit", (event) => {
     event.preventDefault();
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
-    var spanMsg = document.getElementById("span_msg");
+    var username = document.getElementById("username_l").value;
+    var password = document.getElementById("password_l").value;
+    var span_msg = document.getElementById("span_msg_l");
     if (username && password) {
       logar(username, password);
     }
     else {
-      console.log("erro");
       span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
       span_msg.hidden = false;
     }
@@ -32,18 +31,19 @@ window.addEventListener("load", () => {
 
 function logar(username, password) {
   var formData = { username, password }; //Array 
-    $.ajax({
+  var span_msg = document.getElementById("span_msg_l");  
+  $.ajax({
       url: "http://localhost:3000/v1/api/auth/login", // Url of backend (can be python, php, etc..)
       type: "POST", // data type (can be get, post, put, delete)
       data: formData, // data in json format
       async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
       success: function (response) {
-        localStorage.cod_usuario = response.jwt;
+        localStorage.cod_usuario = response.cod_usuario;
         localStorage.nome = response.nome;
-        window.location.assign("listas");
+        window.location.assign("dashboard");
       },
       error: function (response) {
-        
+        console.log(response);
         span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
         span_msg.hidden = false;
 
@@ -54,3 +54,14 @@ function logar(username, password) {
 
 
 
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
+});

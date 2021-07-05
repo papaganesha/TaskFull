@@ -4,19 +4,14 @@ import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_gl
 window.addEventListener("load",()=>{
   
   localStorage.clear();
-  $('form').on("submit", (event) => {
-  formCadastro(event);
-    })
-  })
-
-  
-
-function formCadastro(event){
-    event.preventDefault();
-  var username = document.getElementById("username").value;
+  $('.form-cadastro').on("submit", (event) => {
+   event.preventDefault();
+  var username = document.getElementById("username_c").value;
   var nome = document.getElementById("nome").value;
   var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
+  var password = document.getElementById("password_c").value;
+  var span_msg = document.getElementById("span_msg_c");
+
   if(username && nome && email && password){
       cadastrar(username, nome, email, password);
   }
@@ -24,11 +19,16 @@ function formCadastro(event){
     span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
     span_msg.hidden = false;
   }
-}
+    })
+  })
+
+  
+
+
 
 function cadastrar(username, nome, email, password) {
     var formData = {username: username, nome: nome, email : email, password: password}; //Array
-    var span_msg = document.getElementById("span_msg");
+    var span_msg = document.getElementById("span_msg_c");
  
     $.ajax({
       url : "http://localhost:3000/v1/api/auth/register", // Url of backend (can be python, php, etc..)
@@ -44,7 +44,6 @@ function cadastrar(username, nome, email, password) {
           console.log(response.responseJSON.msg);
           span_msg.innerHTML += dismissable_warning_Msg("Usuario já existente");
           span_msg.hidden = false;
-          console.log("12");
       
         }else{
           span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);

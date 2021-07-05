@@ -7,88 +7,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GDT -- Login</title>
     <meta name="description" content="None" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    
+    <meta name="author" content="" />
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/exform.css">
+    <link rel="stylesheet" href="assets/css/cadastro.css">
 
     <meta name="theme-color" content="#2F3BA2" />
 
 </head>
+
 <body>
-    <!--Bootstrap Scripts-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light"><button type="button" data-toggle="collapse" data-target="#navigations-08" aria-controls="navigations-08" aria-expanded="false"
-            aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
-        <div id="navigations-08" class="collapse navbar-collapse"><a href="#" class="navbar-brand">Gerenciador de Tarefas -- GDT</a>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"></li>
-                <li class="nav-item"></li>
-                <li class="nav-item"></li>
-                <li class="nav-item"><a href="cadastro" class="nav-link">Ainda não possui cadastro?</a></li>
-                <li class="nav-item"></li>
-            </ul>
-            <a href="cadastro" class="btn btn-outline-success mt-2 mt-md-0 ml-lg-3">Cadastro</a>
-            <a href="login" class="btn btn-outline-success mt-2 mt-md-0 ml-lg-3">Login</a>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <div class="row no-gutter">
-            <div class="col-md-8 col-lg-6"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 py-3">
-            <br><br>
-            <h1 class="display-1 text-center">Sistema GDT</h1>
-            </h1>
-            <h1 id="iw9ut">A poucos cliques de gerenciar e organizar suas tarefas diarias.<div><br /></div>
-                <div id="itdhq"><br /></div>
-                <div>Sistema desenvolvido para fins de estudo</div>
-            </h1>
-        </div>
-        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 py-3">
-            <div class="signup d-flex align-items-center py-5">
-                <div class="container">
-                  <div class="row">
-                      <div class="col-md-9 col-lg-8 mx-auto">
-                          <h3 data-type="header" class="signup-heading mb-4">Cadastrar-se no GDT</h3>
-                          <form id="io9k7">
-                            <br>
-                            <span hidden id='span_msg'></span>
 
-                              <div class="form-group"><label id="ihojs">Username</label><!-- Input --><input type="text" id="username" placeholder="Digite seu username" class="form-control" required /></div>
-                              <div class="form-group"><label id="ihojs">Nome</label><!-- Input --><input type="text" id="nome" placeholder="Digite seu nome" class="form-control" required  /></div>
-                              <div class="form-group"><label id="ihojs">Email</label><!-- Input --><input type="email" id="email" placeholder="Digite seu email" class="form-control" required  /></div>
-                              <div class="form-group"><label>Password</label><!-- Input --><input type="password" id="password" placeholder="Digite seu password" class="form-control"  required /></div>
-                              
-                              <br>
-
-                          
-                          <button type="submit" class="btn btn-lg btn-block btn-primary mb-3" id="cadastro_btn">Cadastrar</button>
-                          <p data-type="paragraph" class="text-center"><small class="text-muted text-center"> Já possui conta? <a draggable="true" data-highlightable="1"
-                                      href="login" id="iaw8c">Login</a>. </small></p>
-                                    </form>
-                      </div>
-                  </div>
-                </div>
+    <div class="container">
+        <header>
+            <div class="img-wrapper">
+                <img src="assets/imgs/fdo.jpg" alt="">
             </div>
-        </div>
+            <div class="banner">
+                <h1>Sistema GDT</h1>
+                <p class="description description-primary">A poucos cliques de gerenciar e organizar suas tarefas diarias.</p>
+                <p class="description description-primary">Sistema desenvolvido para fins de estudo</p>
+                <h3 data-type="header" class="signup-heading mb-4">Cadastrar-se no GDT</h3>
+            </div>
+        </header>
     </div>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
-    </script>
+
+    <section class="sessao-cadastro">
+        <div class="cadastro-wrapper">
+            <h1>Cadastro</h1>
+            <form id="io9k7" class="form">
+                <label id="ihojs">Username</label>
+                <input type="text" id="username" placeholder="Digite seu username" class="form-control" required />
+                <label id="ihojs">Nome</label>
+                <input type="text" id="nome" placeholder="Digite seu nome" class="form-control" required />
+                <label id="ihojs">Email</label>
+                <input type="email" id="email" placeholder="Digite seu email" class="form-control" required />
+                <label>Password</label>
+                <input type="password" id="pass" placeholder="your password" class="form-control" required />
+                <label>Repit password</label>
+                <input type="password" name="rep_password" placeholder="Repeat password">
+
+
+                <button class="btn btn-lg btn-block btn-primary mb-3" id="cadastro_btn">Cadastrar</button>
+                <p class="par"><small class="text-muted text-center"> Já possui conta? <a draggable="true" data-highlightable="1"
+              href="login" id="iaw8c" class="link">Login</a> </small></p>
+            </form>
+        </div>
+    </section>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+</script>
 
 <script type="module" src="assets/js/cadastro.js"></script>
-<script src="assets/js/sw.js"></script>
-</body>
-    
+
 </html>

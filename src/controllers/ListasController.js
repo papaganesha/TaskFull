@@ -77,11 +77,12 @@ export function index_codUsuario(req, res, next) {
 }
 
 export function busca_nomeLista(req, res, next){
-    var cod_usuario = req.body.cod_usuario   
+    var { cod_usuario } = req.body 
+    var { listaNome } = req.query
     var decoded = jwt.verify(cod_usuario, 'RUTHLESS')
     var cod_usuario_decoded =  decoded.cod_usuario
-    const query =`SELECT * FROM LISTA_TAREFAS WHERE NOME_LISTA LIKE '%lista%' AND COD_USUARIO = ?;`
-    execute(query ,[cod_usuario_decoded]).then((result) => {
+    const query =`SELECT * FROM LISTA_TAREFAS WHERE NOME_LISTA LIKE '%?%' AND COD_USUARIO = ?;`
+    execute(query ,[listaNome, cod_usuario_decoded]).then((result) => {
         if (result.length > 0) {
             const response = {
                 lista: result.map((list => {

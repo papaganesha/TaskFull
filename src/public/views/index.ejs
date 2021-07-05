@@ -1,47 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppNodeJs</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - TF</title>
+    <meta name="description" content="None" />
+    <meta name="author" content="" />
 
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/StyleCss.css">
-    <link rel="stylesheet" href="../assets/css/styleframe.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+
     
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/imgs/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/imgs/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/imgs/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <meta name="theme-color" content="#2F3BA2" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/imgs/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/imgs/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/imgs/favicon-16x16.png">
 </head>
 
 <body>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form class="form-cadastro">
+                <h1 class="mb-2">Cadastro</h1>
+                <span id="span_msg_c" hidden></span>
 
-    <div class="container">
+                <input type="text" id="username_c" placeholder="Username" />
+                <input type="text" id="nome" placeholder="Nome" />
+                <input type="email" id="email" placeholder="Email" />
+                <input type="password" class="mb-1" id="password_c" placeholder="Password" />
+                 <br>   
+                <button class="org_btn" type='submit'>Cadastre-se</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form class="form-login">
+                <h1 class="mb-2">Login</h1>
+                <span id="span_msg_l" hidden></span>
 
-        <header>
-            <div class="img-wrapper">
-                <img src="assets/imgs/fdo.jpg" alt="">
+
+                <input type="text" id="username_l" placeholder="Username" />
+                <input type="password" class="mb-1" id="password_l" placeholder="Password" />
+                <br>
+                <button class="org_btn" type='submit'>Entrar</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Bem vindo de volta!</h1>
+                    <p>Logue se para checar suas Tarefas.</p>
+                    <br>
+                    <button class="org_btn ghost" id="signIn">Entrar</button>
                 </div>
-                <div class="banner">
-                <h1>Web developer in AppNodeJs</h1>
-                <p> Desenvolvido por: João Pedro, Marcos Alan, Diego </p>
-
-                <button><a class="link" href="login">clique para fazer login</a></button>
-               
-                <button><a class="link" href="cadastro">clique para se cadastrar</a></button>
-
-
+                <div class="overlay-panel overlay-right">
+                    <h1>Ola, amigo!</h1>
+                    <p>Informe seus dados pessoais e<br> comece a usar o TaskFull</p>
+                    <button class="ghost" id="signUp">Cadastre-se</button>
+                </div>
             </div>
-            
-        </header>
-
-
+        </div>
     </div>
+    
+    <footer>
+        <p hidden>
+            Created with <i class="fa fa-heart"></i> by
+            <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
+        </p>
+    </footer>
 
 
+    
 </body>
+
+
+<script type="module" src="assets/js/login.js"></script>
+<script type="module" src="assets/js/cadastro.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+</script>
 
 </html>

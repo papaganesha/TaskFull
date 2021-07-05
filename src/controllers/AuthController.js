@@ -8,56 +8,48 @@ import mailNewUser from '../services/mailer.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
 
-function createJWT(obj, chave ){
+function createJWT(obj, chave) {
     return jwt.sign({
         cod_usuario: obj
-        }, chave, { expiresIn: '1h' })
+    }, chave, { expiresIn: '1h' })
 }
 
-
 export function auth(req, res, next) {
-    var username = req.body.username
-    var password = req.body.password
+    let { username, password } = req.body;
     if (username && password) {
-        //const salt = bcrypt.genSaltSync(10)
-        //var password_hashed = bcrypt.compareSync(password, salt)
         execute("SELECT * FROM USUARIOS WHERE USERNAME = ? AND PASSWORD = ?;", [username, password])
             .then((result) => {
                 if (result.length > 0) {
                     var cod_usuario = result[0].cod_usuario
                     var nome = result[0].NOME
 
+                    //criando um jwt
                     var tokenJWT = createJWT(cod_usuario, 'RUTHLESS')
-
-                    const response = {
+                    res.set('x-access-token', tokenJWT)
+                    return res.status(200).send({
+                        success: true,
                         msg: `${username} logado com sucesso`,
                         nome: nome,
-                        jwt: tokenJWT
-                    }
-    
-                    return res.status(201).send(response)
+                        cod_usuario: tokenJWT,
+                    
+                    })
                     next()
                 }
                 else {
-                    const response = {
-                        msg: 'Erro na autentição, verifique seus dados',
-                     
-                    }
-                    return res.status(500).send(response)
+                    return res.status(401).send({ msg: 'Username ou password incorretos' })
                     next()
                 }
             }).catch((error) => {
-                const response = {
-                    msg: error.sqlMessage}
-                return res.status(500).send(response)
+                return res.status(500).send({
+                    msg: error.sqlMessage
+                })
                 next()
             })
     }
     else {
-        const response = {
+        return res.status(401).send({
             msg: 'Necessario informar username e senha para logar'
-            }
-        return res.status(500).send(response)
+        })
     }
 }
 
@@ -72,7 +64,8 @@ export function register(req, res, next) {
         execute("INSERT INTO USUARIOS(USERNAME, NOME, EMAIL, PASSWORD) VALUES(?, ?, ?, ?);", [username.toUpperCase(), nome.toUpperCase(), email.toUpperCase(), password]).then((result) => {
             if (result.affectedRows > 0) {
                 const response = {
-                    msg: `${username} cadastrado com sucesso` }
+                    msg: `${username} cadastrado com sucesso`
+                }
                 return res.status(201).send(response)
                 mailNewUser(nome, email)
                 next()
@@ -80,7 +73,7 @@ export function register(req, res, next) {
                 const response = {
                     msg: 'Usuario ja existe, verifique seus dados'
                 }
-                return res.status(500).send(response)
+                return res.status(400).send(response)
                 next()
             }
         }).catch((error) => {
@@ -94,6 +87,6 @@ export function register(req, res, next) {
             msg: 'Necessario informar username, nome, email e password para cadastrar'
         }
 
-        return res.status(500).send(response)
+        return res.status(400).send(response)
     }
 }

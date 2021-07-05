@@ -2,13 +2,26 @@ import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_gl
 
 
 window.onload = function() {
-  if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
-    document.getElementById("busca").innerHTML += sessionStorage.nome;
-    window.addEventListener("load",() =>{
+  if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
+    $('form').on("submit", (event) => {
+      event.preventDefault();
+      var nomeLista = document.getElementById("nomeLista");
+      var categoria = document.getElementById("categoria");
+      var span_msg = document.getElementById("span_msg");
+      if (nomeLista && categoria) {
+        nomeLista = nomeLista.value;
+        categoria = categoria.value;
+        adicionarLista(nomeLista, categoria);
+      }
+      else {
+        span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
+        span_msg.hidden = false;
+      }
+  
     })
   }
   else{
-      window.location.assign("401")
+      window.location.assign("401");
   }
 }
 
@@ -20,16 +33,10 @@ function deslogar(){
 
 
 
-  function adicionarLista() {
-    if (sessionStorage.cod_usuario) {
-    var nomeLista = document.getElementById("nomeLista");
-    var categoria = document.getElementById("categoria");
-    var spanMsg = document.getElementById("span_msg");
-    var cod_usuario = sessionStorage.cod_usuario;
-    if (nomeLista && categoria) {
-      nomeLista = nomeLista.value;
-      categoria = categoria.value;
-      var formData = { cod_usuario: cod_usuario, nome: nomeLista, categoria: categoria };
+  function adicionarLista(nomeLista, categoria) {
+    var span_msg = document.getElementById("span_msg");
+    var cod_usuario = localStorage.cod_usuario;
+    var formData = { cod_usuario: cod_usuario, nome: nomeLista, categoria: categoria };
       $.ajax({
         url: "http://localhost:3000/v1/api/create/list",   // Url of backend (can be python, php, etc..)
         type: "POST", // data type (can be get, post, put, delete)
@@ -41,6 +48,7 @@ function deslogar(){
 
         },
         error: function (response) {
+          console.log(1);
           if (response.responseJSON.msg.errno === 1062) {
             span_msg.innerHTML += dismissable_warning_Msg("Lista já existente");
             span_msg.hidden = false;
@@ -50,17 +58,9 @@ function deslogar(){
           }
         }
       })
-    } 
-    else {
-      span_msg.innerHTML = dismissable_sucess_Msg("Preencha todos os campos");
-      span_msg.hidden = false;
-      nomeLista.value = "";
-      categoria.value = "";
-    }
-  }
-    else {
-      window.location.assign("401.html");
-    }
+    
+    
+   
   }
 
 

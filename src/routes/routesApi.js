@@ -35,12 +35,51 @@ import {
 
 var routerApi = Router();
 
+routerApi.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  //res.header('Access-Control-Allow-Credentials', "*");
+  res.header('Access-Control-Expose-Headers', 'x-access-token'); //essta linha habilita o token no header
+  next();
+});
+
+const checkJWT = (req, res, next)=>{
+  // procurar a propriedade token em partes diferentes do pedido
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  // descodificar caso haja um valor no request
+  if (token) {
+    // verifies secret and checks exp
+    jwt.verify(token, 'RUTHLESS', function(err, decoded) {      
+      if (err) { // erro!
+        console.log("erro")    
+
+        return res.status(403).json({ success: false, msg: 'Falha ao autenticar token JWT.' });    
+      } else {
+        // tudo ok! vamos passar esse valor para o req.decoded para ser usado no resto da aplicação
+        //req.decoded = decoded
+          console.log("sucesso")    
+        next()
+      }
+    });
+
+  } else {
+    console.log("erro")    
+
+    // se não houver token no pedido/request, retornar erro
+    return res.status(403).send({ 
+        sucess: false, 
+        msg: 'Sem token JWT.' 
+    })
+    
+  }
+}
 
 
 //LIST ROUTES
 routerApi.get("/v1/api/index/list", indexList);
-routerApi.post("/v1/api/list", busca_listaPorNome);
-routerApi.get("/v1/api/index/listperUser", indexList_perUser);
+routerApi.post("/v1/api/list/", busca_listaPorNome)
+routerApi.get("/v1/api/index/listperUser", indexList_perUser)
 routerApi.get("/v1/api/item/list/:id", itemList);
 routerApi.post("/v1/api/create/list", createList);
 routerApi.put("/v1/api/update/list/:id", updateList);
