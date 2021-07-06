@@ -88,7 +88,6 @@ function excluirLista(codLista) {
 
 
 function index_listas() {
-    if (localStorage.cod_usuario) {
         var cod_usuario = localStorage.cod_usuario;
         $.ajax({
             url: "http://localhost:3000/v1/api/index/listperUser", // Url of backend (can be python, php, etc..)
@@ -97,6 +96,8 @@ function index_listas() {
             async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
             success: function (response) {
                 var data = response;
+                var span_msg = document.getElementById("span_msg");
+
                 $("table > tbody").empty();
                 for (let i = 0; i < data.lista.length; i++) {
                     $('table').find('tbody')
@@ -131,10 +132,7 @@ function index_listas() {
                 span_msg.hidden = false;
             }
         })
-    }
-    else {
-        window.location.assign("401");
-    }
+  
 }
 
 

@@ -76,7 +76,7 @@ export function busca_nomeLista(req, res, next){
     var decoded = jwt.verify(cod_usuario, 'RUTHLESS')
     var cod_usuario_decoded =  decoded.cod_usuario
     const query =`SELECT * FROM LISTA_TAREFAS WHERE NOME_LISTA LIKE '%${nome}%' AND COD_USUARIO = ?;`
-    execute(query ,[ cod_usuario_decoded]).then((result) => {
+    execute(query ,[cod_usuario_decoded]).then((result) => {
         if (result.length > 0) {
             const response = {
                 lista: result.map((list => {

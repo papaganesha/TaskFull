@@ -39,7 +39,9 @@ function logar(username, password) {
       async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
       success: function (response) {
         localStorage.cod_usuario = response.cod_usuario;
+        localStorage.username = response.username;
         localStorage.nome = response.nome;
+
         window.location.assign("dashboard");
       },
       error: function (response) {

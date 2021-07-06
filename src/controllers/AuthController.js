@@ -29,6 +29,8 @@ export function auth(req, res, next) {
                 if (result.length > 0) {
                     var cod_usuario = result[0].cod_usuario
                     var nome = result[0].NOME
+                    var username = result[0].username
+                    var email = result[0].email
 
                     let options = {
                         path:"/",
@@ -45,7 +47,8 @@ export function auth(req, res, next) {
                     return res.status(200).send({
                         success: true,
                         msg: `${username} logado com sucesso`,
-                        nome: nome,
+                        username: username,
+                        nome: nome, 
                         cod_usuario: tokenJWT
                     })
                     

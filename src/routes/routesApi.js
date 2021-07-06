@@ -54,28 +54,33 @@ routerApi.use(function(req, res, next) {
 
 
 const checkJWT1 = (req, res, next) => { 
-  console.log(req.headers["x-access-token"])
+  console.log(req.cookies["x-access-token"])
   next() 
 }
 
 
 //MIDLEWARE CHECK JWT
 const checkJWT = (req, res, next) => {
-  try {
-    let token = req.cookies['x-access-token'];
-    if (token) {
-      const decoded = jwt.verify(token, 'RUTHLESS')
-      req.token = token
-      req.decoded = decoded
-      //console.log(token)
-      //console.log(decoded)
+    if (req.cookies["x-access-token"]) {
+      let token = req.cookies['x-access-token']
+      const decoded = jwt.verify(token, 'RUTHLESS' ,(error, result)=>{
+          if(error) {
+            console.log("error");
+            return res.redirect('/');
+          }
+          else{
+            req.decoded = result
+            req.token = token
+          }
+      })
       next()
-     }else{
+     }
+     else{
+       console.log("error");
        return res.redirect('/');
     }
 }
-  catch{return res.redirect('/')}
-}
+
 
 
 
@@ -99,7 +104,7 @@ routerApi.delete("/v1/api/delete/task/:id", checkJWT, deleteTask);
 
 
 //PERFIL ROUTES
-routerApi.post("/v1/api/index/perfil/", checkJWT, indexPerfil);
+routerApi.post("/v1/api/index/perfil", checkJWT, indexPerfil);
 routerApi.put("/v1/api/index/perfil", checkJWT, updatePerfil);
 
 
