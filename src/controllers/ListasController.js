@@ -36,7 +36,6 @@ export function index(req, res, next) {
     })
 }
 
-
 export function index_codUsuario(req, res, next) {
     var cod_usuario = req.query.cod_usuario  
     var decoded = jwt.verify(cod_usuario, 'RUTHLESS')
@@ -66,23 +65,18 @@ export function index_codUsuario(req, res, next) {
             }
             return res.status(500).send(response)
         }
-    }).catch((error) => {
-        const response = {
-            msg: error
-           
-        }
-        return res.status(500).send({msg : error})
+    }).catch((error) => { 
+        return res.status(500).send({msg : error.sqlMessage})
         next()
     })
 }
 
 export function busca_nomeLista(req, res, next){
-    var { cod_usuario } = req.body 
-    var { listaNome } = req.query
+    var { nome, cod_usuario } = req.query
     var decoded = jwt.verify(cod_usuario, 'RUTHLESS')
     var cod_usuario_decoded =  decoded.cod_usuario
-    const query =`SELECT * FROM LISTA_TAREFAS WHERE NOME_LISTA LIKE '%?%' AND COD_USUARIO = ?;`
-    execute(query ,[listaNome, cod_usuario_decoded]).then((result) => {
+    const query =`SELECT * FROM LISTA_TAREFAS WHERE NOME_LISTA LIKE '%${nome}%' AND COD_USUARIO = ?;`
+    execute(query ,[ cod_usuario_decoded]).then((result) => {
         if (result.length > 0) {
             const response = {
                 lista: result.map((list => {
@@ -101,10 +95,10 @@ export function busca_nomeLista(req, res, next){
             next()
         }
         else {
-            return res.status(500).send({ msg: `Nenhuma Lista para pesquisa: ${nomeLista}` })
+            return res.status(404).send({ msg: `Nenhuma Lista para pesquisa: ${nomeLista}` })
         }
     }).catch((error) => {
-        return res.status(500).send({msg : error})
+        return res.status(404).send({msg : error})
         next()
     })
 }

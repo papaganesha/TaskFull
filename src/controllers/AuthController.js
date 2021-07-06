@@ -1,3 +1,4 @@
+
 import {
     execute
 } from "../database/config.js";
@@ -8,10 +9,16 @@ import mailNewUser from '../services/mailer.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
 
+
+
 function createJWT(obj, chave) {
     return jwt.sign({
         cod_usuario: obj
     }, chave, { expiresIn: '1h' })
+}
+
+function createPass(password){
+    return bcrypt.hashSync(password, 8)
 }
 
 export function auth(req, res, next) {
@@ -23,17 +30,26 @@ export function auth(req, res, next) {
                     var cod_usuario = result[0].cod_usuario
                     var nome = result[0].NOME
 
+                    let options = {
+                        path:"/",
+                        sameSite:true,
+                        maxAge: 1000 * 60 * 60 * 24, // would expire after 24 hours
+                        httpOnly: true, // The cookie only accessible by the web server
+                    }
+
+
                     //criando um jwt
                     var tokenJWT = createJWT(cod_usuario, 'RUTHLESS')
-                    res.set('x-access-token', tokenJWT)
+                    res.cookie('x-access-token',tokenJWT, options) 
+
                     return res.status(200).send({
                         success: true,
                         msg: `${username} logado com sucesso`,
                         nome: nome,
-                        cod_usuario: tokenJWT,
-                    
+                        cod_usuario: tokenJWT
                     })
-                    next()
+                    
+                    
                 }
                 else {
                     return res.status(401).send({ msg: 'Username ou password incorretos' })

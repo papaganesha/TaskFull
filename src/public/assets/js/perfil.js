@@ -1,18 +1,15 @@
-import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+import {deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
 
 
 window.onload = function () {
   if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
     index_perfil();
-    //document.getElementById("print_nome").innerHTML += localStorage.nome;   
-    window.addEventListener("load", () => {
       sessionStorage.cod_tarefa = 0;
       timeInterval_global(index_perfil, 30000);
-    })
-
+        deslogar();
   }
   else {
-    window.location.assign("401");
+    window.location.assign("/");
   }
 }
 

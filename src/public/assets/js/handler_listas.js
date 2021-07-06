@@ -1,4 +1,4 @@
-import { timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg } from './common.js';
+import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg } from './common.js';
 
 
 window.onload = function () {
@@ -20,7 +20,7 @@ window.onload = function () {
                             localStorage.cod_lista = codLista;
                             location.assign('adicionarTarefa');
                         }
-                        else if(e.target.id == "editarLista"){
+                        else if(e.target.id == "EditarLista"){
                             var codLista = e.target.value;
                             localStorage.cod_lista = codLista;
                             location.assign('editarLista');
@@ -28,28 +28,34 @@ window.onload = function () {
                         else if(e.target.id == "DeletarLista"){
                             var codLista = e.target.value;
                             excluirLista(codLista);
-                            //timeOut_global(location.reload(), 1000);
+                            timeOut_global(index_listas, 2000);
                         }
 
                     }
                     e.stopPropagation();
                 })
               })
-        },2000);
-        $('form').on("submit", (event) => {
+        },1000);
+        $('#buscarListas').on("submit", (event) => {
             event.preventDefault();
-            var valor = event.target.value;
-            buscarListas(valor);
+            var valor = document.getElementById("buscaLista").value;
+            if(valor != ""){
+                buscarListas(valor);
+                document.getElementById("buscaTarefa").value = "";
+            }
+            else{
+                index_listas();
+            }
           })
             
-        
+        deslogar();
         timeInterval_global(index_listas, 30000);
         localStorage.cod_lista = 0;
 
        
     }
     else {
-        window.location.assign("401")
+        window.location.assign("/")
     }
 }
 
@@ -91,17 +97,15 @@ function index_listas() {
             async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
             success: function (response) {
                 var data = response;
-                var section = document.querySelector("#root");
-                section.innerHTML = "";
+                $("table > tbody").empty();
                 for (let i = 0; i < data.lista.length; i++) {
                     $('table').find('tbody')
                         .append(
                             `<tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                
+                                <td>
+                                    <div class="d-flex px-2 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">${data.lista[i].nome_lista}</h6>
+                                            <h6 class="mb-0 text-sm mx-2">${data.lista[i].nome_lista}</h6>
                                         </div>
                                         </div>
                                     </td>
@@ -109,7 +113,7 @@ function index_listas() {
                                         <p class="text-xs font-weight-bold mb-0">${data.lista[i].categoria}</p>
                                     
                                     </td>
-                                    <td class="align-middle">
+                                    <td class="d-flex align-content-center  flex-wrap">
                                     <div class="btnslistas">
                                     <button id="showTarefas" value="${data.lista[i].cod_lista}" class="btn btn-primary">Tarefas</button>
                                     <button id="addTarefa" value="${data.lista[i].cod_lista}" class="btn btn-primary">Adicionar Tarefa</button>
@@ -135,53 +139,56 @@ function index_listas() {
 
 
 
-function buscarListas(valor) {
+function buscarListas(nome) {
     var cod_usuario = localStorage.cod_usuario;
-    var formData = { cod_usuario: cod_usuario };
+    //var formData = { cod_usuario: cod_usuario, nome: valor };
     $.ajax({
-      url: `http://localhost:3000/v1/api/list/${valor}`, // Url of backend (can be python, php, etc..)
-      type: "POST", // data type (can be get, post, put, delete)
-      data : formData,
+      url: `http://localhost:3000/v1/api/list/?cod_usuario=${cod_usuario}&nome=${nome}`, // Url of backend (can be python, php, etc..)
+      type: "GET", // data type (can be get, post, put, delete)
+    
       async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
       success: function (response) {
         var data = response;
-        var section = document.querySelector("#root");
         var span_msg = document.getElementById("span_msg");
-        for (let i = 0; i < data.tarefa.length; i++) {
+        $('table').find('td').remove();
+        for (let i = 0; i < data.lista.length; i++) {
           $('table').find('tbody')
                 .append(
                 `<tr>
-                    <td>
-                        <div class="d-flex px-2 py-1">
-                    
-                          <div class="d-flex flex-column justify-content-center">
-                             <h6 class="mb-0 text-sm">${data.lista[i].nome_lista}</h6>
-                          </div>
-                         </div>
-                         </td>
-                        <td>
-                            <p class="text-xs font-weight-bold mb-0">${data.lista[i].categoria}</p>
-                        </td>
-                        <td class="align-middle">
-                        <div class="btnslistas">
-                            <button id="showTarefas" value="${data.lista[i].cod_lista}" class="btn btn-primary">Tarefas</button>
-                            <button id="addTarefa" value="${data.lista[i].cod_lista}" class="btn btn-primary">Adicionar Tarefa</button>
-                            <button id="EditarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Editar</button>
-                            <button id="DeletarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Excluir</button>
+                <td>
+                    <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm mx-2">${data.lista[i].nome_lista}</h6>
                         </div>
-                        </td>
-                        </tr>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="text-xs font-weight-bold mb-0">${data.lista[i].categoria}</p>
+                    
+                    </td>
+                    <td class="d-flex align-content-center  flex-wrap">
+                    <div class="btnslistas">
+                    <button id="showTarefas" value="${data.lista[i].cod_lista}" class="btn btn-primary">Tarefas</button>
+                    <button id="addTarefa" value="${data.lista[i].cod_lista}" class="btn btn-primary">Adicionar Tarefa</button>
+                    <button id="EditarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Editar</button>
+                    <button id="DeletarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Excluir</button>
+                    </div>
+                    </td>
+                </tr>
                         `);
         }
       },
       error: function (response) {
-          console.log(response);
-        span_msg.innerHTML = dismissable_warning_Msg(response.msg);
-        span_msg.hidden = false;
+        console.log(response);
+        if(response.status === 404){
+            $('table').find('td').remove();
+            span_msg.innerHTML = dismissable_warning_Msg(`Nenhuma Lista ${nome} disponivel.`);
+            span_msg.hidden = false;
+        }
+        
       }
     })
-  
-  
+
   }
 
 

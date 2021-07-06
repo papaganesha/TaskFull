@@ -1,6 +1,6 @@
 import { Router } from "express";
+import cors from "cors";
 //import timeLog from '../shared/middleware/timelogMiddleware'
-
 
 
 import {
@@ -17,6 +17,7 @@ import {
   index as indexTask,
   index_codLista as indexTarefasListaX,
   item as itemTask,
+  busca_nomeTarefa as busca_TarefaPorNome,
   create as createTask,
   update as updateTask,
   del as deleteTask,
@@ -33,71 +34,73 @@ import {
   auth as userLogin,
 } from "../controllers/AuthController.js";
 
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser'
+
 var routerApi = Router();
 
+routerApi.use(cookieParser())
+
 routerApi.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  //res.header('Access-Control-Allow-Credentials', "*");
-  res.header('Access-Control-Expose-Headers', 'x-access-token'); //essta linha habilita o token no header
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "*")
+  res.header('Access-Control-Expose-Headers', 'x-access-token') 
+  res.header('Access-Control-Accept-Headers', 'x-access-token')
   next();
 });
 
-const checkJWT = (req, res, next)=>{
-  // procurar a propriedade token em partes diferentes do pedido
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-  // descodificar caso haja um valor no request
-  if (token) {
-    // verifies secret and checks exp
-    jwt.verify(token, 'RUTHLESS', function(err, decoded) {      
-      if (err) { // erro!
-        console.log("erro")    
 
-        return res.status(403).json({ success: false, msg: 'Falha ao autenticar token JWT.' });    
-      } else {
-        // tudo ok! vamos passar esse valor para o req.decoded para ser usado no resto da aplicação
-        //req.decoded = decoded
-          console.log("sucesso")    
-        next()
-      }
-    });
 
-  } else {
-    console.log("erro")    
 
-    // se não houver token no pedido/request, retornar erro
-    return res.status(403).send({ 
-        sucess: false, 
-        msg: 'Sem token JWT.' 
-    })
-    
-  }
+const checkJWT1 = (req, res, next) => { 
+  console.log(req.headers["x-access-token"])
+  next() 
 }
 
 
+//MIDLEWARE CHECK JWT
+const checkJWT = (req, res, next) => {
+  try {
+    let token = req.cookies['x-access-token'];
+    if (token) {
+      const decoded = jwt.verify(token, 'RUTHLESS')
+      req.token = token
+      req.decoded = decoded
+      //console.log(token)
+      //console.log(decoded)
+      next()
+     }else{
+       return res.redirect('/');
+    }
+}
+  catch{return res.redirect('/')}
+}
+
+
+
 //LIST ROUTES
-routerApi.get("/v1/api/index/list", indexList);
-routerApi.post("/v1/api/list/", busca_listaPorNome)
-routerApi.get("/v1/api/index/listperUser", indexList_perUser)
-routerApi.get("/v1/api/item/list/:id", itemList);
-routerApi.post("/v1/api/create/list", createList);
-routerApi.put("/v1/api/update/list/:id", updateList);
-routerApi.delete("/v1/api/delete/list/:id", deleteList);
+routerApi.get("/v1/api/index/list", checkJWT, indexList)
+routerApi.get("/v1/api/list/", checkJWT, busca_listaPorNome)
+routerApi.get("/v1/api/index/listperUser", checkJWT, indexList_perUser)
+routerApi.get("/v1/api/item/list/:id", checkJWT, itemList)
+routerApi.post("/v1/api/create/list", checkJWT, createList)
+routerApi.put("/v1/api/update/list/:id", checkJWT, updateList)
+routerApi.delete("/v1/api/delete/list/:id", checkJWT, deleteList)
 
 //TASK ROUTES
-routerApi.get("/v1/api/index/task", indexTask);
-routerApi.get("/v1/api/item/task/:id", itemTask);
-routerApi.get("/v1/api/list/tasks/:id", indexTarefasListaX);
-
-routerApi.post("/v1/api/create/task", createTask);
-routerApi.put("/v1/api/update/task/:id", updateTask);
-routerApi.delete("/v1/api/delete/task/:id", deleteTask);
+routerApi.get("/v1/api/index/task", checkJWT, indexTask)
+routerApi.get("/v1/api/item/task/:id", checkJWT, itemTask)
+routerApi.get("/v1/api/task/", checkJWT, busca_TarefaPorNome)
+routerApi.get("/v1/api/list/tasks/:id", indexTarefasListaX)
+routerApi.post("/v1/api/create/task", checkJWT, createTask)
+routerApi.put("/v1/api/update/task/:id", checkJWT, updateTask)
+routerApi.delete("/v1/api/delete/task/:id", checkJWT, deleteTask);
 
 
 //PERFIL ROUTES
-routerApi.post("/v1/api/index/perfil/", indexPerfil);
-routerApi.put("/v1/api/index/perfil", updatePerfil);
+routerApi.post("/v1/api/index/perfil/", checkJWT, indexPerfil);
+routerApi.put("/v1/api/index/perfil", checkJWT, updatePerfil);
 
 
 //AUTH ROUTES

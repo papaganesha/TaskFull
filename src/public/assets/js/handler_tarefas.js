@@ -1,4 +1,4 @@
-import { timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg } from './common.js';
+import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg } from './common.js';
 
 
 window.onload = function () {
@@ -8,29 +8,17 @@ window.onload = function () {
       setInterval(function () {
         document.querySelectorAll('.btnsTarefas').forEach(item => {
             item.addEventListener('click', e => {
-             
+            
                 if (e.target !== e.currentTarget) {
-                    if(e.target.id == "showTarefas"){
-                        var codLista = e.target.value;
-                        localStorage.cod_lista = codLista;
-                        location.assign('tarefas');
-                    }
-                    else if(e.target.id == "addTarefa"){
-                        var codLista = e.target.value;
-                        localStorage.cod_lista = codLista;
-                        location.assign('adicionarTarefa');
-                    }
-                    else if(e.target.id == "editarLista"){
-                        var codLista = e.target.value;
-                        localStorage.cod_lista = codLista;
-                        location.assign('editarLista');
+                    if(e.target.id == "EditarTarefa"){
+                        var codTarefa = e.target.value;
+                        localStorage.cod_tarefa = codTarefa;
+                        location.assign('editarTarefa');
                     }
                     else if(e.target.id == "DeletarTarefa"){
                         var codLista = e.target.value;
                         excluirTarefa(codLista);
-                        setTimeout(function(){
-                          window.location.reload();
-                        }, 2000)
+                        setTimeout(index_tarefas, 1000);
                     }
 
                 }
@@ -38,20 +26,29 @@ window.onload = function () {
             })
           })
     },1000);
-      timeInterval_global(index_tarefas, 30000);
-  
+
+    $('#buscarTarefas').on("submit", (event) => {
+      event.preventDefault();
+      var valor = document.getElementById("buscaTarefa").value;
+      if(valor != ""){
+        buscarTarefas(valor);
+        document.getElementById("buscaTarefa").value = "";
+      }
+      else{
+        index_tarefas();
+      }
+      
+    })  
+
+    deslogar();
+    timeInterval_global(index_tarefas, 30000);
+      
   }
   else {
-    window.location.assign("401")
+    window.location.assign("/")
   }
 
 }
-
-
-
-
-
-
 
 
 
@@ -80,7 +77,6 @@ function excluirTarefa(codTarefa) {
 
 
 function index_tarefas() {
-
     var codLista = localStorage.cod_lista;
     $.ajax({
       url: `http://localhost:3000/v1/api/list/tasks/${codLista}`, // Url of backend (can be python, php, etc..)
@@ -89,8 +85,8 @@ function index_tarefas() {
       success: function (response) {
         var data = response;
         var statusTarefa = "";
-        var section = document.querySelector("#root");
         var span_msg = document.getElementById("span_msg");
+        $('table').find('td').remove();
         for (let i = 0; i < data.tarefa.length; i++) {
           if (data.tarefa[i].statusTarefa === 0) {
             statusTarefa = "Em andamento";
@@ -98,29 +94,33 @@ function index_tarefas() {
           else {
             statusTarefa = "Concluida";
           }
+          
           $('table').find('tbody')
             .append(`<tr>
-                        <td>
+                        <td >
                             <div class="d-flex px-2 py-1">
                                 
-                              <div class="d-flex flex-column justify-content-center">
-                                 <h6 class="mb-0 text-sm">${data.tarefa[i].nome_tarefa} </h6>
+                              <div class="d-flex flex-column justify-content-center mx-2">
+                                 <h6 class="mb-0 text-sm ">${data.tarefa[i].nome_tarefa} </h6>
                               </div>
                             </div>
                         </td>
                         <td>
                             <p class="text-xs font-weight-bold mb-0">${data.tarefa[i].descricao}</p>
                          </td>
+                         <td>
+                         <p class="text-xs font-weight-bold mb-0">${statusTarefa}</p>
+                      </td>
                          <td class="align-middle">
                             <div class="btnsTarefas">
                               <button id="EditarTarefa" value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary"> Editar</button>
                               <button id="DeletarTarefa" value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary"> Excluir</button>
-                            </div>
+                              <button id="MudarStatus" value="${data.tarefa[i].statusTarefa}" class="btn btn-primary"> Concluir</button>
+
+                              </div>
                           </td>
                       </tr>
-          
-                              
-                              `);
+             `);
         }
       },
       error: function (response) {
@@ -133,3 +133,63 @@ function index_tarefas() {
 }
 
 
+function buscarTarefas(nome) {
+  var cod_lista = localStorage.cod_lista;
+  //var formData = { cod_usuario: cod_usuario, nome: valor };
+  $.ajax({
+    url: `http://localhost:3000/v1/api/task/?cod_lista=${cod_lista}&nome=${nome}`, // Url of backend (can be python, php, etc..)
+    type: "GET", // data type (can be get, post, put, delete)
+  
+    async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+    success: function (response) {
+        var data = response;
+        var statusTarefa = "";
+        var span_msg = document.getElementById("span_msg");
+        for (let i = 0; i < data.length; i++) {
+          if (data.tarefa[i].statusTarefa === 0) {
+            statusTarefa = "Em andamento";
+          }
+          else {
+            statusTarefa = "Concluida";
+          }
+          $('table').find('td').remove();
+          $('table').find('tbody')
+            .append(`<tr>
+                        <td >
+                            <div class="d-flex px-2 py-1">
+                                
+                              <div class="d-flex flex-column justify-content-center mx-2">
+                                 <h6 class="mb-0 text-sm ">${data.tarefa[i].nome_tarefa} </h6>
+                              </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-xs font-weight-bold mb-0">${data.tarefa[i].descricao}</p>
+                         </td>
+                         <td>
+                         <p class="text-xs font-weight-bold mb-0">${statusTarefa}</p>
+                      </td>
+                         <td class="align-middle">
+                            <div class="btnsTarefas">
+                              <button id="EditarTarefa" value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary"> Editar</button>
+                              <button id="DeletarTarefa" value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary"> Excluir</button>
+                              <button id="MudarStatus" value="${data.tarefa[i].statusTarefa}" class="btn btn-primary"> Concluir</button>
+
+                              </div>
+                          </td>
+                      </tr>
+             `);
+      }
+    },
+    error: function (response) {
+      if(response.status === 404){
+          $('table').find('td').remove();
+          span_msg.innerHTML = dismissable_warning_Msg(`Nenhuma Tarefa ${nome} disponivel.`);
+          span_msg.hidden = false;
+      }
+      
+    }
+  })
+
+
+}

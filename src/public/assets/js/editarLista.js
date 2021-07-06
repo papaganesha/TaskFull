@@ -1,30 +1,13 @@
-import {dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+import {dismissable_warning_Msg, dismissable_sucess_Msg, deslogar} from './common.js';
 
 
 window.onload = function() {
-  if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
-    document.getElementById("busca").innerHTML += sessionStorage.nome;   
-   window.addEventListener("load", () => {
-    })
-}
-  else{
-  window.location.assign("401");
-  }
-}
-
-
-function deslogar(){
-  sessionStorage.clear();
-  window.location.assign("/");
-}
-
-
-
-function editarLista() {
-    var cod_lista = sessionStorage.cod_lista;
+  if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
+    $('form').on("submit", (event) => {
+      event.preventDefault();
     var nomeLista = document.getElementById("nomeLista");
     var categoria = document.getElementById("categoria");
-    var spanMsg = document.getElementById("span_msg");
+    var span_msg = document.getElementById("span_msg");
     var formData;
     if (nomeLista && categoria) {
       nomeLista = nomeLista.value;
@@ -42,6 +25,22 @@ function editarLista() {
     else {
       span_msg.innerHTML += dismissable_warning_Msg("Insira os dados corretamente");
     }
+    editarLista(formData);
+    })
+  }
+  else{
+  window.location.assign("/");
+  }
+}
+
+
+
+
+
+
+function editarLista(formData) {
+  var cod_lista = localStorage.cod_lista;
+  var span_msg = document.getElementById("span_msg");
 
     $.ajax({
       url: "http://localhost:3000/v1/api/update/list/"+cod_lista, // Url of backend (can be python, php, etc..)

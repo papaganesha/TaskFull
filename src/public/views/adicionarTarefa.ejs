@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Adicionando Tarefa - TaskFull
+    Adicionar Tarefa - TaskFull
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -73,8 +73,8 @@
                     Listas
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link me-2" onclick="deslogar()">
+                <li class="nav-item" id="deslogarSummon">
+                  <a class="nav-link me-2" >
                     <i class="fa fa-sign-out opacity-6 text-dark me-1"></i>
                     Deslogar
                   </a>
@@ -117,7 +117,10 @@
                     </div>
                   </form>
                 </div>
-              
+                <a class="nav-link me-2 mt-2 mx-2" href="/tarefas">
+                  <i class="fas fa-arrow-circle-left opacity-6 text-dark me-1"></i>
+                  Voltar
+                </a>
               </div>
             </div>
             <div class="col-md-6">

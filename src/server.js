@@ -8,7 +8,7 @@ import routerFront from "./routes/routesFront.js";
 const app = express()
 const port = 3000
 
-app.use(cors())
+
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -19,6 +19,11 @@ app.set('view engine', 'ejs')
 
 app.use(routerApi)
 app.use(routerFront)
+
+
+app.all("/b", (req, res) => {
+    console.log(req.method, req.headers);
+});
 
 
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`))

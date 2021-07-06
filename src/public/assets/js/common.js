@@ -18,7 +18,7 @@ export function dismissable_warning_Msg(msg){
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>${" "}${msg}</strong> &nbsp;
             <button type="button" class="btn-close" data-bs-dismiss="alert"
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" class="close justify-content-center" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
         </div>
@@ -28,10 +28,11 @@ export function dismissable_warning_Msg(msg){
 
 
 export function deslogar() {
-    sessionStorage.clear();
-    window.location.assign("/");
-  }
-
+  document.getElementById("deslogarSummon").addEventListener("click", ()=>{
+  localStorage.clear();
+  window.location.assign("/");
+})
+}
 
   export var timeInterval_20secs = (nomeFuncao) => {
     window.setInterval(nomeFuncao, 20000);

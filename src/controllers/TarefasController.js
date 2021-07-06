@@ -28,20 +28,44 @@ export function index(req, res, next) {
         }
     })
         .catch((error) => {
-            const response = {
-                msg: error.sqlMessage,
-                request: {
-                    tipo: 'GET',
-                    descricao: 'Erro durante operação de GET'
-                }
-            }
-            return res.status(500).send(response)
+           
+            return res.status(500).send({ msg: error.sqlMessage})
             next()
         })
 
 }
 
-
+export function busca_nomeTarefa(req, res, next){
+    var { nome, cod_lista } = req.query
+    const query =`SELECT * FROM TAREFA WHERE NOME_TAREFA LIKE '%${nome}%' AND COD_LISTA = ?;`
+    execute(query ,[ cod_lista ]).then((result) => {
+        if (result.length > 0) {
+            const response = {
+                lista: result.map((task => {
+                    return {
+                        cod_lista: task.cod_lista,
+                        cod_tarefa: task.cod_tarefa,
+                        nome_tarefa: task.nome_tarefa,
+                        descricao: task.descricao,
+                        data_entrada: task.data_entrada,
+                        data_ultima_alteracao: task.data_ultima_alteracao,
+                        statusTarefa: task.statusTarefa,
+                        data_termino: task.data_termino
+                    }
+                }))
+                
+            }
+            return res.status(200).send(response)
+            next()
+        }
+        else {
+            return res.status(404).send({ msg: `Nenhuma Lista para pesquisa: ${nomeLista}` })
+        }
+    }).catch((error) => {
+        return res.status(404).send({msg : error})
+        next()
+    })
+}
 
 
 export async function index_codLista(req, res, next) {

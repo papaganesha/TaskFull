@@ -1,102 +1,104 @@
-import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg } from './common.js';
 
 
 window.onload = function () {
-  if (sessionStorage.cod_usuario != 0 && sessionStorage.cod_usuario && sessionStorage.cod_usuario != null) {
-    document.getElementById("busca").innerHTML += sessionStorage.nome;   
-    window.addEventListener("load", () => {
-        document.getElementById("btn-editar").addEventListener("click", () => {
-            editarPerfil();
-          
-        })
-    })
-  
-  }
-  else {
-    window.location.assign("401");
+  if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
 
-  }
-}
+    $('form').on("submit", function (e) {
+      e.preventDefault();
+      var cod_usuario = localStorage.cod_usuario;
+      var nomeUsuario = document.getElementById("nomeUsuario");
+      var emailUsuario = document.getElementById("emailUsuario");
+      var passwordUsuario = document.getElementById("passwordUsuario");
+      var span_msg = document.getElementById("span_msg");
+      var formData;
 
+      if (nomeUsuario && emailUsuario && passwordUsuario) {
+        nomeUsuario = nomeUsuario.value;
+        emailUsuario = emailUsuario.value;
+        passwordUsuario = passwordUsuario.value;
+        formData = { cod_usuario: cod_usuario, nome: nomeUsuario, email: emailUsuario, password: passwordUsuario };
+        editarPerfil(formData);
+      }
 
+      else if (nomeUsuario && emailUsuario) {
+        nomeUsuario = nomeUsuario.value;
+        emailUsuario = emailUsuario.value;
+        formData = { cod_usuario: cod_usuario, nome: nomeUsuario, email: emailUsuario };
+        editarPerfil(formData);
+      }
 
+      else if (nomeUsuario && passwordUsuario) {
+        nomeUsuario = nomeUsuario.value;
+        passwordUsuario = passwordUsuario.value;
+        formData = { cod_usuario: cod_usuario, nome: nomeUsuario, password: passwordUsuario };
+        editarPerfil(formData);
+      }
 
-function editarPerfil() {
-  if (sessionStorage.cod_usuario) {
-    var cod_usuario = sessionStorage.cod_usuario;
-    var nomeUsuario = document.getElementById("nomeUsuario");
-    var emailUsuario = document.getElementById("emailUsuario");
-    var passwordUsuario = document.getElementById("passwordUsuario");
-    var spanMsg = document.getElementById("span_msg");
-    var formData;
-    if (nomeUsuario && emailUsuario && passwordUsuario) {
-      nomeUsuario = nomeUsuario.value;
-      emailUsuario = emailUsuario.value;
-      passwordUsuario = passwordUsuario.value;
-
-      formData = { cod_usuario: cod_usuario, nome: nomeUsuario, email: emailUsuario, password: passwordUsuario };
-    }
-
-    else if (nomeUsuario && emailUsuario) {
-      nomeUsuario = nomeUsuario.value;
-      emailUsuario = emailUsuario.value;
-      formData = { cod_usuario: cod_usuario, nome: nomeUsuario, email: emailUsuario };
-    }
-
-    else if (nomeUsuario && passwordUsuario) {
-      nomeUsuario = nomeUsuario.value;
-      passwordUsuario = passwordUsuario.value;
-      formData = { cod_usuario: cod_usuario, nome: nomeUsuario, password: passwordUsuario };
-    }
-
-    else if (emailUsuario && passwordUsuario) {
-      emailUsuario = emailUsuario.value;
-      passwordUsuario = passwordUsuario.value;
-      formData = { cod_usuario: cod_usuario, email: emailUsuario, password: passwordUsuario };
-    }
+      else if (emailUsuario && passwordUsuario) {
+        emailUsuario = emailUsuario.value;
+        passwordUsuario = passwordUsuario.value;
+        formData = { cod_usuario: cod_usuario, email: emailUsuario, password: passwordUsuario };
+        editarPerfil(formData);
+      }
 
 
-    else if (nomeUsuario) {
-      nomeUsuario = nomeUsuario.value;
-      formData = { cod_usuario: cod_usuario, nome: nomeUsuario };
-    }
+      else if (nomeUsuario) {
+        nomeUsuario = nomeUsuario.value;
+        formData = { cod_usuario: cod_usuario, nome: nomeUsuario };
+        console.log(formData);
 
-    else if (emailUsuario) {
-      emailUsuario = emailUsuario.value;
-      formData = { cod_usuario: cod_usuario, email: emailUsuario };
-    }
+      }
 
-    else if (passwordUsuario) {
-      passwordUsuario = passwordUsuario.value;
-      formData = { cod_usuario: cod_usuario, password: passwordUsuario };
-    }
+      else if (emailUsuario) {
+        emailUsuario = emailUsuario.value;
+        formData = { cod_usuario: cod_usuario, email: emailUsuario };
+        editarPerfil(formData);
+      }
 
-    else {
-      span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
-    }
-    console.log(cod_usuario + " --- " + nomeUsuario + " --- " + emailUsuario);
+      else if (passwordUsuario) {
+        passwordUsuario = passwordUsuario.value;
+        formData = { cod_usuario: cod_usuario, password: passwordUsuario };
+        editarPerfil(formData);
+      }
 
-    $.ajax({
-      url: "http://localhost:3000/v1/api/index/perfil", // Url of backend (can be python, php, etc..)
-      type: "PUT", // data type (can be get, post, put, delete)
-      data: formData, // data in json format
-      async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
-      success: function (response) {
-        span_msg.innerHTML = dismissable_sucess_Msg(response.msg);
-        span_msg.hidden = false;
-
-      },
-      error: function (response) {
-        span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
+      else {
+        span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
         span_msg.hidden = false;
       }
     })
+    deslogar();
   }
 
   else {
-    window.location.assign("401");
+    window.location.assign("/");
   }
 }
+
+
+
+
+function editarPerfil(formData) {
+  var span_msg = document.getElementById("span_msg");
+  $.ajax({
+    url: "http://localhost:3000/v1/api/index/perfil", // Url of backend (can be python, php, etc..)
+    type: "PUT", // data type (can be get, post, put, delete)
+    data: formData, // data in json format
+    async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+    success: function (response) {
+      span_msg.innerHTML = dismissable_sucess_Msg(response.msg);
+      span_msg.hidden = false;
+
+    },
+    error: function (response) {
+      span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
+      span_msg.hidden = false;
+    }
+  })
+}
+
+
+
 
 
 
