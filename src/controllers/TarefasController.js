@@ -67,6 +67,35 @@ export function busca_nomeTarefa(req, res, next){
     })
 }
 
+export function switchStatus(req, res, next){
+    var { statusTarefa , cod_tarefa } = req.body
+    statusTarefa = parseInt(statusTarefa)
+    var msg = ""
+    if( statusTarefa == 0){
+        statusTarefa = 1
+        msg = "Tarefa completada"
+    }
+    else if( statusTarefa == 1){
+        statusTarefa = 0
+        msg = "Tarefa reiniciada"
+    }
+
+    cod_tarefa = parseInt(cod_tarefa)
+    const query =`UPDATE TAREFA SET statusTarefa = ? WHERE COD_TAREFA = ?;`
+    execute(query ,[ statusTarefa, cod_tarefa ]).then((result) => {
+        if (result.affectedRows > 0) {
+            return res.status(200).send({msg : msg })
+            next()
+        }
+        else {
+            return res.status(404).send({ msg: `Erro durante switch` })
+        }
+    }).catch((error) => {
+        return res.status(404).send({msg : error.sqlMessage})
+        next()
+    })
+}
+
 
 export async function index_codLista(req, res, next) {
         var cod_lista = req.params.id

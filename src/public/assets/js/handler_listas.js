@@ -4,11 +4,9 @@ import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, time
 window.onload = function () {
     if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
         index_listas();
-      
-        setInterval(function () {
+        setTimeout(function () {
             document.querySelectorAll('.btnslistas').forEach(item => {
                 item.addEventListener('click', e => {
-                 
                     if (e.target !== e.currentTarget) {
                         if(e.target.id == "showTarefas"){
                             var codLista = e.target.value;
@@ -148,7 +146,6 @@ function buscarListas(nome) {
       success: function (response) {
         var data = response;
         var span_msg = document.getElementById("span_msg");
-        $('table').find('td').remove();
         for (let i = 0; i < data.lista.length; i++) {
           $('table').find('tbody')
                 .append(
@@ -177,7 +174,6 @@ function buscarListas(nome) {
         }
       },
       error: function (response) {
-        console.log(response);
         if(response.status === 404){
             $('table').find('td').remove();
             span_msg.innerHTML = dismissable_warning_Msg(`Nenhuma Lista ${nome} disponivel.`);

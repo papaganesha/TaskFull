@@ -21,6 +21,7 @@ import {
   create as createTask,
   update as updateTask,
   del as deleteTask,
+  switchStatus as switchStatusI
 } from "../controllers/TarefasController.js";
 
 import {
@@ -100,6 +101,7 @@ routerApi.get("/v1/api/task/", checkJWT, busca_TarefaPorNome)
 routerApi.get("/v1/api/list/tasks/:id", indexTarefasListaX)
 routerApi.post("/v1/api/create/task", checkJWT, createTask)
 routerApi.put("/v1/api/update/task/:id", checkJWT, updateTask)
+routerApi.put("/v1/api/update/task", checkJWT, switchStatusI)
 routerApi.delete("/v1/api/delete/task/:id", checkJWT, deleteTask);
 
 
