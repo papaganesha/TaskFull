@@ -41,7 +41,7 @@ export function busca_nomeTarefa(req, res, next){
     execute(query ,[ cod_lista ]).then((result) => {
         if (result.length > 0) {
             const response = {
-                lista: result.map((task => {
+                tarefa: result.map((task => {
                     return {
                         cod_lista: task.cod_lista,
                         cod_tarefa: task.cod_tarefa,

@@ -145,14 +145,15 @@ function buscarTarefas(nome) {
         var data = response;
         var statusTarefa = "";
         var span_msg = document.getElementById("span_msg");
-        for (let i = 0; i < data.length; i++) {
+        $('table').find('td').remove();
+        for (let i = 0; i < data.tarefa.length; i++) {
           if (data.tarefa[i].statusTarefa === 0) {
             statusTarefa = "Em andamento";
           }
           else {
             statusTarefa = "Concluida";
           }
-          $('table').find('td').remove();
+        
           $('table').find('tbody')
             .append(`<tr>
                         <td >
