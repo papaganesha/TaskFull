@@ -23,6 +23,7 @@ function createPass(password){
 
 export function auth(req, res, next) {
     let { username, password } = req.body;
+    //password = createPass(password)
     if (username && password) {
         execute("SELECT * FROM USUARIOS WHERE USERNAME = ? AND PASSWORD = ?;", [username, password])
             .then((result) => {
@@ -74,10 +75,8 @@ export function auth(req, res, next) {
 
 
 export function register(req, res, next) {
-    var username = req.body.username
-    var password = req.body.password
-    var nome = req.body.nome
-    var email = req.body.email
+    var {username,  nome, email, password} = req.body
+    //password = createPass(password)
     if (username && nome && email && password) {
 
         execute("INSERT INTO USUARIOS(USERNAME, NOME, EMAIL, PASSWORD) VALUES(?, ?, ?, ?);", [username.toUpperCase(), nome.toUpperCase(), email.toUpperCase(), password]).then((result) => {

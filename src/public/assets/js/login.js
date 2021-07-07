@@ -41,7 +41,6 @@ function logar(username, password) {
         localStorage.cod_usuario = response.cod_usuario;
         localStorage.username = response.username;
         localStorage.nome = response.nome;
-
         window.location.assign("dashboard");
       },
       error: function (response) {

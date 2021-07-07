@@ -27,11 +27,6 @@ window.onload = function () {
 }
 
 
-function deslogar() {
-  sessionStorage.clear();
-  window.location.assign("/");
-}
-
 
 
 function adicionarLista(nomeLista, categoria) {
