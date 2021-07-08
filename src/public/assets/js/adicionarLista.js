@@ -27,7 +27,8 @@ function formAddLista(){
       span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
       span_msg.hidden = false;
     }
-
+    document.getElementById("nomeLista").value = "";
+    document.getElementById("categoria").value = "";
   })
 }
 

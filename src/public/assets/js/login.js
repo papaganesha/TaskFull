@@ -1,7 +1,5 @@
 import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
 
-
-
 window.addEventListener("load", () => {
   localStorage.clear();
   timeOut_global(formLogin, 1000);
@@ -23,7 +21,8 @@ function formLogin(){
       span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
       span_msg.hidden = false;
     }
-
+    document.getElementById("username_l").value = "";
+    document.getElementById("password_l").value = "";
   })
 
 }

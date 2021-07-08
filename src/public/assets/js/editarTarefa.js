@@ -3,8 +3,8 @@ import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, time
 
 window.onload = function () {
   if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
-    timeOut_global(formEditarTarefa, 1500);
-    timeOut_global(deslogar, 1500);
+    timeOut_global(formEditarTarefa, 500);
+    timeOut_global(deslogar, 500);
   }
   else {
     window.location.assign("/")

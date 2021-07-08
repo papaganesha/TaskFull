@@ -3,8 +3,8 @@ import { dismissable_warning_Msg, dismissable_sucess_Msg, deslogar } from './com
 
 window.onload = function () {
   if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
-    timeOut_global(formEditarLista, 1500);
-    timeOut_global(deslogar, 1500);
+    timeOut_global(formEditarLista, 500);
+    timeOut_global(deslogar, 500);
   }
   else {
     window.location.assign("/");

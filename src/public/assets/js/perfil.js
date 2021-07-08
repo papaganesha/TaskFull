@@ -1,12 +1,11 @@
-import {deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
+import {capitalizeFirstLetter, deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_global, dismissable_warning_Msg, dismissable_sucess_Msg} from './common.js';
 
 
 window.onload = function () {
   if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
       index_perfil();
-      sessionStorage.cod_tarefa = 0;
       timeInterval_global(index_perfil, 30000);
-      deslogar();
+      localStorage.cod_tarefa = 0;
   }
   else {
     window.location.assign("/");
@@ -17,7 +16,6 @@ window.onload = function () {
 
 
 function index_perfil(){
-  console.log('1');
     var cod_usuario = localStorage.cod_usuario;
     var span_msg = document.getElementById("span_msg");
     $.ajax({
@@ -31,9 +29,9 @@ function index_perfil(){
         var printNome = document.getElementById("print_nome");
         var printEmail = document.getElementById("print_mail") ;
         if(username && userText && printNome && printEmail){
-          username.innerHTML  = localStorage.username;
+          username.innerHTML  = capitalizeFirstLetter(localStorage.username);
           userText.innerHTML = 'Usuario comum';
-          printNome.innerHTML  = response.nome;
+          printNome.innerHTML  = capitalizeFirstLetter(response.nome);
           printEmail.innerHTML  = response.email;
         }
        

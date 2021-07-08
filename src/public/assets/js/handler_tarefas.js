@@ -4,8 +4,6 @@ import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, time
 window.onload = function () {
   if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
     index_tarefas();
-    timeOut_global(acoesTarefa, 1500);
-    timeOut_global(searchTarefas, 1500);
     timeOut_global(deslogar, 1500);
     timeInterval_global(index_tarefas, 30000);
     localStorage.cod_tarefa = 0;
@@ -103,6 +101,9 @@ function index_tarefas() {
           else {
             statusTarefa = "Concluida";
           }
+          var nome_tarefa = data.tarefa[i].nome_tarefa;
+          var descricao = data.tarefa[i].descricao;
+          var cod_tarefa = data.tarefa[i].cod_tarefa;
           $('table').find('tbody')
             .append(`<tr>
                         <td >
@@ -132,6 +133,8 @@ function index_tarefas() {
                       </tr>
              `);
         }
+        timeOut_global(acoesTarefa, 1500);
+        timeOut_global(searchTarefas, 1500);
       },
       error: function (response) {
         span_msg.innerHTML = dismissable_warning_Msg(response.responseJSON.msg);
@@ -179,19 +182,22 @@ function buscarTarefas(nome) {
           else {
             statusTarefa = "Concluida";
           }
+          var nome_tarefa = data.tarefa[i].nome_tarefa;
+          var descricao = data.tarefa[i].descricao;
+          var cod_tarefa = data.tarefa[i].cod_tarefa;
           $('table').find('tbody')
             .append(`<tr>
                         <td >
                             <div class="d-flex px-2 py-1">
                                 
                               <div class="d-flex flex-column justify-content-center mx-2">
-                              <h6 class="mb-0 text-sm ">${data.tarefa[i].nome_tarefa}</h6>
+                              <h6 class="mb-0 text-sm ">${nome_tarefa}</h6>
 
                               </div>
                             </div>
                         </td>
                         <td>
-                        <p class="text-xs font-weight-bold mb-0">${data.tarefa[i].descricao}</p>
+                        <p class="text-xs font-weight-bold mb-0">${descricao}</p>
 
                          </td>
                          <td>
@@ -199,8 +205,8 @@ function buscarTarefas(nome) {
                       </td>
                          <td class="align-middle">
                             <div class="btnsTarefas">
-                              <button id="EditarTarefa" value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary"> Editar</button>
-                              <button id="DeletarTarefa" value="${data.tarefa[i].cod_tarefa}" class="btn btn-primary"> Excluir</button>
+                              <button id="EditarTarefa" value="${cod_tarefa}" class="btn btn-primary"> Editar</button>
+                              <button id="DeletarTarefa" value="${cod_tarefa}" class="btn btn-primary"> Excluir</button>
                               <button id="MudarStatus" value="${data.tarefa[i].statusTarefa}" class="btn btn-primary"> Concluir</button>
 
                               </div>
@@ -208,6 +214,8 @@ function buscarTarefas(nome) {
                       </tr>
              `);
       }
+      timeOut_global(acoesTarefa, 500);
+      timeOut_global(searchTarefas, 500);
     },
     error: function (response) {
       $('table').find('td').remove();

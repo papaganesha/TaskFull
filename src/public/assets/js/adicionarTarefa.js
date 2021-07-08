@@ -3,8 +3,8 @@ import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, time
 
 window.onload = function () {
   if (localStorage.cod_usuario && localStorage.cod_usuario != null) {
-    timeOut_global(formAddTarefa,1500);
-    timeOut_global(deslogar,1500);
+    timeOut_global(formAddTarefa, 500);
+    timeOut_global(deslogar, 500);
   }
   else {
     window.location.assign("/")
@@ -25,6 +25,8 @@ function formAddTarefa(){
       span_msg.innerHTML += dismissable_warning_Msg("Insira os dados corretamente");
       span_msg.hidden = false;
     }
+    document.getElementById("nomeTarefa").value = "";
+    document.getElementById("descricao").value = "";
   })
 }
 

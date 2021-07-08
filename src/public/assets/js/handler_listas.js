@@ -4,9 +4,7 @@ import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, time
 window.onload = function () {
     if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
         index_listas();
-        timeOut_global(acoesLista, 1500);
         timeOut_global(deslogar, 1500);
-        timeOut_global(searchListas, 1500);
         timeInterval_global(index_listas, 30000);
         localStorage.cod_lista = 0;
 
@@ -17,26 +15,26 @@ window.onload = function () {
 }
 
 
-function acoesLista(){
+function acoesLista() {
     document.querySelectorAll('.btnslistas').forEach(item => {
         item.addEventListener('click', e => {
             if (e.target !== e.currentTarget) {
-                if(e.target.id == "showTarefas"){
+                if (e.target.id == "showTarefas") {
                     var codLista = e.target.value;
                     localStorage.cod_lista = codLista;
                     location.assign('tarefas');
                 }
-                else if(e.target.id == "addTarefa"){
+                else if (e.target.id == "addTarefa") {
                     var codLista = e.target.value;
                     localStorage.cod_lista = codLista;
                     location.assign('adicionarTarefa');
                 }
-                else if(e.target.id == "EditarLista"){
+                else if (e.target.id == "EditarLista") {
                     var codLista = e.target.value;
                     localStorage.cod_lista = codLista;
                     location.assign('editarLista');
                 }
-                else if(e.target.id == "DeletarLista"){
+                else if (e.target.id == "DeletarLista") {
                     var codLista = e.target.value;
                     excluirLista(codLista);
                     timeOut_global(index_listas, 2000);
@@ -45,23 +43,23 @@ function acoesLista(){
             }
             e.stopPropagation();
         })
-      })
+    })
 }
 
-function searchListas(){
+function searchListas() {
     $('#buscarListas').on("submit", (event) => {
         event.preventDefault();
         var valor = document.getElementById("buscaLista").value;
-        if(valor != ""){
+        if (valor != "") {
             buscarListas(valor);
             document.getElementById("buscaLista").value = "";
             timeOut_global(acoesLista, 500);
         }
-        else{
+        else {
             index_listas();
             timeOut_global(acoesLista, 500);
         }
-      })
+    })
 }
 
 
@@ -92,51 +90,58 @@ function excluirLista(codLista) {
 
 
 function index_listas() {
-        var cod_usuario = localStorage.cod_usuario;
-        $.ajax({
-            url: "http://localhost:3000/v1/api/index/listperUser", // Url of backend (can be python, php, etc..)
-            type: "GET", // data type (can be get, post, put, delete)
-            data: { cod_usuario: cod_usuario }, // data in json format
-            async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
-            success: function (response) {
-                var data = response;
-                var span_msg = document.getElementById("span_msg");
+    var cod_usuario = localStorage.cod_usuario;
+    $.ajax({
+        url: "http://localhost:3000/v1/api/index/listperUser", // Url of backend (can be python, php, etc..)
+        type: "GET", // data type (can be get, post, put, delete)
+        data: { cod_usuario: cod_usuario }, // data in json format
+        async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+        success: function (response) {
+            var data = response;
+            var span_msg = document.getElementById("span_msg");
 
-                $("table > tbody").empty();
-                for (let i = 0; i < data.lista.length; i++) {
-                    $('table').find('tbody')
-                        .append(
-                            `<tr>
+            $("table > tbody").empty();
+            for (let i = 0; i < data.lista.length; i++) {
+                var nomeLista = data.lista[i].nome_lista;
+                var categoria = data.lista[i].categoria;
+                var cod_lista = data.lista[i].cod_lista;
+                $('table').find('tbody')
+                    .append(
+                        `<tr>
                                 <td>
                                     <div class="d-flex px-2 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm mx-2">${data.lista[i].nome_lista}</h6>
+                                            <h6 class="mb-0 text-sm mx-2">${nomeLista}</h6>
                                         </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">${data.lista[i].categoria}</p>
+                                        <p class="text-xs font-weight-bold mb-0">${categoria}</p>
                                     
                                     </td>
                                     <td class="d-flex align-content-center  flex-wrap">
                                     <div class="btnslistas">
-                                    <button id="showTarefas" value="${data.lista[i].cod_lista}" class="btn btn-primary">Tarefas</button>
-                                    <button id="addTarefa" value="${data.lista[i].cod_lista}" class="btn btn-primary">Adicionar Tarefa</button>
-                                    <button id="EditarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Editar</button>
-                                    <button id="DeletarLista" value="${data.lista[i].cod_lista}" class="btn btn-primary">Excluir</button>
+                                    <button id="showTarefas" value="${cod_lista}" class="btn btn-primary">Tarefas</button>
+                                    <button id="addTarefa" value="${cod_lista}" class="btn btn-primary">Adicionar Tarefa</button>
+                                    <button id="EditarLista" value="${cod_lista}" class="btn btn-primary">Editar</button>
+                                    <button id="DeletarLista" value="${cod_lista}" class="btn btn-primary">Excluir</button>
                                     </div>
                                     </td>
                                 </tr>
                              `);
 
-                }
-            },
-            error: function (response) {
-                span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);
-                span_msg.hidden = false;
             }
-        })
-  
+
+            timeOut_global(acoesLista, 500);
+            timeOut_global(searchListas, 500);
+
+        },
+        error: function (response) {
+            span_msg.innerHTML += dismissable_warning_Msg(response.responseJSON.msg);
+            span_msg.hidden = false;
+        }
+    })
+
 }
 
 
@@ -144,18 +149,21 @@ function index_listas() {
 function buscarListas(nome) {
     var cod_usuario = localStorage.cod_usuario;
     $.ajax({
-      url: `http://localhost:3000/v1/api/list/?cod_usuario=${cod_usuario}&nome=${nome}`, // Url of backend (can be python, php, etc..)
-      type: "GET", // data type (can be get, post, put, delete)
-    
-      async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
-      success: function (response) {
-        var data = response;
-        var span_msg = document.getElementById("span_msg");
-        $('table').find('td').remove();
-        for (let i = 0; i < data.lista.length; i++) {
-          $('table').find('tbody')
-                .append(
-                `<tr>
+        url: `http://localhost:3000/v1/api/list/?cod_usuario=${cod_usuario}&nome=${nome}`, // Url of backend (can be python, php, etc..)
+        type: "GET", // data type (can be get, post, put, delete)
+
+        async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+        success: function (response) {
+            var data = response;
+            var span_msg = document.getElementById("span_msg");
+            $('table').find('td').remove();
+            for (let i = 0; i < data.lista.length; i++) {
+                var nomeLista = data.lista[i].nome_lista;
+                var categoria = data.lista[i].categoria;
+                var cod_lista = data.lista[i].cod_lista;
+                $('table').find('tbody')
+                    .append(
+                        `<tr>
                 <td>
                     <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
@@ -177,19 +185,21 @@ function buscarListas(nome) {
                     </td>
                 </tr>
                         `);
+            }
+            timeOut_global(acoesLista, 500);
+            timeOut_global(searchListas, 500);
+        },
+        error: function (response) {
+            if (response.status === 404) {
+                $('table').find('td').remove();
+                span_msg.innerHTML = dismissable_warning_Msg(`Nenhuma Lista ${nome} disponivel.`);
+                span_msg.hidden = false;
+            }
+
         }
-      },
-      error: function (response) {
-        if(response.status === 404){
-            $('table').find('td').remove();
-            span_msg.innerHTML = dismissable_warning_Msg(`Nenhuma Lista ${nome} disponivel.`);
-            span_msg.hidden = false;
-        }
-        
-      }
     })
 
-  }
+}
 
 
 

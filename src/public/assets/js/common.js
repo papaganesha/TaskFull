@@ -26,6 +26,18 @@ export function dismissable_warning_Msg(msg){
   `
 }
 
+export function capitalizeFirstLetter(mySentence) {
+  //return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  //const mySentence = "freeCodeCamp is an awesome resource";
+  const words = mySentence.split(" ");
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+  }
+
+  return words.join(" ");
+
+}
 
 export function deslogar() {
   document.getElementById("deslogarSummon").addEventListener("click", ()=>{
