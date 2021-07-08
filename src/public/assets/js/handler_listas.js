@@ -55,9 +55,11 @@ function searchListas(){
         if(valor != ""){
             buscarListas(valor);
             document.getElementById("buscaLista").value = "";
+            timeOut_global(acoesLista, 500);
         }
         else{
             index_listas();
+            timeOut_global(acoesLista, 500);
         }
       })
 }

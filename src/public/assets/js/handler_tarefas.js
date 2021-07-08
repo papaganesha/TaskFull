@@ -51,9 +51,11 @@ function searchTarefas(){
     if(valor != ""){
       buscarTarefas(valor);
       document.getElementById("buscaTarefa").value = "";
+      timeOut_global(acoesTarefa, 500);
     }
     else{
       index_tarefas();
+      timeOut_global(acoesTarefa, 500);
     }
     
   })
