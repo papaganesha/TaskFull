@@ -3,20 +3,8 @@ import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, time
 
 window.onload = function () {
   if (localStorage.cod_usuario && localStorage.cod_usuario != null) {
-    $('form').on("submit", (event) => {
-      event.preventDefault();
-      var nomeTarefa = document.getElementById("nomeTarefa");
-      var descricao = document.getElementById("descricao");
-      var span_msg = document.getElementById("span_msg");
-      if (nomeTarefa && descricao) {
-        adicionarTarefa(nomeTarefa.value, descricao.value);
-      }
-      else {
-        span_msg.innerHTML += dismissable_warning_Msg("Insira os dados corretamente");
-        span_msg.hidden = false;
-      }
-    })
-    deslogar();
+    timeOut_global(formAddTarefa,1500);
+    timeOut_global(deslogar,1500);
   }
   else {
     window.location.assign("/")
@@ -24,6 +12,21 @@ window.onload = function () {
 }
 
 
+function formAddTarefa(){
+  $('form').on("submit", (event) => {
+    event.preventDefault();
+    var nomeTarefa = document.getElementById("nomeTarefa");
+    var descricao = document.getElementById("descricao");
+    var span_msg = document.getElementById("span_msg");
+    if (nomeTarefa && descricao) {
+      adicionarTarefa(nomeTarefa.value, descricao.value);
+    }
+    else {
+      span_msg.innerHTML += dismissable_warning_Msg("Insira os dados corretamente");
+      span_msg.hidden = false;
+    }
+  })
+}
 
 function adicionarTarefa(nomeTarefa, descricao) {
   var cod_lista = localStorage.cod_lista;

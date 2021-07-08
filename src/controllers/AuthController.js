@@ -44,26 +44,25 @@ export function auth(req, res, next) {
                     //criando um jwt
                     var tokenJWT = createJWT(cod_usuario, 'RUTHLESS')
                     res.cookie('x-access-token',tokenJWT, options) 
-
-                    return res.status(200).send({
+                    res.status(202).send({
                         success: true,
                         msg: `${username} logado com sucesso`,
                         username: username,
                         nome: nome, 
                         cod_usuario: tokenJWT
                     })
-                    
+                    next()
                     
                 }
                 else {
                     return res.status(401).send({ msg: 'Username ou password incorretos' })
-                    next()
+                
                 }
             }).catch((error) => {
                 return res.status(500).send({
                     msg: error.sqlMessage
                 })
-                next()
+               
             })
     }
     else {
@@ -81,30 +80,18 @@ export function register(req, res, next) {
 
         execute("INSERT INTO USUARIOS(USERNAME, NOME, EMAIL, PASSWORD) VALUES(?, ?, ?, ?);", [username.toUpperCase(), nome.toUpperCase(), email.toUpperCase(), password]).then((result) => {
             if (result.affectedRows > 0) {
-                const response = {
-                    msg: `${username} cadastrado com sucesso`
-                }
-                return res.status(201).send(response)
+                res.status(201).send({ msg: `${username} cadastrado com sucesso`})
+                // USANDO NODEMAILER
                 mailNewUser(nome, email)
                 next()
             } else {
-                const response = {
-                    msg: 'Usuario ja existe, verifique seus dados'
-                }
-                return res.status(400).send(response)
-                next()
+                res.status(500).send({msg: 'Usuario ja existe, verifique seus dados'})
             }
         }).catch((error) => {
-            const response = { msg: error }
-            return res.status(500).send(response)
-            next()
+            res.status(500).send({ msg: error.sqlMessage })
         })
     }
     else {
-        const response = {
-            msg: 'Necessario informar username, nome, email e password para cadastrar'
-        }
-
-        return res.status(400).send(response)
+        return res.status(400).send({msg: 'Necessario informar username, nome, email e password para cadastrar'})
     }
 }

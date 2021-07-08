@@ -24,7 +24,7 @@ export function index(req, res, next) {
             next()
         }
         else {
-            return res.status(500).send({ msg: 'Tabela de Tarefas vazia' })
+            return res.status(204).send({ msg: 'Tabela de Tarefas vazia' })
         }
     })
         .catch((error) => {
@@ -59,10 +59,10 @@ export function busca_nomeTarefa(req, res, next){
             next()
         }
         else {
-            return res.status(404).send({ msg: `Nenhuma Lista para pesquisa: ${nomeLista}` })
+            return res.status(204).send({ msg: `Nenhuma Lista para pesquisa: ${nomeLista}` })
         }
     }).catch((error) => {
-        return res.status(404).send({msg : error})
+        return res.status(500).send({msg : error.sqlMessage})
         next()
     })
 }

@@ -3,14 +3,16 @@ import {deslogar ,timeInterval_20secs, timeInterval_3secs, timeOut_global, timeI
 
 window.onload = function () {
   if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
-    document.getElementById("print_welcome").innerHTML += `Seja bem vindo ${localStorage.nome}`;   
-      localStorage.cod_lista = 0;
-      deslogar();
-      
+    timeOut_global(alterHome, 500);   
+    timeOut_global(deslogar,1500);   
+    localStorage.cod_lista = 0;
+    
   }
   else {
     window.location.assign("/");
   }
 }
 
-
+function alterHome(){
+  document.getElementById("print_welcome").innerHTML += `Seja bem vindo ${localStorage.nome}`;   
+}

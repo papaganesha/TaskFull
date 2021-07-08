@@ -4,7 +4,13 @@ import {timeInterval_20secs, timeInterval_3secs, timeOut_global, timeInterval_gl
 
 window.addEventListener("load", () => {
   localStorage.clear();
+  timeOut_global(formLogin, 1000);
   
+})
+
+
+
+function formLogin(){
   $('.form-login').on("submit", (event) => {
     event.preventDefault();
     var username = document.getElementById("username_l").value;
@@ -20,11 +26,7 @@ window.addEventListener("load", () => {
 
   })
 
-})
-
-
-
-
+}
 
 
 

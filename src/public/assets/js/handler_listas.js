@@ -4,59 +4,63 @@ import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, time
 window.onload = function () {
     if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
         index_listas();
-        setTimeout(function () {
-            document.querySelectorAll('.btnslistas').forEach(item => {
-                item.addEventListener('click', e => {
-                    if (e.target !== e.currentTarget) {
-                        if(e.target.id == "showTarefas"){
-                            var codLista = e.target.value;
-                            localStorage.cod_lista = codLista;
-                            location.assign('tarefas');
-                        }
-                        else if(e.target.id == "addTarefa"){
-                            var codLista = e.target.value;
-                            localStorage.cod_lista = codLista;
-                            location.assign('adicionarTarefa');
-                        }
-                        else if(e.target.id == "EditarLista"){
-                            var codLista = e.target.value;
-                            localStorage.cod_lista = codLista;
-                            location.assign('editarLista');
-                        }
-                        else if(e.target.id == "DeletarLista"){
-                            var codLista = e.target.value;
-                            excluirLista(codLista);
-                            timeOut_global(index_listas, 2000);
-                        }
-
-                    }
-                    e.stopPropagation();
-                })
-              })
-        },1000);
-        $('#buscarListas').on("submit", (event) => {
-            event.preventDefault();
-            var valor = document.getElementById("buscaLista").value;
-            if(valor != ""){
-                buscarListas(valor);
-                document.getElementById("buscaTarefa").value = "";
-            }
-            else{
-                index_listas();
-            }
-          })
-            
-        deslogar();
+        timeOut_global(acoesLista, 1500);
+        timeOut_global(deslogar, 1500);
+        timeOut_global(searchListas, 1500);
         timeInterval_global(index_listas, 30000);
         localStorage.cod_lista = 0;
 
-       
     }
     else {
         window.location.assign("/")
     }
 }
 
+
+function acoesLista(){
+    document.querySelectorAll('.btnslistas').forEach(item => {
+        item.addEventListener('click', e => {
+            if (e.target !== e.currentTarget) {
+                if(e.target.id == "showTarefas"){
+                    var codLista = e.target.value;
+                    localStorage.cod_lista = codLista;
+                    location.assign('tarefas');
+                }
+                else if(e.target.id == "addTarefa"){
+                    var codLista = e.target.value;
+                    localStorage.cod_lista = codLista;
+                    location.assign('adicionarTarefa');
+                }
+                else if(e.target.id == "EditarLista"){
+                    var codLista = e.target.value;
+                    localStorage.cod_lista = codLista;
+                    location.assign('editarLista');
+                }
+                else if(e.target.id == "DeletarLista"){
+                    var codLista = e.target.value;
+                    excluirLista(codLista);
+                    timeOut_global(index_listas, 2000);
+                }
+
+            }
+            e.stopPropagation();
+        })
+      })
+}
+
+function searchListas(){
+    $('#buscarListas').on("submit", (event) => {
+        event.preventDefault();
+        var valor = document.getElementById("buscaLista").value;
+        if(valor != ""){
+            buscarListas(valor);
+            document.getElementById("buscaLista").value = "";
+        }
+        else{
+            index_listas();
+        }
+      })
+}
 
 
 function excluirLista(codLista) {
@@ -137,7 +141,6 @@ function index_listas() {
 
 function buscarListas(nome) {
     var cod_usuario = localStorage.cod_usuario;
-    //var formData = { cod_usuario: cod_usuario, nome: valor };
     $.ajax({
       url: `http://localhost:3000/v1/api/list/?cod_usuario=${cod_usuario}&nome=${nome}`, // Url of backend (can be python, php, etc..)
       type: "GET", // data type (can be get, post, put, delete)
@@ -146,6 +149,7 @@ function buscarListas(nome) {
       success: function (response) {
         var data = response;
         var span_msg = document.getElementById("span_msg");
+        $('table').find('td').remove();
         for (let i = 0; i < data.lista.length; i++) {
           $('table').find('tbody')
                 .append(

@@ -4,50 +4,12 @@ import { deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, time
 window.onload = function () {
   if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
     index_tarefas();
-      localStorage.cod_tarefa = 0;
-      setTimeout(function () {
-        document.querySelectorAll('.btnsTarefas').forEach(item => {
-            item.addEventListener('click', e => {
-                if (e.target !== e.currentTarget) {
-                    if(e.target.id == "EditarTarefa"){
-                        var codTarefa = e.target.value;
-                        console.log(codTarefa);
-                        localStorage.cod_tarefa = codTarefa;
-                        location.assign('editarTarefa');
-                    }
-                    else if(e.target.id == "DeletarTarefa"){
-                        var codLista = e.target.value;
-                        excluirTarefa(codLista);
-                        setTimeout(index_tarefas, 1000);
-                    }
-                    else if(e.target.id == "MudarStatus"){
-                      var codTarefa = $("btnsTarefas").find("cod_tarefaSpn").innerHTML;
-                      localStorage.cod_tarefa = codTarefa;
-                      mudarStatus(e.target.value);
-                  }
-
-                }
-                e.stopPropagation();
-            })
-          })
-    },1000);
-
-    $('#buscarTarefas').on("submit", (event) => {
-      event.preventDefault();
-      var valor = document.getElementById("buscaTarefa").value;
-      if(valor != ""){
-        buscarTarefas(valor);
-        document.getElementById("buscaTarefa").value = "";
-      }
-      else{
-        index_tarefas();
-      }
-      
-    })
-    
-    deslogar();
+    timeOut_global(acoesTarefa, 1500);
+    timeOut_global(searchTarefas, 1500);
+    timeOut_global(deslogar, 1500);
     timeInterval_global(index_tarefas, 30000);
-      
+    localStorage.cod_tarefa = 0;
+
   }
   else {
     window.location.assign("/")
@@ -55,7 +17,47 @@ window.onload = function () {
 
 }
 
+function acoesTarefa(){
+  document.querySelectorAll('.btnsTarefas').forEach(item => {
+    item.addEventListener('click', e => {
+        if (e.target !== e.currentTarget) {
+            if(e.target.id == "EditarTarefa"){
+                var codTarefa = e.target.value;
+                console.log(codTarefa);
+                localStorage.cod_tarefa = codTarefa;
+                location.assign('editarTarefa');
+            }
+            else if(e.target.id == "DeletarTarefa"){
+                var codLista = e.target.value;
+                excluirTarefa(codLista);
+                setTimeout(index_tarefas, 1000);
+            }
+            else if(e.target.id == "MudarStatus"){
+              var codTarefa = $("btnsTarefas").find("cod_tarefaSpn").innerHTML;
+              localStorage.cod_tarefa = codTarefa;
+              mudarStatus(e.target.value);
+          }
 
+        }
+        e.stopPropagation();
+    })
+  })
+}
+
+function searchTarefas(){
+  $('#buscarTarefas').on("submit", (event) => {
+    event.preventDefault();
+    var valor = document.getElementById("buscaTarefa").value;
+    if(valor != ""){
+      buscarTarefas(valor);
+      document.getElementById("buscaTarefa").value = "";
+    }
+    else{
+      index_tarefas();
+    }
+    
+  })
+}
 
 function excluirTarefa(codTarefa) {
   var span_msg = document.getElementById("span_msg");
@@ -95,13 +97,10 @@ function index_tarefas() {
         for (let i = 0; i < data.tarefa.length; i++) {
           if (data.tarefa[i].statusTarefa === 0) {
             statusTarefa = "Em andamento";
-          
           }
           else {
             statusTarefa = "Concluida";
-           
           }
-          
           $('table').find('tbody')
             .append(`<tr>
                         <td >
@@ -162,11 +161,9 @@ function mudarStatus(statusAtual){
 
 function buscarTarefas(nome) {
   var cod_lista = localStorage.cod_lista;
-  //var formData = { cod_usuario: cod_usuario, nome: valor };
   $.ajax({
     url: `http://localhost:3000/v1/api/task/?cod_lista=${cod_lista}&nome=${nome}`, // Url of backend (can be python, php, etc..)
     type: "GET", // data type (can be get, post, put, delete)
-  
     async: true, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
     success: function (response) {
         var data = response;
@@ -176,12 +173,10 @@ function buscarTarefas(nome) {
         for (let i = 0; i < data.tarefa.length; i++) {
           if (data.tarefa[i].statusTarefa === 0) {
             statusTarefa = "Em andamento";
-           
           }
           else {
             statusTarefa = "Concluida";
           }
-        
           $('table').find('tbody')
             .append(`<tr>
                         <td >
@@ -213,6 +208,8 @@ function buscarTarefas(nome) {
       }
     },
     error: function (response) {
+      $('table').find('td').remove();
+      
           span_msg.innerHTML = dismissable_warning_Msg(`Nenhuma Tarefa ${nome} disponivel.`);
           span_msg.hidden = false;
       }

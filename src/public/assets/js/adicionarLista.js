@@ -3,23 +3,8 @@ import {deslogar, timeInterval_20secs, timeInterval_3secs, timeOut_global, timeI
 
 window.onload = function () {
   if (localStorage.cod_usuario != 0 && localStorage.cod_usuario && localStorage.cod_usuario != null) {
-    $('form').on("submit", (event) => {
-      event.preventDefault();
-      var nomeLista = document.getElementById("nomeLista");
-      var categoria = document.getElementById("categoria");
-      var span_msg = document.getElementById("span_msg");
-      if (nomeLista && categoria) {
-        nomeLista = nomeLista.value;
-        categoria = categoria.value;
-        adicionarLista(nomeLista, categoria);
-      }
-      else {
-        span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
-        span_msg.hidden = false;
-      }
-
-    })
-    deslogar();
+    timeOut_global(formAddLista, 1500);
+    timeOut_global(deslogar, 1500);
   }
   else {
     window.location.assign("/");
@@ -27,7 +12,24 @@ window.onload = function () {
 }
 
 
+function formAddLista(){
+  $('form').on("submit", (event) => {
+    event.preventDefault();
+    var nomeLista = document.getElementById("nomeLista");
+    var categoria = document.getElementById("categoria");
+    var span_msg = document.getElementById("span_msg");
+    if (nomeLista && categoria) {
+      nomeLista = nomeLista.value;
+      categoria = categoria.value;
+      adicionarLista(nomeLista, categoria);
+    }
+    else {
+      span_msg.innerHTML = dismissable_warning_Msg("Insira os dados corretamente");
+      span_msg.hidden = false;
+    }
 
+  })
+}
 
 function adicionarLista(nomeLista, categoria) {
   var span_msg = document.getElementById("span_msg");

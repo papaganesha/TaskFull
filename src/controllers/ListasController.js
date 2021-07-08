@@ -27,13 +27,9 @@ export function index(req, res, next) {
             return res.status(200).send(response)
             next()
         }
-        else {
-            return res.status(500).send({ msg: 'Tabela de listas vazia' })
-        }
-    }).catch((error) => {
-        return res.status(500).send({msg : error})
-        next()
-    })
+        else { res.status(404).send({ msg: 'Tabela de listas vazia' })}
+
+    }).catch((error) => { res.status(500).send({msg : error.sqlMessage}) })
 }
 
 export function index_codUsuario(req, res, next) {
@@ -55,20 +51,12 @@ export function index_codUsuario(req, res, next) {
                 }))
                 
             }
-            return res.status(200).send(response)
+            res.status(200).send(response)
             next()
         }
-        else {
-            const response = {
-                msg: 'Tabela de listas vazia'
-               
-            }
-            return res.status(500).send(response)
-        }
-    }).catch((error) => { 
-        return res.status(500).send({msg : error.sqlMessage})
-        next()
-    })
+        else {res.status(404).send({ msg: 'Tabela de listas vazia'}) }
+
+    }).catch((error) => { res.status(500).send({msg : error.sqlMessage})})
 }
 
 export function busca_nomeLista(req, res, next){
@@ -91,16 +79,12 @@ export function busca_nomeLista(req, res, next){
                 }))
                 
             }
-            return res.status(200).send(response)
+            res.status(200).send(response)
             next()
         }
-        else {
-            return res.status(404).send({ msg: `Nenhuma Lista para pesquisa: ${nomeLista}` })
-        }
-    }).catch((error) => {
-        return res.status(404).send({msg : error})
-        next()
+        else { res.status(404).send({ msg: `Nenhuma Lista para pesquisa: ${nomeLista}` })}
     })
+    .catch((error) => { res.status(404).send({msg : error.sqlMessage}) })
 }
 
 export function item(req, res, next) {
@@ -117,43 +101,14 @@ export function item(req, res, next) {
                             data_ultima_alteracao: result[0].data_ultima_alteracao
                         }
                     
-              
-                return res.status(201).send(response)
+                res.status(201).send(response)
                 next()
             }
-            else {
-                const response = {
-                    msg: `Lista não existe`,
-                    request: {
-                        tipo: 'GET',
-                        descricao: 'Erro durante operação de GET'
-                    }
-                }
-                return res.status(500).send(response)
-                next()
-            }
-        }).catch((error) => {
-            const response = {
-                msg: error.sqlMessage,
-                request: {
-                    tipo: 'GET',
-                    descricao: 'Erro durante operação de GET'
-                }
-            }
-            return res.status(500).send(response)
-            next()
-        })
-    } else {
-        const response = {
-            msg: 'ID nao inserido ou não numerico',
-            request: {
-                tipo: 'GET',
-                descricao: 'Erro durante operação de GET'
-            }
-        }
-        return res.status(500).send(response)
-    }
+            else { res.status(404).send({ msg: `Lista não existe`})}
 
+        }).catch((error) => { res.status(500).send({msg: error.sqlMessage}) })
+    } 
+    else { res.status(500).send({ msg: 'ID nao inserido ou não numerico'})}
 }
 
 
@@ -167,38 +122,16 @@ export function create(req, res, next) {
     if (cod_usuario_decoded && nomeLista && categoriaLista && req) {
         execute("INSERT INTO LISTA_TAREFAS(COD_USUARIO, NOME_LISTA, CATEGORIA) VALUES(?, ?, ?);", [cod_usuario_decoded, nomeLista.toUpperCase(), categoriaLista.toUpperCase()])
         .then((result) => {
-            const response = {
+            res.status(201).send({
                 msg: `${nomeLista} cadastrada com sucesso`,
-                cod_lista: result.insertId,
-                request: {
-                    tipo: 'POST',
-                    descricao: 'Cadastro de Lista'
-                }
-            }
-            return res.status(201).send(response)
+                cod_lista: result.insertId
+            })
             next()
-        }).catch((error) => {
-            const response = {
-                msg: error,
-                request: {
-                    tipo: 'POST',
-                    descricao: 'Erro durante operação de POST'
-                }
-            }
-            return res.status(500).send(response)
-            next()
-        })
+
+        }).catch((error) => {res.status(500).send({ msg: error.sqlMessage }) })
     }
-    else {
-        const response = {
-            msg: 'Necessario informar nome e categoria para cadastro de Lista',
-            request: {
-                tipo: 'POST',
-                descricao: 'Erro durante operação de POST'
-            }
-        }
-        return res.status(500).send(response)
-    }
+
+    else { res.status(500).send({ msg: 'Necessario informar nome e categoria para cadastro de Lista'}) }
 }
 
 
@@ -213,127 +146,41 @@ export function update(req, res, next) {
             execute("UPDATE LISTA_TAREFAS SET NOME_LISTA = ?,  CATEGORIA =  ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE COD_LISTA = ?;", [nomeLista.toUpperCase(), categoriaLista.toUpperCase(), id])
             .then((result) => {
                 if (result.affectedRows > 0) {
-                    const response = {
-                        msg: `Nome e categoria da Lista editados com sucesso`,
-                        request: {
-                            tipo: 'PUT',
-                            descricao: 'Edição de Listas'
-                        }
-                    }
-                    return res.status(201).send(response)
+                    res.status(200).send({ msg: `Nome e categoria da Lista editados com sucesso`})
                     next()
                 }
-                else {
-                    const response = {
-                        msg: `Lista de ID(${id}) não existe`,
-                        request: {
-                            tipo: 'POST',
-                            descricao: 'Erro durante operação de POST'
-                        }
-                    }
-                    return res.status(500).send(response)
-                    next()
-                }
-            }).catch((error) => {
-                const response = {
-                    msg: error,
-                    request: {
-                        tipo: 'POST',
-                        descricao: 'Erro durante operação de POST'
-                    }
-                }
-                return res.status(500).send(response)
-                next()
-            })
+                else { res.status(404).send({ msg: `Lista de ID(${id}) não existe`}) }
+
+            }).catch((error) => { res.status(500).send( {msg: error.sqlMessage }) })
         }
 
         else if (nomeLista) {
             execute("UPDATE LISTA_TAREFAS SET NOME_LISTA = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE COD_LISTA = ?;", [nomeLista.toUpperCase(), id])
             .then((result) => {
                 if (result.affectedRows > 0) {
-                    const response = {
-                        msg: `Nome da Lista editado com sucesso`,
-                        request: {
-                            tipo: 'PUT',
-                            descricao: 'Edição de Listas'
-                        }
-                    }
-                    return res.status(201).send(response)
+                    res.status(201).send({ msg: `Nome da Lista editado com sucesso`})
                     next()
                 }
-                else {
-                    return res.status(500).send({ msg: `Lista de ID(${id}) não existe` })
-                    next()
-                }
+                else { res.status(404).send({ msg: `Lista de ID(${id}) não existe` })}
 
             })
-            .catch((error) => {
-                return res.status(500).send({ error: error })
-                next()
-            })
-
+            .catch((error) => { res.status(500).send({ error: error.sqlMessage }) })
         }
 
         else if (categoriaLista) {
             execute("UPDATE LISTA_TAREFAS SET CATEGORIA = ?, DATA_ULTIMA_ALTERACAO = NOW() WHERE COD_LISTA = ?;", [categoriaLista.toUpperCase(), id]).then((result) => {
                 if (result.affectedRows > 0) {
-                    const response = {
-                        msg: `Categoria da Lista editada com sucesso`,
-                        request: {
-                            tipo: 'PUT',
-                            descricao: 'Edição de Listas'
-                        }
-                    }
-                    return res.status(201).send(response)
+                    res.status(200).send({ msg: `Categoria da Lista editada com sucesso`})
                     next()
                 }
-                else {
-                    const response = {
-                        msg: `Lista de ID(${id}) não existe`,
-                        request: {
-                            tipo: 'PUT',
-                            descricao: 'Erro durante operação de PUT'
-                        }
-                    }
-                    return res.status(500).send(response)
-                    next()
-                }
+                else { res.status(404).send({msg: `Lista de ID(${id}) não existe`})}
 
-            }).catch((error) => {
-                const response = {
-                    msg: error,
-                    request: {
-                        tipo: 'PUT',
-                        descricao: 'Erro durante operação de PUT'
-                    }
-                }
-                return res.status(500).send(response)
-                next()
-            })
+            }).catch((error) => { res.status(500).send({msg: error.sqlMessage }) })
         }
-        else {
-            const response = {
-                msg: `É necessario informar os campos de alteração`,
-                request: {
-                    tipo: 'PUT',
-                    descricao: 'Erro durante operação de PUT'
-                }
-            }
-            return res.status(500).send(response)
-        }
-
+        else { res.status(500).send({ msg: `É necessario informar os campos de alteração` }) }
     }
 
-    else {
-        const response = {
-            msg: 'ID não inserido ou não numerico',
-            request: {
-                tipo: 'PUT',
-                descricao: 'Erro durante operação de PUT'
-            }
-        }
-        return res.status(500).send(response)
-    }
+    else { res.status(500).send({ msg: 'ID não inserido ou não numerico'}) }
 }
 
 export function del(req, res, next) {
@@ -341,47 +188,13 @@ export function del(req, res, next) {
     if (id && id != NaN && req) {
         execute("DELETE FROM LISTA_TAREFAS WHERE COD_LISTA = ?;", [id]).then((result) => {
             if (result.affectedRows > 0) {
-                const response = {
-                    msg: `Lista deletada com sucesso`,
-                    request: {
-                        tipo: 'DELETE',
-                        descricao: 'Delete de Listas'
-                    }
-                }
-                return res.status(201).send(response)
+                res.status(200).send({msg: `Lista deletada com sucesso`})
                 next()
             }
-            else {
-                const response = {
-                    msg: `Lista não existe`,
-                    request: {
-                        tipo: 'DELETE',
-                        descricao: 'Erro durante operação de DELETE'
-                    }
-                }
-                return res.status(500).send(response)
-                next()
-            }
-        }).catch((error) => {
-            const response = {
-                msg: error.errno,
-                request: {
-                    tipo: 'DELETE',
-                    descricao: 'Erro durante operação de DELETE'
-                }
-            }
-            return res.status(500).send(response)
-            next()
+            else { res.status(404).send({ msg: `Lista não existe`}) }
         })
-    } else {
-        const response = {
-            msg: 'ID não inserido ou não numerico',
-            request: {
-                tipo: 'DELETE',
-                descricao: 'Erro durante operação de DELETE'
-            }
-        }
-        return res.status(500).send(response)
-    }
+        .catch((error) => { res.status(500).send({ msg: error.errno }) })
+    } 
+    else { res.status(500).send({ msg: 'ID não inserido ou não numerico'}) }
 
 }
